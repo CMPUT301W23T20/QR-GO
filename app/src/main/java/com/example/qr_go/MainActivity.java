@@ -1,5 +1,7 @@
 package com.example.qr_go;
 
+
+
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -43,6 +45,56 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+        /*
+        System.out.println("hello world");
+
+        Player player = new Player("test", "123");
+
+        int j = 10;
+        for(int i = 0; i < 10; i++) {
+            player.addQR(new QR(j));
+            j += 10;
+
+            System.out.println(player.getQRList().toString());
+            System.out.println("Highest: " + player.getHighestScore());
+            System.out.println("Lowest: " + player.getLowestScore());
+            System.out.println("Total: " + player.getTotalScore());
+            System.out.println("------------------------------------------------------------");
+        }
+
+        System.out.println(player.getQRList().toString());
+        System.out.println("Highest: " + player.getHighestScore());
+        System.out.println("Lowest: " + player.getLowestScore());
+        System.out.println("Total: " + player.getTotalScore());
+        System.out.println("------------------------------------------------------------");
+
+        player.deleteQR(9);
+
+        System.out.println(player.getQRList().toString());
+        System.out.println("Highest: " + player.getHighestScore());
+        System.out.println("Lowest: " + player.getLowestScore());
+        System.out.println("Total: " + player.getTotalScore());
+        System.out.println("------------------------------------------------------------");
+
+        player.addQR(new QR(10000));
+
+        System.out.println(player.getQRList().toString());
+        System.out.println("Highest: " + player.getHighestScore());
+        System.out.println("Lowest: " + player.getLowestScore());
+        System.out.println("Total: " + player.getTotalScore());
+        System.out.println("------------------------------------------------------------");
+
+        player.deleteQR(4);
+
+        System.out.println(player.getQRList().toString());
+        System.out.println("Highest: " + player.getHighestScore());
+        System.out.println("Lowest: " + player.getLowestScore());
+        System.out.println("Total: " + player.getTotalScore());
+        System.out.println("------------------------------------------------------------");
+
+         */
     }
 
     @Override
