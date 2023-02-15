@@ -1,23 +1,29 @@
 package com.example.qr_go;
 
-import androidx.annotation.NonNull;
+import java.util.ArrayList;
 
 public class QR {
+    private ArrayList<QRComment> commentsList;
     private final String qrHash;
     private final int score;
     private final String name;
     private final String avatar;
 
+    private final Player discoverer;
+
+
     // private picture
     // private geolocation
 
     // will also need picture and geolocation as params
-    public QR(String qrContents) {
+    public QR(String qrContents, Player discoverer) {
         // store only hash
         this.qrHash = hashQR(qrContents);
         this.score = generateScore(qrHash);
         this.name = generateName(qrHash);
         this.avatar = generateAvatar(qrHash);
+        this.commentsList = new ArrayList<>();
+        this.discoverer = discoverer;
     }
 
     private String hashQR(String qrContents) {
@@ -44,12 +50,19 @@ public class QR {
         return "";
     }
 
+    public void addComment(String comment, Actor commenter) {
+        commentsList.add(new QRComment(comment, commenter));
+    }
 
+    public void deleteComment(int i) {
+        commentsList.remove(i);
+    }
 
     // getters and setters
     public int getScore() {
         return score;
     }
-
-
+    public ArrayList<QRComment> getCommentsList() {
+        return commentsList;
+    }
 }

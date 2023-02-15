@@ -15,11 +15,14 @@ public class Player extends Actor {
         qrList = new ArrayList<>();
     }
 
+    // adds QR to the end of the list
+    // runtime: O(1)
     public void addQR(QR qr) {
         // add QR to end of list
         qrList.add(qr);
 
         // update highest and lowest
+        // runtime: O(1)
 
         // replace highest score if the current QR score is larger
         if(qr.getScore() > highestScore) {
@@ -35,6 +38,8 @@ public class Player extends Actor {
         totalScore += qr.getScore();
     }
 
+    // deletes QR code at i from list
+    // runtime: O(n)
     public void deleteQR(int i) {
 
         // save copy of deleted QR code
@@ -57,6 +62,7 @@ public class Player extends Actor {
     }
 
     // updates the highest and lowest scores based on the current state of the qrList
+    // runtime: O(n)
     private void updateHighestLowest() {
 
         // reset highest and lowest scores
