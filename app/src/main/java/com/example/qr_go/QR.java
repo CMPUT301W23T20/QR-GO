@@ -53,7 +53,6 @@ public class QR {
     public void addComment(String comment, Actor commenter) {
         commentsList.add(new QRComment(comment, commenter));
     }
-
     public void deleteComment(int i) {
         commentsList.remove(i);
     }
