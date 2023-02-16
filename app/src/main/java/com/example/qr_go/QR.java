@@ -27,9 +27,9 @@ public class QR {
     }
 
     private String hashQR(String qrContents) {
-        // returning empty string to avoid error lines
-        // actually implement this
-        return "";
+        // don't know if we should implement our own way hash but seems unnecessary
+        return String.valueOf(qrContents.hashCode());// hashes a URL and converts the hash into a string for further use
+
     }
 
     private int generateScore(String qrHash) {
@@ -38,13 +38,13 @@ public class QR {
         return 1;
     }
 
-    private String generateName(String qrContents) {
+    private String generateName(String qrHash) {
         // returning empty string to avoid error lines
         // actually implement this
         return "";
     }
 
-    private String generateAvatar(String qrContents) {
+    private String generateAvatar(String qrHash) {
         // returning empty string to avoid error lines
         // actually implement this
         return "";
