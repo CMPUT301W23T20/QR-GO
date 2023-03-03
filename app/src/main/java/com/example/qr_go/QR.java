@@ -1,5 +1,8 @@
 package com.example.qr_go;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class QR {
@@ -26,16 +29,52 @@ public class QR {
         this.discoverer = discoverer;
     }
 
-    private String hashQR(String qrContents) {
-        // don't know if we should implement our own way hash but seems unnecessary
-        return String.valueOf(qrContents.hashCode());// hashes a URL and converts the hash into a string for further use
-
+    public String hashQR(String qrContents) {
+        //hashing string with sha256 then returning the string
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] result = md.digest(qrContents.getBytes(StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for (byte b : result) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            // handle the exception
+            return null;
+        }
     }
 
     private int generateScore(String qrHash) {
-        // returning empty string to avoid error lines
-        // actually implement this
-        return 1;
+        int score = 0;    // total score
+        int zeroCount = 0;// counting consecutive zeros
+        double points = 0;// variable that tracks the points that consecutive zeros create
+
+        String hash = this.qrHash;
+        for (int i = 0; i < hash.length(); i++) {
+
+            if (hash.charAt(i) == '0') {
+
+                zeroCount++;
+
+                if (zeroCount >= 2) {
+                    points = Math.pow(20, zeroCount - 1);
+                    if (i == hash.length() - 1) {
+                        score += points;
+                    }
+                } else if (i + 1 < hash.length() && (hash.charAt(i + 1) != '0' || i == hash.length() - 1)) {
+                    // the case where there is one zero
+                    score++;
+
+                }
+            } else if (i != 0 && hash.charAt(i - 1) == '0') {
+                zeroCount = 0;
+                score += points;
+            }
+
+        }
+
+        return score;
     }
 
     private String generateName(String qrHash) {
