@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "699158992338",
+    "project_id": "qr-go-de751",
+    "storage_bucket": "qr-go-de751.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699158992338:android:48a5e18703f9dd442c240b",
+        "android_client_info": {
+          "package_name": "com.example.qr_go"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699158992338-3j69n1326ld8opjf3o1btblt3t105u2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF4DppAlO26I4gqxLtrkva4h24zJeY5S8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699158992338-3j69n1326ld8opjf3o1btblt3t105u2o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
