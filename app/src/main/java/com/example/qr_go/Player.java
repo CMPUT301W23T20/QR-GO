@@ -1,6 +1,16 @@
 package com.example.qr_go;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Player extends Actor {
     private ArrayList<QR> qrList;
@@ -9,6 +19,7 @@ public class Player extends Actor {
     private int lowestScore;
 
     private int totalScore;
+    private FirebaseFirestore db;
 
     /**
      * Constructor for creating brand new player
@@ -18,6 +29,8 @@ public class Player extends Actor {
     public Player(String username, String deviceID) {
         super(username, deviceID);
         qrList = new ArrayList<>();
+
+        db = FirebaseFirestore.getInstance();
     }
 
     /**
@@ -38,16 +51,20 @@ public class Player extends Actor {
         this.highestScore = highestScore;
         this.lowestScore = lowestScore;
         this.totalScore = totalScore;
+
+        db = FirebaseFirestore.getInstance();
     }
 
-    // adds QR to the end of the list
-    // runtime: O(1)
+    /**
+     * Adds QR to the end of the list
+     * @param qr
+     * QR code to be added to player's list
+     */
     public void addQR(QR qr) {
         // add QR to end of list
         qrList.add(qr);
 
         // update highest and lowest
-        // runtime: O(1)
 
         // replace highest score if the current QR score is larger
         if(qr.getScore() > highestScore) {
@@ -63,8 +80,10 @@ public class Player extends Actor {
         totalScore += qr.getScore();
     }
 
-    // deletes QR code at i from list
-    // runtime: O(n)
+    /**
+     * Deletes QR code at i from list
+     * @param i
+     */
     public void deleteQR(int i) {
 
         // save copy of deleted QR code
@@ -128,5 +147,43 @@ public class Player extends Actor {
 
     public ArrayList<QR> getQRList() {
         return qrList;
+    }
+    public int getRank() {
+        return rank;
+    }
+
+    /**
+     * Updates firestone database with player's information. Document named after user device ID.
+     */
+    public void updateDB() {
+        // get collection reference to player class
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+        // Create hashmap for data
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("username", this.getUsername());
+        data.put("qrList", this.getQRList());
+        data.put("rank", this.getRank());
+        data.put("highestScore", this.getHighestScore());
+        data.put("lowestScore", this.getLowestScore());
+        data.put("totalScore", this.getTotalScore());
+
+        // add data to database
+        // document named after user deviceID
+        collectionReference
+                .document(this.getDeviceID())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("updateDB()", "Data added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("updateDB()", "Data not added: " + e);
+                    }
+                });
     }
 }
