@@ -10,9 +10,34 @@ public class Player extends Actor {
 
     private int totalScore;
 
+    /**
+     * Constructor for creating brand new player
+     * @param username
+     * @param deviceID
+     */
     public Player(String username, String deviceID) {
         super(username, deviceID);
         qrList = new ArrayList<>();
+    }
+
+    /**
+     * Constructor for creating existing player from database
+     * @param username
+     * @param deviceID
+     * @param qrList
+     * @param rank
+     * @param highestScore
+     * @param lowestScore
+     * @param totalScore
+     */
+    public Player(String username, String deviceID, ArrayList<QR> qrList,
+                  int rank, int highestScore, int lowestScore, int totalScore) {
+        super(username, deviceID);
+        this.qrList = qrList;
+        this.rank = rank;
+        this.highestScore = highestScore;
+        this.lowestScore = lowestScore;
+        this.totalScore = totalScore;
     }
 
     // adds QR to the end of the list
