@@ -1,4 +1,6 @@
 package com.example.qr_go;
 
-public class CaptureActivity extends com.journeyapps.barcodescanner.CaptureActivity {
+import com.journeyapps.barcodescanner.CaptureActivity;
+
+public class CaptureAct extends CaptureActivity {
 }
