@@ -191,13 +191,21 @@ public class Player extends Actor {
     }
 
     /**
+     * Gets total number of QRs scanned
+     * @return
+     * Total number of QRs scanned
+     */
+    public int getTotalQR() {
+        return qrList.size();
+    }
+
+    /**
      * Updates firestone database with player's information. Document named after user device ID.
      */
     public void updateDB() {
-        //
+        // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // get collection reference to player class
         CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 
         // Create hashmap for data
