@@ -1,5 +1,7 @@
 package com.example.qr_go;
 
+import com.example.qr_go.Actor.Actor;
+
 public class QRComment {
     private String comment;
     private final Actor commenter;

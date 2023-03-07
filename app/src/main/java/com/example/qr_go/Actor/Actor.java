@@ -1,7 +1,7 @@
 // unique android device:
 // https://stackoverflow.com/questions/2785485/is-there-a-unique-android-device-id
 
-package com.example.qr_go;
+package com.example.qr_go.Actor;
 
 
 import android.provider.Settings;

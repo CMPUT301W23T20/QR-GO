@@ -1,5 +1,8 @@
 package com.example.qr_go;
 
+import com.example.qr_go.Actor.Actor;
+import com.example.qr_go.Actor.Player;
+
 import java.util.ArrayList;
 
 public class QR {
