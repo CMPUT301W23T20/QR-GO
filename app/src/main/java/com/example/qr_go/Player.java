@@ -17,31 +17,36 @@ public class Player extends Actor {
     private int rank;
     private int highestScore;
     private int lowestScore;
-
     private int totalScore;
-    private FirebaseFirestore db;
 
     /**
      * Constructor for creating brand new player
      * @param username
+     * Player's username
      * @param deviceID
+     * Player's device ID
      */
     public Player(String username, String deviceID) {
         super(username, deviceID);
         qrList = new ArrayList<>();
-
-        db = FirebaseFirestore.getInstance();
     }
 
     /**
      * Constructor for creating existing player from database
      * @param username
+     * Player's username
      * @param deviceID
+     * Player's device ID
      * @param qrList
+     * Player's list of QR codes scanned
      * @param rank
+     * Player's rank
      * @param highestScore
+     * Player's highest score
      * @param lowestScore
+     * Player's lowest score
      * @param totalScore
+     * Player's total score
      */
     public Player(String username, String deviceID, ArrayList<QR> qrList,
                   int rank, int highestScore, int lowestScore, int totalScore) {
@@ -51,8 +56,6 @@ public class Player extends Actor {
         this.highestScore = highestScore;
         this.lowestScore = lowestScore;
         this.totalScore = totalScore;
-
-        db = FirebaseFirestore.getInstance();
     }
 
     /**
@@ -83,6 +86,7 @@ public class Player extends Actor {
     /**
      * Deletes QR code at i from list
      * @param i
+     * Index of QR code to be deleted
      */
     public void deleteQR(int i) {
 
@@ -105,8 +109,10 @@ public class Player extends Actor {
         totalScore -= deletedQR.getScore();
     }
 
-    // updates the highest and lowest scores based on the current state of the qrList
-    // runtime: O(n)
+
+    /**
+     * Updates the highest and lowest scores based on the current state of the qrList
+     */
     private void updateHighestLowest() {
 
         // reset highest and lowest scores
@@ -129,25 +135,56 @@ public class Player extends Actor {
     }
 
     // getters and setters
+
+    /**
+     * Gets player's highest score
+     * @return
+     * Player's highest score
+     */
     public int getHighestScore() {
         return highestScore;
     }
 
+    /**
+     * Gets player's lowest score
+     * @return
+     * Player's lowest score
+     */
     public int getLowestScore() {
         return lowestScore;
     }
 
+    /**
+     * Gets player's total score
+     * @return
+     * Player's total score
+     */
     public int getTotalScore() {
         return totalScore;
     }
 
+    /**
+     * Sets player's rank
+     * @param rank
+     * Player's rank
+     */
     public void setRank(int rank) {
         this.rank = rank;
     }
 
+    /**
+     * Gets player's list of QR codes scanned
+     * @return
+     * Player's list of QR codes scanned
+     */
     public ArrayList<QR> getQRList() {
         return qrList;
     }
+    /**
+     * Gets player's rank
+     * @return
+     * Player's rank
+     */
     public int getRank() {
         return rank;
     }
@@ -156,6 +193,9 @@ public class Player extends Actor {
      * Updates firestone database with player's information. Document named after user device ID.
      */
     public void updateDB() {
+        //
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         // get collection reference to player class
         CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 

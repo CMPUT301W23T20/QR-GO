@@ -15,10 +15,20 @@ public class Actor {
         this.deviceID = deviceID;
     }
 
+    /**
+     * Gets actor's username
+     * @return
+     * Actor's username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Gets actor's device ID
+     * @return
+     * Actor's device ID
+     */
     public String getDeviceID() {
         return deviceID;
     }
