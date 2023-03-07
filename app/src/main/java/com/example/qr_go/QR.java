@@ -11,26 +11,34 @@ public class QR {
     private final int score;
     private final String name;
     private final String avatar;
+    private ArrayList<Player> qrUsers; // array of people who have discovered this QR
 
-    private final Player discoverer;
 
 
     // private picture
     // private geolocation
 
     // will also need picture and geolocation as params
-    public QR(String qrContents, Player discoverer) {
+    public QR(String qrContents, Player discoverer) throws Exception {
         // store only hash
         this.qrHash = hashQR(qrContents);
         this.score = generateScore(qrHash);
         this.name = generateName(qrHash);
         this.avatar = generateAvatar(qrHash);
         this.commentsList = new ArrayList<>();
-        this.discoverer = discoverer;
+        if (qrUsers.contains(discoverer)) {
+            throw new Exception("Discoverer already exists in qrUsers list.");
+        }
+        qrUsers.add(discoverer);
     }
 
+    /**
+     * hashes the URL using sha256
+     * then combines the bits into one string
+     * @param qrContents
+     * @return hashed string
+     */
     public String hashQR(String qrContents) {
-        //hashing string with sha256 then returning the string
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] result = md.digest(qrContents.getBytes(StandardCharsets.UTF_8));
@@ -45,6 +53,12 @@ public class QR {
         }
     }
 
+    /**
+     * takes a hashed string and generates a score based on individual zeros which make up 1 point
+     * and consecutive zeroes which make up 20^(number of zeros minus the first one)
+     * @param qrHash
+     * @return score
+     */
     private int generateScore(String qrHash) {
         int score = 0;    // total score
         int zeroCount = 0;// counting consecutive zeros
@@ -57,7 +71,7 @@ public class QR {
 
                 zeroCount++;
 
-                if (zeroCount >= 2) {
+                if (zeroCount >= 2) { // checks for consecutive zeros
                     points = Math.pow(20, zeroCount - 1);
                     if (i == hash.length() - 1) {
                         score += points;
@@ -100,6 +114,9 @@ public class QR {
     public int getScore() {
         return score;
     }
+    public String returnAvatar(){ return avatar;}
+
+    public String returnName(){ return name;}
     public ArrayList<QRComment> getCommentsList() {
         return commentsList;
     }
