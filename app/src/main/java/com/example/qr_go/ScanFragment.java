@@ -105,12 +105,13 @@ public class ScanFragment extends Fragment {
         if(result.getContents() !=null)
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // show score of QR code here
             builder.setTitle("Result");
             builder.setMessage(result.getContents());
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    //DialogInterface.dismiss();
+                    dialog.dismiss();
                 }
             }).show();
         }
