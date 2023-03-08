@@ -40,6 +40,7 @@ public class ScanFragment extends Fragment {
 
     View view;
 
+    //for passing data
     private OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener{
