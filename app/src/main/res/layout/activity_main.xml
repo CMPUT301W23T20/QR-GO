@@ -1,48 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <LinearLayout
+    <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/viewPager"
+        android:background="@color/white">
 
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:gravity="center_vertical"
-            android:text="Username"
-            android:textSize="30sp" />
+    </androidx.viewpager2.widget.ViewPager2>
 
-        <Button
-            android:id="@+id/my_qr_codes"
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:gravity="center_vertical"
-            android:text="QR Codes"
-            android:textSize="30sp" />
+    <include layout="@layout/navigation_bar" />
 
-        <TextView
-            android:id="@+id/total_score"
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:gravity="center_vertical"
-            android:text="Total Score:"
-            android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/total_scanned"
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:gravity="center_vertical"
-            android:text="Total QR Scanned"
-            android:textSize="30sp" />
-
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
