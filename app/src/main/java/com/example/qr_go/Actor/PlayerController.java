@@ -4,7 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.qr_go.QR.QR;
+import com.example.qr_go.QR.QRModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -29,7 +29,7 @@ public class PlayerController {
      * @param qr
      * QR code to be added to player's list
      */
-    public void addQR(QR qr) {
+    public void addQR(QRModel qr) {
         // add QR to end of list
         model.getQRList().add(qr);
 
@@ -57,7 +57,7 @@ public class PlayerController {
     public void deleteQR(int i) {
 
         // save copy of deleted QR code
-        QR deletedQR = model.getQRList().get(i);
+        QRModel deletedQR = model.getQRList().get(i);
 
         // delete QR at index i
         model.getQRList().remove(i);
@@ -86,7 +86,7 @@ public class PlayerController {
         model.setLowestScore(model.getQRList().get(0).getScore());
         // iterate through qrList
         for(int i = 0; i < model.getQRList().size(); i++) {
-            QR qr = model.getQRList().get(i);
+            QRModel qr = model.getQRList().get(i);
 
             // replace highest score if the current QR score is larger
             if(qr.getScore() > model.getHighestScore()) {
