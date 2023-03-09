@@ -1,7 +1,7 @@
-package com.example.qr_go;
+package com.example.qr_go.QR;
 
 import com.example.qr_go.Actor.Actor;
-import com.example.qr_go.Actor.Player;
+import com.example.qr_go.Actor.PlayerModel;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -14,7 +14,7 @@ public class QR {
     private final int score;
     private final String name;
     private final String avatar;
-    private ArrayList<Player> qrUsers; // array of people who have discovered this QR
+    private ArrayList<PlayerModel> qrUsers; // array of people who have discovered this QR
 
 
 
@@ -22,7 +22,7 @@ public class QR {
     // private geolocation
 
     // will also need picture and geolocation as params
-    public QR(String qrContents, Player discoverer) throws Exception {
+    public QR(String qrContents, PlayerModel discoverer) throws Exception {
         // store only hash
         this.qrHash = hashQR(qrContents);
         this.score = generateScore(qrHash);
@@ -117,9 +117,9 @@ public class QR {
     public int getScore() {
         return score;
     }
-    public String returnAvatar(){ return avatar;}
+    public String getAvatar(){ return avatar;}
 
-    public String returnName(){ return name;}
+    public String getName(){ return name;}
     public ArrayList<QRComment> getCommentsList() {
         return commentsList;
     }

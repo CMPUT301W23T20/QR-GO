@@ -1,4 +1,4 @@
-package com.example.qr_go;
+package com.example.qr_go.Adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

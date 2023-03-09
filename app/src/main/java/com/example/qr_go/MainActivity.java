@@ -10,6 +10,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 
+import com.example.qr_go.Adapters.QRFragmentPagerAdapter;
+import com.example.qr_go.Fragments.BlankFragment;
+import com.example.qr_go.Fragments.LeaderboardFragment;
+import com.example.qr_go.Fragments.PlayerProfileFragment;
+import com.example.qr_go.Fragments.ScanFragment;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{

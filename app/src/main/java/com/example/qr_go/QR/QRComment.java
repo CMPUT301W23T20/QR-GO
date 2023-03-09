@@ -1,4 +1,4 @@
-package com.example.qr_go;
+package com.example.qr_go.QR;
 
 import com.example.qr_go.Actor.Actor;
 

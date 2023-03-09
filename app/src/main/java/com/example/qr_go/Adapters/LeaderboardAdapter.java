@@ -1,4 +1,4 @@
-package com.example.qr_go;
+package com.example.qr_go.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.qr_go.LeaderboardContent;
+import com.example.qr_go.R;
 
 import java.util.ArrayList;
 import java.util.List;
