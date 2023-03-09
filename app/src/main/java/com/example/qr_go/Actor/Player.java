@@ -235,4 +235,25 @@ public class Player extends Actor {
                     }
                 });
     }
+
+    /**
+     * Checks if data has changed
+     * @param rank
+     * Rank to check against current instance
+     * @param highestScore
+     * Highest score to check against current instance
+     * @param lowestScore
+     * Lowest score to check against current instance
+     * @param totalScore
+     * Total score to check against current instance
+     * @return
+     * True if data has changed False otherwise
+     */
+    public boolean dataChanged(int rank, int highestScore, int lowestScore, int totalScore) {
+        if(this.rank == rank || this.highestScore == highestScore || this.lowestScore == lowestScore || this.totalScore == totalScore) {
+            return false;
+        }
+
+        return true;
+    }
 }

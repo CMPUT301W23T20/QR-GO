@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/username"
+            android:id="@+id/username_text"
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:gravity="center_vertical"
@@ -19,7 +19,7 @@
             android:textSize="30sp" />
 
         <Button
-            android:id="@+id/my_qr_codes"
+            android:id="@+id/my_qr_codes_button"
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:gravity="center_vertical"
@@ -27,7 +27,7 @@
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/total_score"
+            android:id="@+id/total_score_text"
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:gravity="center_vertical"
@@ -35,7 +35,7 @@
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/total_scanned"
+            android:id="@+id/total_scanned_text"
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:gravity="center_vertical"
