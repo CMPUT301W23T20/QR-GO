@@ -1,8 +1,10 @@
 package com.example.qr_go.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,42 +12,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.qr_go.Actor.PlayerController;
 import com.example.qr_go.Actor.PlayerModel;
 import com.example.qr_go.QR.QR;
+import com.example.qr_go.QR.QRComment;
 import com.example.qr_go.R;
 
 import java.util.ArrayList;
 public class PlayerProfileFragment extends Fragment {
-
     private TextView usernameTextView;
     private Button qrButton;
     private TextView totalScoreTextView;
     private TextView totalScannedTextView;
-
-    // private String android_id = Secure.getString(getContext().getContentResolver(), Secure.ANDROID_ID);
-    // need to find a way to get the device ID
+    private String android_id;
     private PlayerModel model;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     private View view;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    public PlayerProfileFragment() {
-        // Required empty public constructor
+    public PlayerProfileFragment(String android_id) {
+        this.android_id = android_id;
     }
 
-    public static Fragment newInstance(String param1, String param2) {
-        PlayerProfileFragment fragment = new PlayerProfileFragment();
+    public static Fragment newInstance(String android_id) {
+        PlayerProfileFragment fragment = new PlayerProfileFragment(android_id);
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,16 +43,27 @@ public class PlayerProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_player_profile, container, false);
+
+        getViews(view);
+
+        qrButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getChildFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.profile_container, new ProfileQRListFragment(model))
+                        .commit();
+            }
+        });
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_player_profile, container, false);
+        return view;
     }
 
     @Override
@@ -89,11 +90,7 @@ public class PlayerProfileFragment extends Fragment {
      */
     private void updateProfileInfo(View view) {
 
-        // get views from fragment
-        usernameTextView = view.findViewById(R.id.username_text);
-        qrButton = view.findViewById(R.id.my_qr_codes_button);
-        totalScoreTextView = view.findViewById(R.id.total_score_text);
-        totalScannedTextView = view.findViewById(R.id.total_scanned_text);
+        getViews(view);
 
         /**
          // get database information
@@ -117,8 +114,22 @@ public class PlayerProfileFragment extends Fragment {
 
 
         model = new PlayerModel("test123", "123", new ArrayList<QR>(), 1, 123, 0, 12345);
+        PlayerController controller = new PlayerController(model);
+        controller.addQR(new QR("3453", "test qr", "", 12345, new ArrayList<QRComment>()));
+        controller.addQR(new QR("123123", "test qr2", "", 67890, new ArrayList<QRComment>()));
         usernameTextView.setText(model.getUsername());
         totalScoreTextView.setText("Total Score: " + model.getTotalScore());
         totalScannedTextView.setText("Total Scanned: " + model.getTotalQR());
+    }
+
+    /**
+     * Gets views from fragment
+     */
+    public void getViews(View view) {
+        // get views from fragment
+        usernameTextView = view.findViewById(R.id.username_text);
+        qrButton = view.findViewById(R.id.my_qr_codes_button);
+        totalScoreTextView = view.findViewById(R.id.total_score_text);
+        totalScannedTextView = view.findViewById(R.id.total_scanned_text);
     }
 }

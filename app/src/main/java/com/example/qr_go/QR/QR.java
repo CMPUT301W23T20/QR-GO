@@ -21,7 +21,14 @@ public class QR {
     // private picture
     // private geolocation
 
-    // will also need picture and geolocation as params
+    /**
+     * Constructor for creating new QR
+     * @param qrHash
+     * @param name
+     * @param avatar
+     * @param score
+     * @param commentsList
+     */
     public QR(String qrContents, PlayerModel discoverer) throws Exception {
         // store only hash
         this.qrHash = hashQR(qrContents);
@@ -33,6 +40,22 @@ public class QR {
             throw new Exception("Discoverer already exists in qrUsers list.");
         }
         qrUsers.add(discoverer);
+    }
+
+    /**
+     * Constructor for creating QR from database
+     * @param qrHash
+     * @param name
+     * @param avatar
+     * @param score
+     * @param commentsList
+     */
+    public QR(String qrHash, String name, String avatar, int score, ArrayList<QRComment> commentsList) {
+        this.qrHash = qrHash;
+        this.name = name;
+        this.avatar = avatar;
+        this.score = score;
+        this.commentsList = commentsList;
     }
 
     /**

@@ -6,6 +6,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 
+import android.provider.Settings;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragments.add(BlankFragment.newInstance("Map","321"));
         fragments.add(ScanFragment.newInstance("Scan","321"));
         fragments.add(LeaderboardFragment.newInstance("Leaderboard","321"));
-        fragments.add(PlayerProfileFragment.newInstance("Profile","321"));
+        fragments.add(PlayerProfileFragment.newInstance(getDeviceId()));
         QRFragmentPagerAdapter pagerAdapter = new QRFragmentPagerAdapter(
                 getSupportFragmentManager(),
                 getLifecycle(),
@@ -99,5 +100,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
         }
+    }
+
+    public String getDeviceId() {
+        String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        return deviceId;
     }
 }
