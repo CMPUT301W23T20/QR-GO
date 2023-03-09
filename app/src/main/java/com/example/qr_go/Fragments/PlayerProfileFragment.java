@@ -1,8 +1,7 @@
-package com.example.qr_go;
+package com.example.qr_go.Fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,14 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.qr_go.Actor.Player;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-
-import android.provider.Settings.Secure;
+import com.example.qr_go.Actor.PlayerModel;
+import com.example.qr_go.QR.QR;
+import com.example.qr_go.R;
 
 import java.util.ArrayList;
 public class PlayerProfileFragment extends Fragment {
@@ -30,7 +24,7 @@ public class PlayerProfileFragment extends Fragment {
 
     // private String android_id = Secure.getString(getContext().getContentResolver(), Secure.ANDROID_ID);
     // need to find a way to get the device ID
-    private Player player;
+    private PlayerModel model;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -122,9 +116,9 @@ public class PlayerProfileFragment extends Fragment {
          */
 
 
-        player = new Player("test123", "123", new ArrayList<QR>(), 1, 123, 0, 12345);
-        usernameTextView.setText(player.getUsername());
-        totalScoreTextView.setText("Total Score: " + player.getTotalScore());
-        totalScannedTextView.setText("Total Scanned: " + player.getTotalQR());
+        model = new PlayerModel("test123", "123", new ArrayList<QR>(), 1, 123, 0, 12345);
+        usernameTextView.setText(model.getUsername());
+        totalScoreTextView.setText("Total Score: " + model.getTotalScore());
+        totalScannedTextView.setText("Total Scanned: " + model.getTotalQR());
     }
 }

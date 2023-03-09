@@ -1,4 +1,4 @@
-package com.example.qr_go;
+package com.example.qr_go.Fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.qr_go.CaptureAct;
+import com.example.qr_go.R;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
