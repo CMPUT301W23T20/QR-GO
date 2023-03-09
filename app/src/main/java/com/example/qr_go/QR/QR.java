@@ -1,5 +1,7 @@
 package com.example.qr_go.QR;
 
+import android.graphics.Bitmap;
+
 import com.example.qr_go.Actor.Actor;
 import com.example.qr_go.Actor.PlayerModel;
 
@@ -19,6 +21,7 @@ public class QR {
 
 
     // private picture
+    private Bitmap photo;
     // private geolocation
 
     // will also need picture and geolocation as params
@@ -123,4 +126,7 @@ public class QR {
     public ArrayList<QRComment> getCommentsList() {
         return commentsList;
     }
+
+    // getter and setter for photo
+    // getter and setter for geolocation
 }

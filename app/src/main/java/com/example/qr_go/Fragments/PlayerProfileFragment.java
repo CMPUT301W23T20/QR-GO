@@ -13,10 +13,17 @@ import android.widget.TextView;
 import com.example.qr_go.Actor.PlayerModel;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
-public class PlayerProfileFragment extends Fragment {
 
+import javax.annotation.Nullable;
+
+public class PlayerProfileFragment extends Fragment {
     private TextView usernameTextView;
     private Button qrButton;
     private TextView totalScoreTextView;
@@ -96,25 +103,26 @@ public class PlayerProfileFragment extends Fragment {
         totalScannedTextView = view.findViewById(R.id.total_scanned_text);
 
         /**
+
          // get database information
          FirebaseFirestore db = FirebaseFirestore.getInstance();
-         DocumentReference documentReference = db.collection(Player.class.getSimpleName()).document(android_id);
+         DocumentReference documentReference = db.collection(PlayerModel.class.getSimpleName()).document(android_id);
 
          // put data into class
          documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-        @Override
-        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-        player = new Player((String)value.get("username"), (String)value.get("deviceID"), (ArrayList<QR>) value.get("qrList"),
-        (int)value.get("rank"), (int)value.get("highestScore"), (int)value.get("lowestScore"), (int)value.get("totalScore"));
-        }
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                model = new PlayerModel((String)value.get("username"), (String)value.get("deviceID"), (ArrayList<QR>) value.get("qrList"),
+                (int)value.get("rank"), (int)value.get("highestScore"), (int)value.get("lowestScore"), (int)value.get("totalScore"));
+            }
         });
 
          // update UI
-         usernameTextView.setText(player.getUsername());
-         totalScoreTextView.setText("Total Score: " + player.getTotalScore());
-         totalScannedTextView.setText("Total Scanned: " + player.getTotalQR());
-         */
+         usernameTextView.setText(model.getUsername());
+         totalScoreTextView.setText("Total Score: " + model.getTotalScore());
+         totalScannedTextView.setText("Total Scanned: " + model.getTotalQR());
 
+        */
 
         model = new PlayerModel("test123", "123", new ArrayList<QR>(), 1, 123, 0, 12345);
         usernameTextView.setText(model.getUsername());
