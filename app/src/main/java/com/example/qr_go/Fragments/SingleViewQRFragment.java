@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qr_go.Actor.PlayerModel;
 import com.example.qr_go.Adapters.ProfileQRListAdapter;
@@ -23,22 +23,25 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class ProfileQRListFragment extends Fragment {
-    private PlayerModel model;
+public class SingleViewQRFragment extends Fragment {
+    private QRModel model;
     private View view;
     private String android_id;
     private Button backButton;
-    private TextView totalText;
-    private ListView qrList;
+    private TextView nameText;
+    private TextView scoreText;
+    private Button playerListButton;
+    private RecyclerView commentList;
     private ProfileQRListAdapter qrListAdapter;
     private ArrayList<QRModel> qrDataList;
 
-    public ProfileQRListFragment(String android_id) {
+    public SingleViewQRFragment(String android_id, QRModel model) {
         this.android_id = android_id;
+        this.model = model;
     }
 
-    public static Fragment newInstance(String android_id) {
-        ProfileQRListFragment fragment = new ProfileQRListFragment(android_id);
+    public static Fragment newInstance(String android_id, QRModel model) {
+        SingleViewQRFragment fragment = new SingleViewQRFragment(android_id, model);
         Bundle args = new Bundle();
         return fragment;
     }
@@ -51,7 +54,7 @@ public class ProfileQRListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_player_qr_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_single_qr_view, container, false);
 
         getViews(view);
 
@@ -60,14 +63,11 @@ public class ProfileQRListFragment extends Fragment {
             public void onClick(View view) {
                 getParentFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.profile_container, new PlayerProfileFragment(android_id))
+                        .replace(R.id.qr_list_container, new ProfileQRListFragment(android_id))
                         .addToBackStack(null)
                         .commit();
             }
         });
-
-        // set single QR view on item click
-        // to do*
 
         // Inflate the layout for this fragment
         return view;
@@ -79,8 +79,6 @@ public class ProfileQRListFragment extends Fragment {
 
         View view = getView();
         getViews(view);
-
-        updateProfileInfo(view);
     }
 
     @Override
@@ -97,9 +95,10 @@ public class ProfileQRListFragment extends Fragment {
      */
     public void getViews(View view) {
         // get views from fragment
-        this.qrList = view.findViewById(R.id.qr_list);
-        this.backButton = view.findViewById(R.id.back_button_qr_list);
-        this.totalText = view.findViewById(R.id.total_text);
+        this.nameText = view.findViewById(R.id.name_text);
+        this.backButton = view.findViewById(R.id.back_button);
+        this.scoreText = view.findViewById(R.id.score_text);
+        this.playerListButton = view.findViewById(R.id.player_list_button);
     }
 
     /**
@@ -119,26 +118,19 @@ public class ProfileQRListFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        model = new PlayerModel((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QRModel>) documentSnapshot.get("qrList"),
-                                (int) Integer.parseInt((String)documentSnapshot.get("rank")), (int) Integer.parseInt((String)documentSnapshot.get("highestScore")),
-                                (int)Integer.parseInt((String)documentSnapshot.get("lowestScore")), (int)Integer.parseInt((String)documentSnapshot.get("totalScore")));
+                        model = new QRModel((String)documentSnapshot.get("name"), (String)documentSnapshot.get("avatar"),
+                                (int) Integer.parseInt((String)documentSnapshot.get("score")), (ArrayList<QRComment>)documentSnapshot.get("commentsList"));
 
-                        // add data list from player
-                        qrDataList = new ArrayList<QRModel>();
-
-                        qrDataList.addAll(model.getQRList());
-
-                        // test
-                        qrDataList.add(new QRModel("herbert", "avatar", 300, new ArrayList<QRComment>()));
-
-                        // initialize adapter
-                        qrList = view.findViewById(R.id.qr_list);
-                        qrListAdapter = new ProfileQRListAdapter(getContext(), qrDataList);
-                        qrList.setAdapter(qrListAdapter);
 
                         // set total text
-                        totalText.setText("Total QRs: " + model.getTotalQR());
+                        nameText.setText(model.getName());
+                        nameText.setText(model.getScore());
+
+                        // initialize adapter for comments
+                        // to do*
+
                     }
                 });
     }
+
 }

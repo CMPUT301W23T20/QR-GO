@@ -1,12 +1,11 @@
 package com.example.qr_go.Actor;
 
-import com.example.qr_go.QR.QR;
-import com.google.android.material.color.utilities.Score;
+import com.example.qr_go.QR.QRModel;
 
 import java.util.ArrayList;
 
 public class PlayerModel extends Actor {
-    private ArrayList<QR> qrList;
+    private ArrayList<QRModel> qrList;
     private int rank;
     private int highestScore;
     private int lowestScore;
@@ -41,7 +40,7 @@ public class PlayerModel extends Actor {
      * @param totalScore
      * Player's total score
      */
-    public PlayerModel(String username, String deviceID, ArrayList<QR> qrList,
+    public PlayerModel(String username, String deviceID, ArrayList<QRModel> qrList,
                        int rank, int highestScore, int lowestScore, int totalScore) {
         super(username, deviceID);
         this.qrList = qrList;
@@ -140,7 +139,7 @@ public class PlayerModel extends Actor {
      * @return
      * Player's list of QR codes scanned
      */
-    public ArrayList<QR> getQRList() {
+    public ArrayList<QRModel> getQRList() {
         return qrList;
     }
 

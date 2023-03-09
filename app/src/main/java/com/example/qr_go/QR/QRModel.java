@@ -10,9 +10,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-public class QR {
+public class QRModel {
     private ArrayList<QRComment> commentsList;
-    private final String qrHash;
+    private String qrHash;
     private final int score;
     private final String name;
     private final String avatar;
@@ -26,14 +26,11 @@ public class QR {
 
     /**
      * Constructor for creating new QR
-     * @param qrHash
-     * @param name
-     * @param avatar
-     * @param score
-     * @param commentsList
+     * @param qrContents
+     * @param discoverer
      */
-    public QR(String qrContents, PlayerModel discoverer) throws Exception {
-        // store only hash
+    public QRModel(String qrContents, PlayerModel discoverer) throws Exception {
+        // use hash to create contents
         this.qrHash = hashQR(qrContents);
         this.score = generateScore(qrHash);
         this.name = generateName(qrHash);
@@ -47,14 +44,12 @@ public class QR {
 
     /**
      * Constructor for creating QR from database
-     * @param qrHash
      * @param name
      * @param avatar
      * @param score
      * @param commentsList
      */
-    public QR(String qrHash, String name, String avatar, int score, ArrayList<QRComment> commentsList) {
-        this.qrHash = qrHash;
+    public QRModel(String name, String avatar, int score, ArrayList<QRComment> commentsList) {
         this.name = name;
         this.avatar = avatar;
         this.score = score;
@@ -132,14 +127,6 @@ public class QR {
         return "";
     }
 
-    public void addComment(String comment, Actor commenter) {
-        commentsList.add(new QRComment(comment, commenter));
-    }
-    public void deleteComment(int i) {
-        commentsList.remove(i);
-    }
-
-    // getters and setters
     public int getScore() {
         return score;
     }
@@ -148,6 +135,9 @@ public class QR {
     public String getName(){ return name;}
     public ArrayList<QRComment> getCommentsList() {
         return commentsList;
+    }
+    public String getQrHash() {
+        return qrHash;
     }
 
     // getter and setter for photo

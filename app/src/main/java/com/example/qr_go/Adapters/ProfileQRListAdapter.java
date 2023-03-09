@@ -10,16 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.qr_go.LeaderboardContent;
-import com.example.qr_go.QR.QR;
+import com.example.qr_go.QR.QRModel;
 import com.example.qr_go.R;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
-public class ProfileQRListAdapter extends ArrayAdapter<QR> {
-    public ProfileQRListAdapter(Context context, ArrayList<QR> qrList) {
+public class ProfileQRListAdapter extends ArrayAdapter<QRModel> {
+    public ProfileQRListAdapter(Context context, ArrayList<QRModel> qrList) {
         super(context, 0, qrList);
     }
 
@@ -34,7 +31,7 @@ public class ProfileQRListAdapter extends ArrayAdapter<QR> {
             view = convertView;
         }
 
-        QR qr = getItem(position);
+        QRModel qr = getItem(position);
 
         TextView qrName = view.findViewById(R.id.name_text);
         TextView qrScore = view.findViewById(R.id.score_text);
