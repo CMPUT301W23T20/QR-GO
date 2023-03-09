@@ -41,7 +41,7 @@ public class LeaderboardAdapter extends ArrayAdapter<LeaderboardContent> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
         View view;
         if (convertView == null){
-            view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_leaderboard_content, parent, false);
+            view = LayoutInflater.from(getContext()).inflate(R.layout.content_leaderboard, parent, false);
         }
         else{
             view= convertView;
