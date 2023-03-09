@@ -69,5 +69,4 @@ public class LeaderboardAdapter extends ArrayAdapter<LeaderboardContent> {
         }
         notifyDataSetChanged();
     }
-
 }
