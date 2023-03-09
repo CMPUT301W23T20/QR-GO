@@ -1,5 +1,6 @@
 package com.example.qr_go;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
@@ -11,11 +12,17 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 
+import com.example.qr_go.Actor.PlayerModel;
 import com.example.qr_go.Adapters.QRFragmentPagerAdapter;
 import com.example.qr_go.Fragments.BlankFragment;
+import com.example.qr_go.Fragments.GreetingScreenFragment;
 import com.example.qr_go.Fragments.LeaderboardFragment;
 import com.example.qr_go.Fragments.PlayerProfileFragment;
 import com.example.qr_go.Fragments.ScanFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -31,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initGreetingScreen();
         initNavigationBar();
         initViewPager();
     }
@@ -76,6 +84,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         leaderboard.setOnClickListener(this);
         profile = findViewById(R.id.navigation_profile);
         profile.setOnClickListener(this);
+    }
+
+    private void initGreetingScreen() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(PlayerModel.class.getSimpleName()).document(getDeviceId()).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(!task.getResult().exists()) {
+                            getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .add(R.id.main_container, new GreetingScreenFragment(getDeviceId()))
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+                    }
+                });
     }
 
 

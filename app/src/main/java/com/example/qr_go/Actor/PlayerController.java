@@ -113,10 +113,10 @@ public class PlayerController {
         HashMap<String, Object> data = new HashMap<>();
         data.put("username", model.getUsername());
         data.put("qrList", model.getQRList());
-        data.put("rank", model.getRank());
-        data.put("highestScore", model.getHighestScore());
-        data.put("lowestScore", model.getLowestScore());
-        data.put("totalScore", model.getTotalScore());
+        data.put("rank", String.valueOf(model.getRank()));
+        data.put("highestScore", String.valueOf(model.getHighestScore()));
+        data.put("lowestScore", String.valueOf(model.getLowestScore()));
+        data.put("totalScore", String.valueOf(model.getTotalScore()));
 
         // add data to database
         // document named after user deviceID
