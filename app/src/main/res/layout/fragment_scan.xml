@@ -12,5 +12,12 @@
         android:text="Scan"
         android:textSize="70sp"/>
 
+    <Button
+        android:id="@+id/btn_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_scan"
+        android:text="Record Object" />
+
 
 </RelativeLayout>
