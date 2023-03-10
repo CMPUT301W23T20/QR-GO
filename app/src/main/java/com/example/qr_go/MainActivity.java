@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -27,6 +28,7 @@ import com.example.qr_go.Adapters.QRFragmentPagerAdapter;
 import com.example.qr_go.Fragments.BlankFragment;
 import com.example.qr_go.Fragments.GreetingScreenFragment;
 import com.example.qr_go.Fragments.LeaderboardFragment;
+import com.example.qr_go.Fragments.MapFragment;
 import com.example.qr_go.Fragments.PlayerProfileFragment;
 import com.example.qr_go.Fragments.ScanFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initViewPager() {
         viewPager = findViewById(R.id.viewPager);
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(BlankFragment.newInstance("Map","321"));
+        //fragments.add(MapFragment.newInstance("Map","321"));
         fragments.add(ScanFragment.newInstance("Scan","321"));
         fragments.add(LeaderboardFragment.newInstance("Leaderboard","321"));
         fragments.add(PlayerProfileFragment.newInstance(getDeviceId()));
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 getLifecycle(),
                 fragments);
         viewPager.setAdapter(pagerAdapter);
+
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -99,11 +102,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
+
+
     }
 
     private void initNavigationBar() {
         map = findViewById(R.id.navigation_map);
-        map.setOnClickListener(this);
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(intent);
+
+            }
+        });
         scan = findViewById(R.id.navigation_scan);
         scan.setOnClickListener(this);
         leaderboard = findViewById(R.id.navigation_leaderboard);
@@ -135,19 +147,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         changeTab(view.getId());
     }
 
+
     private void changeTab(int i){
         switch(i){
-            case R.id.navigation_map:
+            //case R.id.navigation_map:
+                //viewPager.setCurrentItem(0);
+                //break;
+            case R.id.navigation_scan:
                 viewPager.setCurrentItem(0);
                 break;
-            case R.id.navigation_scan:
+            case R.id.navigation_leaderboard:
                 viewPager.setCurrentItem(1);
                 break;
-            case R.id.navigation_leaderboard:
-                viewPager.setCurrentItem(2);
-                break;
             case R.id.navigation_profile:
-                viewPager.setCurrentItem(3);
+                viewPager.setCurrentItem(2);
                 break;
 
         }
