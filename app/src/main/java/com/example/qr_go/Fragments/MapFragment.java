@@ -79,7 +79,7 @@ public class MapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-/*
+
         view =  inflater.inflate(R.layout.fragment_map, container, false);
         showMap = view.findViewById(R.id.showMap);
 
@@ -94,9 +94,9 @@ public class MapFragment extends Fragment {
         });
         return view;
     }
-*/
 
-        view = inflater.inflate(R.layout.activity_map, container, false);
+
+        /*view = inflater.inflate(R.layout.activity_map, container, false);
 
         map = view.findViewById(R.id.map);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -126,5 +126,5 @@ public class MapFragment extends Fragment {
             }
         });
         return view;
-    }
+    }*/
 }
