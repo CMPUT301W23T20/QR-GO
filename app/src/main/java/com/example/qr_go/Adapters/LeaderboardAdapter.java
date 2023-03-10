@@ -1,4 +1,4 @@
-package com.example.qr_go;
+package com.example.qr_go.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.qr_go.LeaderboardContent;
+import com.example.qr_go.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +41,7 @@ public class LeaderboardAdapter extends ArrayAdapter<LeaderboardContent> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
         View view;
         if (convertView == null){
-            view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_leaderboard_content, parent, false);
+            view = LayoutInflater.from(getContext()).inflate(R.layout.content_leaderboard, parent, false);
         }
         else{
             view= convertView;
@@ -69,5 +72,4 @@ public class LeaderboardAdapter extends ArrayAdapter<LeaderboardContent> {
         }
         notifyDataSetChanged();
     }
-
 }

@@ -1,4 +1,4 @@
-package com.example.qr_go;
+package com.example.qr_go.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,9 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.qr_go.Adapters.LeaderboardAdapter;
+import com.example.qr_go.LeaderboardContent;
+import com.example.qr_go.R;
 
 import java.util.ArrayList;
 
