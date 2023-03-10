@@ -27,6 +27,7 @@ import com.example.qr_go.Adapters.QRFragmentPagerAdapter;
 import com.example.qr_go.Fragments.BlankFragment;
 import com.example.qr_go.Fragments.GreetingScreenFragment;
 import com.example.qr_go.Fragments.LeaderboardFragment;
+import com.example.qr_go.Fragments.MapFragment;
 import com.example.qr_go.Fragments.PlayerProfileFragment;
 import com.example.qr_go.Fragments.ScanFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initViewPager() {
         viewPager = findViewById(R.id.viewPager);
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(BlankFragment.newInstance("Map","321"));
+        fragments.add(MapFragment.newInstance("Map","321"));
         fragments.add(ScanFragment.newInstance("Scan","321"));
         fragments.add(LeaderboardFragment.newInstance("Leaderboard","321"));
         fragments.add(PlayerProfileFragment.newInstance(getDeviceId()));
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 getLifecycle(),
                 fragments);
         viewPager.setAdapter(pagerAdapter);
+
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -97,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 super.onPageScrollStateChanged(state);
             }
         });
+
+         
 
 
     }
