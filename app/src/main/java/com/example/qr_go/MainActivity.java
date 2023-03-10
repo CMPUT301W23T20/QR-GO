@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initViewPager() {
         viewPager = findViewById(R.id.viewPager);
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(MapFragment.newInstance("Map","321"));
+        //fragments.add(MapFragment.newInstance("Map","321"));
         fragments.add(ScanFragment.newInstance("Scan","321"));
         fragments.add(LeaderboardFragment.newInstance("Leaderboard","321"));
         fragments.add(PlayerProfileFragment.newInstance(getDeviceId()));
@@ -150,17 +150,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void changeTab(int i){
         switch(i){
-            case R.id.navigation_map:
+            //case R.id.navigation_map:
+                //viewPager.setCurrentItem(0);
+                //break;
+            case R.id.navigation_scan:
                 viewPager.setCurrentItem(0);
                 break;
-            case R.id.navigation_scan:
+            case R.id.navigation_leaderboard:
                 viewPager.setCurrentItem(1);
                 break;
-            case R.id.navigation_leaderboard:
-                viewPager.setCurrentItem(2);
-                break;
             case R.id.navigation_profile:
-                viewPager.setCurrentItem(3);
+                viewPager.setCurrentItem(2);
                 break;
 
         }
