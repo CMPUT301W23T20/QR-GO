@@ -23,13 +23,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 
-import com.example.qr_go.Actor.PlayerModel;
+import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.QRFragmentPagerAdapter;
-import com.example.qr_go.Fragments.BlankFragment;
 import com.example.qr_go.Fragments.GreetingScreenFragment;
 import com.example.qr_go.Fragments.LeaderboardFragment;
-import com.example.qr_go.Fragments.MapFragment;
-import com.example.qr_go.Fragments.PlayerProfileFragment;
+import com.example.qr_go.Fragments.Profile.PlayerProfileFragment;
 import com.example.qr_go.Fragments.ScanFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -126,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initGreetingScreen() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(PlayerModel.class.getSimpleName()).document(getDeviceId()).get()
+        db.collection(Player.class.getSimpleName()).document(getDeviceId()).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
