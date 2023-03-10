@@ -1,13 +1,13 @@
 package com.example.qr_go;
 
-import com.example.qr_go.QR.QRModel;
+import com.example.qr_go.QR.QR;
 
 import java.io.Serializable;
 
 public class ProfileQRListContent implements Serializable {
-    private QRModel qr;
+    private QR qr;
 
-    public ProfileQRListContent(QRModel qr) {
+    public ProfileQRListContent(QR qr) {
         this.qr = qr;
     }
 

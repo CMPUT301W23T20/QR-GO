@@ -1,18 +1,16 @@
-package com.example.qr_go.Fragments;
+package com.example.qr_go.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.qr_go.Activities.Profile.ProfileQRListViewActivity;
 import com.example.qr_go.Actor.Player;
-import com.example.qr_go.Adapters.ProfileQRListAdapter;
-import com.example.qr_go.Fragments.Profile.ProfileQRListFragment;
 import com.example.qr_go.QR.QRComment;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
@@ -23,91 +21,73 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class SingleViewQRFragment extends Fragment {
+public class QRViewActivity extends FragmentActivity {
+
     private QR model;
-    private View view;
-    private String android_id;
     private Button backButton;
     private TextView nameText;
     private TextView scoreText;
     private Button playerListButton;
     private RecyclerView commentList;
-    private ProfileQRListAdapter qrListAdapter;
-    private ArrayList<QR> qrDataList;
+    private String qr_hash;
+    private String android_id;
 
-    public SingleViewQRFragment(String android_id, QR model) {
-        this.android_id = android_id;
-        this.model = model;
-    }
 
-    public static Fragment newInstance(String android_id, QR model) {
-        SingleViewQRFragment fragment = new SingleViewQRFragment(android_id, model);
-        Bundle args = new Bundle();
-        return fragment;
+    public QRViewActivity() {
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.activity_qr_view);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_qr_view, container, false);
+        getViews();
 
-        getViews(view);
+        try {
+            getIDFromBundle();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getParentFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.qr_list_container, new ProfileQRListFragment(android_id))
-                        .addToBackStack(null)
-                        .commit();
+                Intent myIntent = new Intent(QRViewActivity.this, ProfileQRListViewActivity.class);
+                myIntent.putExtra("android_id", android_id);
+                QRViewActivity.this.startActivity(myIntent);
             }
         });
-
-        // Inflate the layout for this fragment
-        return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        View view = getView();
-        getViews(view);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        View view = getView();
-
-
     }
 
     /**
      * Gets views from fragment
      */
-    public void getViews(View view) {
+    public void getViews() {
         // get views from fragment
-        this.nameText = view.findViewById(R.id.name_text);
-        this.backButton = view.findViewById(R.id.back_button);
-        this.scoreText = view.findViewById(R.id.score_text);
-        this.playerListButton = view.findViewById(R.id.player_list_button);
+        this.nameText = findViewById(R.id.name_text);
+        this.backButton = findViewById(R.id.back_button);
+        this.scoreText = findViewById(R.id.score_text);
+        this.playerListButton = findViewById(R.id.player_list_button);
     }
 
     /**
      * Updates the profile information on screen
      */
-    private void updateProfileInfo(View view) {
+    private void updateProfileInfo() {
 
-        getViews(view);
-
+        getViews();
 
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -133,4 +113,13 @@ public class SingleViewQRFragment extends Fragment {
                 });
     }
 
+    public void getIDFromBundle() throws Exception{
+        if(getIntent() == null || getIntent().getExtras() == null) {
+            throw new Exception("Must have intent with \"android_id\" and \"qr_hash\"");
+        }
+        Bundle extras = getIntent().getExtras();
+        Intent intent = getIntent();
+        android_id = extras.getString("android_id");
+        qr_hash = extras.getString("qr_hash");
+    }
 }

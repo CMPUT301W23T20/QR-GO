@@ -2,30 +2,17 @@ package com.example.qr_go.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.qr_go.Actor.PlayerController;
-import com.example.qr_go.Actor.PlayerModel;
-import com.example.qr_go.Fragments.PlayerProfileFragment;
-import com.example.qr_go.MainActivity;
+import com.example.qr_go.Actor.Player;
 import com.example.qr_go.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
 
 public class GreetingScreenFragment extends Fragment {
 
@@ -63,10 +50,9 @@ public class GreetingScreenFragment extends Fragment {
             public void onClick(View view) {
                 final String username = addUsernameText.getText().toString();
                 // create player and push to db
-                PlayerModel player = new PlayerModel(username, android_id);
-                PlayerController controller = new PlayerController(player);
+                Player player = new Player(username, android_id);
 
-                controller.updateDB();
+                player.updateDB();
 
                 getActivity().onBackPressed();
             }

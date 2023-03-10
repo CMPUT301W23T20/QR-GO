@@ -40,6 +40,21 @@
             android:name=".MapsActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".Activities.Profile.PlayerProfileViewActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Activities.Profile.ProfileQRListViewActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Activities.QRViewActivity"
+            android:exported="true">
+        </activity>
+
 
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAAUZ6VMDZh8RHsaIRJPIDI9BFr_XbylCM"/>
