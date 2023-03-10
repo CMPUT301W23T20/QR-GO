@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -107,7 +108,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initNavigationBar() {
         map = findViewById(R.id.navigation_map);
-        map.setOnClickListener(this);
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(intent);
+
+            }
+        });
         scan = findViewById(R.id.navigation_scan);
         scan.setOnClickListener(this);
         leaderboard = findViewById(R.id.navigation_leaderboard);
@@ -138,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         changeTab(view.getId());
     }
+
 
     private void changeTab(int i){
         switch(i){
