@@ -29,7 +29,7 @@ public class QR {
 
 
     // private picture
-    private Bitmap photo;
+    private String photo;
     // private geolocation
 
     /**
@@ -70,7 +70,7 @@ public class QR {
      * @param qrContents
      * @return hashed string
      */
-    public String hashQR(String qrContents) {
+    private String hashQR(String qrContents) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] result = md.digest(qrContents.getBytes(StandardCharsets.UTF_8));
