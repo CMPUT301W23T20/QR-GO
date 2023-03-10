@@ -1,22 +1,30 @@
 package com.example.qr_go.QR;
 
 import android.graphics.Bitmap;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.example.qr_go.Actor.Actor;
-import com.example.qr_go.Actor.PlayerModel;
+import com.example.qr_go.Actor.Player;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class QRModel {
+public class QR {
     private ArrayList<QRComment> commentsList;
     private String qrHash;
     private final int score;
     private final String name;
     private final String avatar;
-    private ArrayList<PlayerModel> qrUsers; // array of people who have discovered this QR
+    private ArrayList<Player> qrUsers; // array of people who have discovered this QR
 
 
 
@@ -29,7 +37,7 @@ public class QRModel {
      * @param qrContents
      * @param discoverer
      */
-    public QRModel(String qrContents, PlayerModel discoverer) throws Exception {
+    public QR(String qrContents, Player discoverer) throws Exception {
         // use hash to create contents
         this.qrHash = hashQR(qrContents);
         this.score = generateScore(qrHash);
@@ -49,7 +57,7 @@ public class QRModel {
      * @param score
      * @param commentsList
      */
-    public QRModel(String name, String avatar, int score, ArrayList<QRComment> commentsList) {
+    public QR(String name, String avatar, int score, ArrayList<QRComment> commentsList) {
         this.name = name;
         this.avatar = avatar;
         this.score = score;
@@ -125,6 +133,43 @@ public class QRModel {
         // returning empty string to avoid error lines
         // actually implement this
         return "";
+    }
+
+    public void addComment(String comment, Actor commenter) {
+        getCommentsList().add(new QRComment(comment, commenter));
+    }
+    public void deleteComment(int i) { getCommentsList().remove(i);
+    }
+
+    public void updateDB() {
+        // get database information
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+        // Create hashmap for data
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("name", getName());
+        data.put("score", String.valueOf(getScore()));
+        data.put("avatar", getAvatar());
+        data.put("commentsList", getCommentsList());
+        // add data to database
+        // document named after user the hash
+        collectionReference
+                .document(getQrHash())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("updateDB()", "Data added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("updateDB()", "Data not added: " + e);
+                    }
+                });
     }
 
     public int getScore() {

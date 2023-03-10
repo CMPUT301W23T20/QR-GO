@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.qr_go.Actor.PlayerModel;
+import com.example.qr_go.Actor.Player;
 import com.example.qr_go.ProfileActivity;
-import com.example.qr_go.QR.QRModel;
+import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -22,7 +22,7 @@ public class PlayerProfileViewActivity extends ProfileActivity {
     private Button qrButton;
     private TextView totalScoreTextView;
     private TextView totalScannedTextView;
-    private PlayerModel model;
+    private Player player;
 
     public PlayerProfileViewActivity() {
         super();
@@ -76,21 +76,21 @@ public class PlayerProfileViewActivity extends ProfileActivity {
 
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection(PlayerModel.class.getSimpleName());
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 
         // put data into class
-        db.collection(PlayerModel.class.getSimpleName()).document(android_id).get()
+        db.collection(Player.class.getSimpleName()).document(android_id).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        model = new PlayerModel((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QRModel>) documentSnapshot.get("qrList"),
+                        player = new Player((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QR>) documentSnapshot.get("qrList"),
                                 (int) Integer.parseInt((String)documentSnapshot.get("rank")), (int) Integer.parseInt((String)documentSnapshot.get("highestScore")),
                                 (int)Integer.parseInt((String)documentSnapshot.get("lowestScore")), (int)Integer.parseInt((String)documentSnapshot.get("totalScore")));
 
                         // update UI
-                        usernameTextView.setText(model.getUsername());
-                        totalScoreTextView.setText("Total Score: " + model.getTotalScore());
-                        totalScannedTextView.setText("Total Scanned: " + model.getTotalQR());
+                        usernameTextView.setText(player.getUsername());
+                        totalScoreTextView.setText("Total Score: " + player.getTotalScore());
+                        totalScannedTextView.setText("Total Scanned: " + player.getTotalQR());
                     }
                 });
     }

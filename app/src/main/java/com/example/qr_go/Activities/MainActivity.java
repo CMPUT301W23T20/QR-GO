@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import android.provider.Settings;
@@ -13,8 +12,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 
-import com.example.qr_go.Activities.Profile.PlayerProfileViewActivity;
-import com.example.qr_go.Actor.PlayerModel;
+import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.QRFragmentPagerAdapter;
 import com.example.qr_go.Fragments.BlankFragment;
 import com.example.qr_go.Fragments.GreetingScreenFragment;
@@ -93,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initGreetingScreen() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(PlayerModel.class.getSimpleName()).document(getAndroidID()).get()
+        db.collection(Player.class.getSimpleName()).document(getAndroidID()).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {

@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.qr_go.Actor.PlayerModel;
+import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Activities.MainActivity;
-import com.example.qr_go.QR.QRModel;
+import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,7 +30,7 @@ public class PlayerProfileFragment extends Fragment {
     private TextView totalScoreTextView;
     private TextView totalScannedTextView;
     private final String android_id;
-    private PlayerModel model;
+    private Player model;
     private View view;
     private String test;
 
@@ -105,14 +105,14 @@ public class PlayerProfileFragment extends Fragment {
 
          // get database information
          FirebaseFirestore db = FirebaseFirestore.getInstance();
-         CollectionReference collectionReference = db.collection(PlayerModel.class.getSimpleName());
+         CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 
          // put data into class
-        db.collection(PlayerModel.class.getSimpleName()).document(android_id).get()
+        db.collection(Player.class.getSimpleName()).document(android_id).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        model = new PlayerModel((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QRModel>) documentSnapshot.get("qrList"),
+                        model = new Player((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QR>) documentSnapshot.get("qrList"),
                                 (int) Integer.parseInt((String)documentSnapshot.get("rank")), (int) Integer.parseInt((String)documentSnapshot.get("highestScore")),
                                 (int)Integer.parseInt((String)documentSnapshot.get("lowestScore")), (int)Integer.parseInt((String)documentSnapshot.get("totalScore")));
 

@@ -9,11 +9,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.qr_go.Activities.QRViewActivity;
-import com.example.qr_go.Actor.PlayerModel;
+import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.ProfileQRListAdapter;
 import com.example.qr_go.ProfileActivity;
 import com.example.qr_go.QR.QRComment;
-import com.example.qr_go.QR.QRModel;
+import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -27,9 +27,9 @@ public class ProfileQRListViewActivity extends ProfileActivity {
     private TextView totalText;
     private ListView qrList;
     private ProfileQRListAdapter qrListAdapter;
-    private ArrayList<QRModel> qrDataList;
+    private ArrayList<QR> qrDataList;
 
-    private PlayerModel model;
+    private Player model;
 
     public ProfileQRListViewActivity() {
         super();
@@ -94,24 +94,24 @@ public class ProfileQRListViewActivity extends ProfileActivity {
 
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection(PlayerModel.class.getSimpleName());
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 
         // put data into class
-        db.collection(PlayerModel.class.getSimpleName()).document(android_id).get()
+        db.collection(Player.class.getSimpleName()).document(android_id).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        model = new PlayerModel((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QRModel>) documentSnapshot.get("qrList"),
+                        model = new Player((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QR>) documentSnapshot.get("qrList"),
                                 (int) Integer.parseInt((String)documentSnapshot.get("rank")), (int) Integer.parseInt((String)documentSnapshot.get("highestScore")),
                                 (int)Integer.parseInt((String)documentSnapshot.get("lowestScore")), (int)Integer.parseInt((String)documentSnapshot.get("totalScore")));
 
                         // add data list from player
-                        qrDataList = new ArrayList<QRModel>();
+                        qrDataList = new ArrayList<QR>();
 
                         qrDataList.addAll(model.getQRList());
 
                         // test
-                        qrDataList.add(new QRModel("herbert", "avatar", 300, new ArrayList<QRComment>()));
+                        qrDataList.add(new QR("herbert", "avatar", 300, new ArrayList<QRComment>()));
 
                         // initialize adapter
                         qrList = findViewById(R.id.qr_list);

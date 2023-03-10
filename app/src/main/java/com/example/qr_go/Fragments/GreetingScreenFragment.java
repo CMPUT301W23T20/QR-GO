@@ -11,8 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.qr_go.Actor.PlayerController;
-import com.example.qr_go.Actor.PlayerModel;
+import com.example.qr_go.Actor.Player;
 import com.example.qr_go.R;
 
 public class GreetingScreenFragment extends Fragment {
@@ -51,10 +50,9 @@ public class GreetingScreenFragment extends Fragment {
             public void onClick(View view) {
                 final String username = addUsernameText.getText().toString();
                 // create player and push to db
-                PlayerModel player = new PlayerModel(username, android_id);
-                PlayerController controller = new PlayerController(player);
+                Player player = new Player(username, android_id);
 
-                controller.updateDB();
+                player.updateDB();
 
                 getActivity().onBackPressed();
             }

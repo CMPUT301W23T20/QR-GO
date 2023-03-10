@@ -2,7 +2,6 @@ package com.example.qr_go.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,10 +10,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qr_go.Activities.Profile.ProfileQRListViewActivity;
-import com.example.qr_go.Actor.PlayerModel;
-import com.example.qr_go.ProfileActivity;
+import com.example.qr_go.Actor.Player;
 import com.example.qr_go.QR.QRComment;
-import com.example.qr_go.QR.QRModel;
+import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -25,7 +23,7 @@ import java.util.ArrayList;
 
 public class QRViewActivity extends FragmentActivity {
 
-    private QRModel model;
+    private QR model;
     private Button backButton;
     private TextView nameText;
     private TextView scoreText;
@@ -93,14 +91,14 @@ public class QRViewActivity extends FragmentActivity {
 
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection(PlayerModel.class.getSimpleName());
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 
         // put data into class
-        db.collection(PlayerModel.class.getSimpleName()).document(android_id).get()
+        db.collection(Player.class.getSimpleName()).document(android_id).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        model = new QRModel((String)documentSnapshot.get("name"), (String)documentSnapshot.get("avatar"),
+                        model = new QR((String)documentSnapshot.get("name"), (String)documentSnapshot.get("avatar"),
                                 (int) Integer.parseInt((String)documentSnapshot.get("score")), (ArrayList<QRComment>)documentSnapshot.get("commentsList"));
 
 
