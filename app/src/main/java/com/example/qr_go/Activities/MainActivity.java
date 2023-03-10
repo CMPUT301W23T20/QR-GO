@@ -1,10 +1,11 @@
-package com.example.qr_go;
+package com.example.qr_go.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.provider.Settings;
@@ -12,13 +13,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 
+import com.example.qr_go.Activities.Profile.PlayerProfileViewActivity;
 import com.example.qr_go.Actor.PlayerModel;
 import com.example.qr_go.Adapters.QRFragmentPagerAdapter;
 import com.example.qr_go.Fragments.BlankFragment;
 import com.example.qr_go.Fragments.GreetingScreenFragment;
 import com.example.qr_go.Fragments.LeaderboardFragment;
-import com.example.qr_go.Fragments.PlayerProfileFragment;
+import com.example.qr_go.Fragments.Profile.PlayerProfileFragment;
 import com.example.qr_go.Fragments.ScanFragment;
+import com.example.qr_go.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -38,9 +41,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         initGreetingScreen();
         initNavigationBar();
         initViewPager();
+
     }
 
     private void initViewPager() {
@@ -49,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragments.add(BlankFragment.newInstance("Map","321"));
         fragments.add(ScanFragment.newInstance("Scan","321"));
         fragments.add(LeaderboardFragment.newInstance("Leaderboard","321"));
-        fragments.add(PlayerProfileFragment.newInstance(getDeviceId()));
+        fragments.add(PlayerProfileFragment.newInstance(getAndroidID()));
         QRFragmentPagerAdapter pagerAdapter = new QRFragmentPagerAdapter(
                 getSupportFragmentManager(),
                 getLifecycle(),
@@ -88,14 +93,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initGreetingScreen() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(PlayerModel.class.getSimpleName()).document(getDeviceId()).get()
+        db.collection(PlayerModel.class.getSimpleName()).document(getAndroidID()).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if(!task.getResult().exists()) {
                             getSupportFragmentManager()
                                     .beginTransaction()
-                                    .add(R.id.main_container, new GreetingScreenFragment(getDeviceId()))
+                                    .add(R.id.main_container, new GreetingScreenFragment(getAndroidID()))
                                     .addToBackStack(null)
                                     .commit();
                         }
@@ -127,8 +132,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public String getDeviceId() {
-        String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        return deviceId;
+    /**
+     * Gets device ID
+     * @return
+     * Device ID
+     */
+    public String getAndroidID() {
+        String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        return android_id;
     }
 }
