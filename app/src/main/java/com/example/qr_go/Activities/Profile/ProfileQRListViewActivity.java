@@ -151,7 +151,37 @@ public class ProfileQRListViewActivity extends ProfileActivity implements Recycl
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            // test
             qrDataList.remove(viewHolder.getAdapterPosition());
+
+            /**
+            // get database information
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+            // put data into class
+            db.collection(Player.class.getSimpleName()).document(android_id).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            model = new Player((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QR>) documentSnapshot.get("qrList"),
+                                    (int) Integer.parseInt((String)documentSnapshot.get("rank")), (int) Integer.parseInt((String)documentSnapshot.get("highestScore")),
+                                    (int)Integer.parseInt((String)documentSnapshot.get("lowestScore")), (int)Integer.parseInt((String)documentSnapshot.get("totalScore")));
+
+                            // add data list from player
+                            qrDataList = new ArrayList<QR>();
+                            qrDataList.addAll(model.getQRList());
+
+                            // remove QR from account
+                            qrDataList.remove(viewHolder.getAdapterPosition());
+
+                            // update DB
+                            model.updateDB();
+
+                        }
+                    });
+            updateProfileInfo();
+             */
             qrListAdapter.notifyDataSetChanged();
         }
     };
