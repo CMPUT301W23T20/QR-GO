@@ -3,7 +3,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="75dp"
-    android:background="@color/gray">
+    >
 
     <LinearLayout
         android:layout_width="0dp"
@@ -12,7 +12,8 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal"
-        android:id="@+id/navigation_map">
+        android:id="@+id/navigation_map"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,7 +31,8 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal"
-        android:id="@+id/navigation_scan">
+        android:id="@+id/navigation_scan"
+        android:background="@color/gray">
 
         <TextView
             android:layout_width="wrap_content"
@@ -48,7 +50,8 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal"
-        android:id="@+id/navigation_leaderboard">
+        android:id="@+id/navigation_leaderboard"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -66,7 +69,8 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal"
-        android:id="@+id/navigation_profile">
+        android:id="@+id/navigation_profile"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
