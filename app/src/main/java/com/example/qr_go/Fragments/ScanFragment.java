@@ -90,7 +90,7 @@ public class ScanFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_scan, container, false);
         Button scanButton = view.findViewById(R.id.btn_scan);
-        Button recordButton = view.findViewById(R.id.btn_record);
+        //Button recordButton = view.findViewById(R.id.btn_record);
 
         scanButton.setOnClickListener(v->
         {
@@ -98,14 +98,14 @@ public class ScanFragment extends Fragment {
 
         });
 
-        recordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent,REQUEST_CODE);
-
-            }
-        });
+//        recordButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(cameraIntent,REQUEST_CODE);
+//
+//            }
+//        });
 
 
         return view;

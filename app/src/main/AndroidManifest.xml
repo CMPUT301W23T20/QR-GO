@@ -32,6 +32,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ScanActivity"
+            android:exported="true"/>
+        <activity android:name=".CameraActivity"
+            android:exported="true"/>
+        <activity android:name=".GetLocationActivity"
+            android:exported="true"/>
         <activity android:name=".CaptureAct"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"

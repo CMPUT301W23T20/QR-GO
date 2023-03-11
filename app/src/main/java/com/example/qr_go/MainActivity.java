@@ -120,7 +120,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-        scan.setOnClickListener(this);
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent scanIntent = new Intent(MainActivity.this, ScanActivity.class);
+                startActivity(scanIntent);
+
+            }
+        });
         leaderboard.setOnClickListener(this);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
