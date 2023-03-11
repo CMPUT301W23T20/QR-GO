@@ -55,16 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION
-            },100);
-        }
-
-        getLocation();
-
-
         initGreetingScreen();
         initNavigationBar();
         initViewPager();
@@ -75,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewPager = findViewById(R.id.viewPager);
         ArrayList<Fragment> fragments = new ArrayList<>();
         //fragments.add(MapFragment.newInstance("Map","321"));
-        fragments.add(ScanFragment.newInstance("Scan","321"));
+        //fragments.add(ScanFragment.newInstance("Scan","321"));
         fragments.add(LeaderboardFragment.newInstance("Leaderboard","321"));
         fragments.add(PlayerProfileFragment.newInstance(getDeviceId()));
         QRFragmentPagerAdapter pagerAdapter = new QRFragmentPagerAdapter(
@@ -117,7 +107,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         scan = findViewById(R.id.navigation_scan);
-        scan.setOnClickListener(this);
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent scanIntent = new Intent(MainActivity.this, ScanActivity.class);
+                startActivity(scanIntent);
+
+            }
+        });
+        //scan.setOnClickListener(this);
+
         leaderboard = findViewById(R.id.navigation_leaderboard);
         leaderboard.setOnClickListener(this);
         profile = findViewById(R.id.navigation_profile);
