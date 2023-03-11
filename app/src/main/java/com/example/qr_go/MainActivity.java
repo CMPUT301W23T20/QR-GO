@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout map, scan, leaderboard, profile;
 
     LocationManager locationManager;
+    ArrayList<Fragment> fragments = new ArrayList<>();
     List<Address> address = null;
 
     @Override
@@ -73,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initViewPager() {
         viewPager = findViewById(R.id.viewPager);
-        ArrayList<Fragment> fragments = new ArrayList<>();
         //fragments.add(MapFragment.newInstance("Map","321"));
         fragments.add(ScanFragment.newInstance("Scan","321"));
         fragments.add(LeaderboardFragment.newInstance("Leaderboard","321"));
@@ -188,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try{
             Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
             address = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+
 
         }catch (Exception e){
             e.printStackTrace();
