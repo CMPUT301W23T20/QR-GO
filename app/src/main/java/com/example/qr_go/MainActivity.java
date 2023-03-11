@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      *      This is a ID
      */
     private void changeTab(int i){
-        currentPage.setBackgroundColor(getColor(R.color.white));
+        currentPage.setBackground(getDrawable(R.drawable.border_navigation_bar));
         switch(i){
             //case R.id.navigation_map:
                 //viewPager.setCurrentItem(0);
