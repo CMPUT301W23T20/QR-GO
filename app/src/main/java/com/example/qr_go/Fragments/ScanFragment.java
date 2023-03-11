@@ -21,8 +21,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.qr_go.CameraActivity;
 import com.example.qr_go.CaptureAct;
 import com.example.qr_go.R;
+import com.example.qr_go.ScanActivity;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 /**
@@ -144,6 +146,8 @@ public class ScanFragment extends Fragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
+                    Intent cameraIntent = new Intent(getActivity(), CameraActivity.class);
+                    startActivity(cameraIntent);
                 }
             }).show();
             // show fragment for camera here to record object
