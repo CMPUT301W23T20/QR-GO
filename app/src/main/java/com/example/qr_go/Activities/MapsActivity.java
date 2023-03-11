@@ -9,9 +9,13 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.example.qr_go.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+//import com.google.type.LatLng;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -44,6 +48,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.gMap = googleMap;
+        LatLng tester = new LatLng(50,20);
+        this.gMap.addMarker(new MarkerOptions().position(tester).title("QR SCORE: 300"));
+        this.gMap.moveCamera(CameraUpdateFactory.newLatLng(tester));
 
 
     }
