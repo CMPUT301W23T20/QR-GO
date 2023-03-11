@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class PlayerProfileViewActivity extends ProfileActivity {
     private TextView usernameTextView;
     private Button qrButton;
+    private Button backButton;
     private TextView totalScoreTextView;
     private TextView totalScannedTextView;
     private Player player;
@@ -43,9 +44,17 @@ public class PlayerProfileViewActivity extends ProfileActivity {
         qrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent myIntent = new Intent(PlayerProfileViewActivity.this, ProfileQRListViewActivity.class);
                 myIntent.putExtra("android_id", android_id);
                 PlayerProfileViewActivity.this.startActivity(myIntent);
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
@@ -102,6 +111,7 @@ public class PlayerProfileViewActivity extends ProfileActivity {
         // get views from fragment
         usernameTextView = findViewById(R.id.username_text);
         qrButton = findViewById(R.id.my_qr_codes_button);
+        backButton =findViewById(R.id.my_qr_back_button);
         totalScoreTextView = findViewById(R.id.total_score_text);
         totalScannedTextView = findViewById(R.id.total_scanned_text);
     }

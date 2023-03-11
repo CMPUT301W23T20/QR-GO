@@ -46,10 +46,12 @@ public class QRPlayerListViewActivity extends QRActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(QRPlayerListViewActivity.this, QRViewActivity.class);
-                myIntent.putExtra("android_id", android_id);
-                myIntent.putExtra("qr_hash", qr_hash);
-                QRPlayerListViewActivity.this.startActivity(myIntent);
+                // will stack between two activities.
+//                Intent myIntent = new Intent(QRPlayerListViewActivity.this, QRViewActivity.class);
+//                myIntent.putExtra("android_id", android_id);
+//                myIntent.putExtra("qr_hash", qr_hash);
+//                QRPlayerListViewActivity.this.startActivity(myIntent);
+                finish();
             }
         });
     }

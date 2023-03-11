@@ -3,48 +3,28 @@ package com.example.qr_go.Fragments;
 import static android.app.Activity.RESULT_OK;
 import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
 
-import android.app.Activity;
-import android.content.Context;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Address;
-import android.location.Geocoder;
+
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.annotation.NonNull;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.qr_go.CaptureAct;
-import com.example.qr_go.MainActivity;
 import com.example.qr_go.R;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-
-import java.util.List;
-import java.util.Locale;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ScanFragment#newInstance} factory method to
@@ -52,7 +32,6 @@ import java.util.Locale;
  */
 public class ScanFragment extends Fragment {
 
-    private static final String tag = "ScanFragment";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,7 +42,6 @@ public class ScanFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private List<Address> address = null;
 
     View view;
 
@@ -103,7 +81,6 @@ public class ScanFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-
         }
     }
 
@@ -134,12 +111,6 @@ public class ScanFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-
-
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -178,6 +149,5 @@ public class ScanFragment extends Fragment {
             // show fragment for camera here to record object
         }
     });
-
 
 }

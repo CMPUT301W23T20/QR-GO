@@ -49,9 +49,11 @@ public class QRViewActivity extends QRActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(QRViewActivity.this, ProfileQRListViewActivity.class);
-                myIntent.putExtra("android_id", android_id);
-                QRViewActivity.this.startActivity(myIntent);
+                // will stack between two activities.
+//                Intent myIntent = new Intent(QRViewActivity.this, ProfileQRListViewActivity.class);
+//                myIntent.putExtra("android_id", android_id);
+//                QRViewActivity.this.startActivity(myIntent);
+                finish();
             }
         });
 

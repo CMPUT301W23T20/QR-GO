@@ -95,36 +95,4 @@ public class MapFragment extends Fragment {
         return view;
     }
 
-
-        /*view = inflater.inflate(R.layout.activity_map, container, false);
-
-        map = view.findViewById(R.id.map);
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        assert mapFragment != null;
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                // When map is loaded
-                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                    @Override
-                    public void onMapClick(LatLng latLng) {
-                        // When clicked on map
-                        // Initialize marker options
-                        MarkerOptions markerOptions = new MarkerOptions();
-                        // Set position of marker
-                        markerOptions.position(latLng);
-                        // Set title of marker
-                        markerOptions.title(latLng.latitude + " : " + latLng.longitude);
-                        // Remove all marker
-                        googleMap.clear();
-                        // Animating to zoom the marker
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                        // Add marker on map
-                        googleMap.addMarker(markerOptions);
-                    }
-                });
-            }
-        });
-        return view;
-    }*/
 }

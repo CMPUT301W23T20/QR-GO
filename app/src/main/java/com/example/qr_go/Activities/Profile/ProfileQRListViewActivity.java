@@ -50,9 +50,11 @@ public class ProfileQRListViewActivity extends ProfileActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(ProfileQRListViewActivity.this, PlayerProfileViewActivity.class);
-                myIntent.putExtra("android_id", android_id);
-                ProfileQRListViewActivity.this.startActivity(myIntent);
+                // will stack between two activities.
+//                Intent myIntent = new Intent(ProfileQRListViewActivity.this, PlayerProfileViewActivity.class);
+//                myIntent.putExtra("android_id", android_id);
+//                ProfileQRListViewActivity.this.startActivity(myIntent);
+                finish();
             }
         });
 
@@ -130,7 +132,7 @@ public class ProfileQRListViewActivity extends ProfileActivity {
     public void getViews() {
         // get views from fragment
         this.qrList = findViewById(R.id.qr_list);
-        this.backButton = findViewById(R.id.back_button_qr_list);
+        this.backButton = findViewById(R.id.qr_list_back_button);
         this.totalText = findViewById(R.id.total_text);
     }
 }

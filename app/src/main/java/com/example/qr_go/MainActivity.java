@@ -42,11 +42,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, LocationListener {
 
-
     private ViewPager2 viewPager;
-
     private LinearLayout map, scan, leaderboard, profile;
-
     LocationManager locationManager;
     ArrayList<Fragment> fragments = new ArrayList<>();
     List<Address> address = null;
@@ -64,14 +61,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         getLocation();
-
-
         initGreetingScreen();
         initNavigationBar();
         initViewPager();
 
     }
 
+    /**
+     * This initialize a viewPager
+     */
     private void initViewPager() {
         viewPager = findViewById(R.id.viewPager);
         //fragments.add(MapFragment.newInstance("Map","321"));
@@ -106,8 +104,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * This initialize a navigation bar on main screen
+     */
     private void initNavigationBar() {
         map = findViewById(R.id.navigation_map);
+        scan = findViewById(R.id.navigation_scan);
+        leaderboard = findViewById(R.id.navigation_leaderboard);
+        profile = findViewById(R.id.navigation_profile);
         map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,11 +120,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-        scan = findViewById(R.id.navigation_scan);
         scan.setOnClickListener(this);
-        leaderboard = findViewById(R.id.navigation_leaderboard);
         leaderboard.setOnClickListener(this);
-        profile = findViewById(R.id.navigation_profile);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,6 +132,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    /**
+     *  This initialize a greeting screen
+     */
     private void initGreetingScreen() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Player.class.getSimpleName()).document(getDeviceId()).get()
@@ -148,13 +152,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
-
+    /**
+     * This calls changeTab method when a view is clicked
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         changeTab(view.getId());
     }
 
-
+    /**
+     * This switches fragments when navigation bar is clicked
+     * @param i
+     *      This is a ID
+     */
     private void changeTab(int i){
         switch(i){
             //case R.id.navigation_map:
@@ -173,6 +184,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * This returns the device's ID
+     * @return
+     *      Return the String ID
+     */
     public String getDeviceId() {
         String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         return deviceId;

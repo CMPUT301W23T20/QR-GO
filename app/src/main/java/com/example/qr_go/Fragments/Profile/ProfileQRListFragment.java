@@ -97,7 +97,7 @@ public class ProfileQRListFragment extends Fragment {
     public void getViews(View view) {
         // get views from fragment
         this.qrList = view.findViewById(R.id.qr_list);
-        this.backButton = view.findViewById(R.id.back_button_qr_list);
+        this.backButton = view.findViewById(R.id.qr_list_back_button);
         this.totalText = view.findViewById(R.id.total_text);
     }
 

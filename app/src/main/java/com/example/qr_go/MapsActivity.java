@@ -1,7 +1,6 @@
 package com.example.qr_go;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.widget.FrameLayout;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.type.LatLng;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -29,7 +27,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         map = findViewById(R.id.map);
-        back = findViewById(R.id.map_back);
+        back = findViewById(R.id.map_back_button);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
