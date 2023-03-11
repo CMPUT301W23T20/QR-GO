@@ -23,8 +23,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 
+import com.example.qr_go.Activities.MapsActivity;
 import com.example.qr_go.Activities.Profile.PlayerProfileViewActivity;
-import com.example.qr_go.Activities.Profile.ProfileQRListViewActivity;
+import com.example.qr_go.Activities.Scan.ScanActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.QRFragmentPagerAdapter;
 import com.example.qr_go.Fragments.GreetingScreenFragment;
@@ -43,7 +44,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, LocationListener {
 
     private ViewPager2 viewPager;
-    private LinearLayout map, scan, leaderboard, profile;
+    private LinearLayout map, scan, leaderboard, profile, currentPage;
     LocationManager locationManager;
     ArrayList<Fragment> fragments = new ArrayList<>();
     List<Address> address = null;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                changeTab(position);
             }
 
             @Override
@@ -112,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         scan = findViewById(R.id.navigation_scan);
         leaderboard = findViewById(R.id.navigation_leaderboard);
         profile = findViewById(R.id.navigation_profile);
+        currentPage = scan;
+
         map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,23 +124,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-        scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent scanIntent = new Intent(MainActivity.this, ScanActivity.class);
-                startActivity(scanIntent);
-
-            }
-        });
+        scan.setOnClickListener(this);
         leaderboard.setOnClickListener(this);
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(MainActivity.this, PlayerProfileViewActivity.class);
-                myIntent.putExtra("android_id", getDeviceId());
-                MainActivity.this.startActivity(myIntent);
-            }
-        });
+        profile.setOnClickListener(this);
+        // uncomment to have scan opened in activity when clicked
+//        scan.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent scanIntent = new Intent(MainActivity.this, ScanActivity.class);
+//                startActivity(scanIntent);
+//
+//            }
+//        });
+
+        // uncomment to have profile opened in activity when clicked
+//        profile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent myIntent = new Intent(MainActivity.this, PlayerProfileViewActivity.class);
+//                myIntent.putExtra("android_id", getDeviceId());
+//                MainActivity.this.startActivity(myIntent);
+//            }
+//        });
     }
 
     /**
@@ -174,18 +183,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      *      This is a ID
      */
     private void changeTab(int i){
+        currentPage.setBackground(getDrawable(R.drawable.border_navigation_bar));
         switch(i){
             //case R.id.navigation_map:
                 //viewPager.setCurrentItem(0);
                 //break;
+
+
             case R.id.navigation_scan:
                 viewPager.setCurrentItem(0);
+            case 0:
+                scan.setBackgroundColor(getColor(R.color.gray));
+                currentPage = scan;
                 break;
             case R.id.navigation_leaderboard:
                 viewPager.setCurrentItem(1);
+            case 1:
+                leaderboard.setBackgroundColor(getColor(R.color.gray));
+                currentPage = leaderboard;
                 break;
             case R.id.navigation_profile:
                 viewPager.setCurrentItem(2);
+            case 2:
+                profile.setBackgroundColor(getColor(R.color.gray));
+                currentPage = profile;
                 break;
 
         }

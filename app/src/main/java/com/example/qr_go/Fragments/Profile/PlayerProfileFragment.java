@@ -1,5 +1,6 @@
 package com.example.qr_go.Fragments.Profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.qr_go.Activities.Profile.PlayerProfileViewActivity;
+import com.example.qr_go.Activities.Profile.ProfileQRListViewActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.MainActivity;
 import com.example.qr_go.QR.QR;
@@ -64,11 +67,15 @@ public class PlayerProfileFragment extends Fragment {
         qrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getChildFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.profile_container, new ProfileQRListFragment(android_id))
-                        .addToBackStack(null)
-                        .commit();
+
+                Intent myIntent = new Intent(getActivity(), ProfileQRListViewActivity.class);
+                myIntent.putExtra("android_id", android_id);
+                startActivity(myIntent);
+//                getChildFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.profile_container, new ProfileQRListFragment(android_id))
+//                        .addToBackStack(null)
+//                        .commit();
             }
         });
 

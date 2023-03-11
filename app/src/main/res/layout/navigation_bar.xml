@@ -1,80 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="75dp"
-    android:background="@color/gray">
+    android:orientation="horizontal"
+    android:background="@drawable/border_navigation_bar">
 
     <LinearLayout
+        android:id="@+id/navigation_map"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@drawable/border_navigation_bar"
         android:gravity="center"
         android:orientation="horizontal"
-        android:id="@+id/navigation_map">
+        >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Map">
-        </TextView>
+            android:text="Map"></TextView>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/navigation_scan"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@color/gray"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:id="@+id/navigation_scan">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Scan">
-        </TextView>
+            android:text="Scan"></TextView>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/navigation_leaderboard"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@drawable/border_navigation_bar"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:id="@+id/navigation_leaderboard">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_leaderboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Leaderboard">
-        </TextView>
+            android:text="Leaderboard"></TextView>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/navigation_profile"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@drawable/border_navigation_bar"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:id="@+id/navigation_profile">
+        android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_profile"
             android:gravity="center"
-            android:text="Profile">
-        </TextView>
+            android:text="Profile"></TextView>
     </LinearLayout>
 
 
