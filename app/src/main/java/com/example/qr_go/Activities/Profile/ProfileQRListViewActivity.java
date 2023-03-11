@@ -8,10 +8,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.qr_go.Activities.QRViewActivity;
+import com.example.qr_go.Activities.QRView.QRViewActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.ProfileQRListAdapter;
-import com.example.qr_go.ProfileActivity;
 import com.example.qr_go.QR.QRComment;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;

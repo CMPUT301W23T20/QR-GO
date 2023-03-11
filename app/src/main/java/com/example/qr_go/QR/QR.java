@@ -184,6 +184,9 @@ public class QR {
     public String getQrHash() {
         return qrHash;
     }
+    public ArrayList<Player> getPlayerList() {
+        return this.qrUsers;
+    }
 
     // getter and setter for photo
     // getter and setter for geolocation

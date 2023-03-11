@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.qr_go.LeaderboardContent;
+import com.example.qr_go.Content.LeaderboardContent;
 import com.example.qr_go.R;
 
 import java.util.ArrayList;

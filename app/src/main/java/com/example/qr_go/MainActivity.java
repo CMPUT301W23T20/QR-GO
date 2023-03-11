@@ -23,6 +23,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 
+import com.example.qr_go.Activities.Profile.PlayerProfileViewActivity;
+import com.example.qr_go.Activities.Profile.ProfileQRListViewActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.QRFragmentPagerAdapter;
 import com.example.qr_go.Fragments.GreetingScreenFragment;
@@ -119,7 +121,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         leaderboard = findViewById(R.id.navigation_leaderboard);
         leaderboard.setOnClickListener(this);
         profile = findViewById(R.id.navigation_profile);
-        profile.setOnClickListener(this);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this, PlayerProfileViewActivity.class);
+                myIntent.putExtra("android_id", getDeviceId());
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
     }
 
     private void initGreetingScreen() {
