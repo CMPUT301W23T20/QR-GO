@@ -1,4 +1,4 @@
-package com.example.qr_go;
+package com.example.qr_go.Activities.Scan;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,8 +9,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.qr_go.R;
 
 public class CameraActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 22;

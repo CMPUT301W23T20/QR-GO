@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        tools:context=".MapsActivity"
+        tools:context=".Activities.MapsActivity"
         android:id="@+id/map"
         tools:layout="@layout/activity_main" />
 

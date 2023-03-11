@@ -1,4 +1,4 @@
-package com.example.qr_go;
+package com.example.qr_go.Activities.Scan;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -18,6 +18,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.Manifest;
 import android.widget.Toast;
+
+import com.example.qr_go.MainActivity;
+import com.example.qr_go.R;
 
 import java.util.List;
 import java.util.Locale;
