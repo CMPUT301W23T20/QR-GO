@@ -10,7 +10,7 @@ import android.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import com.example.qr_go.Adapters.LeaderboardAdapter;
-import com.example.qr_go.LeaderboardContent;
+import com.example.qr_go.Content.LeaderboardContent;
 import com.example.qr_go.R;
 
 import java.util.ArrayList;

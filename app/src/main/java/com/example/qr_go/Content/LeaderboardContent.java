@@ -1,4 +1,4 @@
-package com.example.qr_go;
+package com.example.qr_go.Content;
 
 import java.io.Serializable;
 
