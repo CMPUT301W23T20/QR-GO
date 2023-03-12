@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.qr_go.Activities.QRView.QRViewActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.ProfileQRListAdapter;
+import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.Interfaces.RecyclerViewInterface;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.QR.QRComment;
@@ -22,6 +23,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class OtherProfileQRListViewActivity extends ProfileActivity implements RecyclerViewInterface {
     private Button backButton;
@@ -30,6 +33,7 @@ public class OtherProfileQRListViewActivity extends ProfileActivity implements R
     private ProfileQRListAdapter qrListAdapter;
     private ArrayList<QR> qrDataList;
     private Player player;
+    private DataBaseHelper dbHelper = new DataBaseHelper();
 
     public OtherProfileQRListViewActivity() {
         super();
@@ -92,17 +96,25 @@ public class OtherProfileQRListViewActivity extends ProfileActivity implements R
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        player = new Player((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QR>) documentSnapshot.get("qrList"),
-                                (int) Integer.parseInt((String)documentSnapshot.get("rank")), (int) Integer.parseInt((String)documentSnapshot.get("highestScore")),
-                                (int)Integer.parseInt((String)documentSnapshot.get("lowestScore")), (int)Integer.parseInt((String)documentSnapshot.get("totalScore")));
+                        String username = (String)documentSnapshot.get("username");
+                        String deviceID = (String)documentSnapshot.get("deviceID");
+
+                        // convert list from db to arraylist
+                        ArrayList<QR> qrListFromDoc = dbHelper.convertQRListFromDB((List<Map<String, Object>>) documentSnapshot.get("qrList"));
+
+                        int rank = (int) Integer.parseInt((String)documentSnapshot.get("rank"));
+                        int highestScore = (int) Integer.parseInt((String)documentSnapshot.get("highestScore"));
+                        int lowestScore = (int)Integer.parseInt((String)documentSnapshot.get("lowestScore"));
+                        int totalScore = (int)Integer.parseInt((String)documentSnapshot.get("totalScore"));
+
+
+
+                        player = new Player(username, deviceID, qrListFromDoc, rank, highestScore, lowestScore, totalScore);
 
                         // add data list from player
                         qrDataList = new ArrayList<QR>();
 
                         qrDataList.addAll(player.getQRList());
-
-                        // test
-                        qrDataList.add(new QR("herbert", "avatar", 300, new ArrayList<QRComment>()));
 
                         // initialize adapter
                         qrListRecyclerView = findViewById(R.id.qr_list);

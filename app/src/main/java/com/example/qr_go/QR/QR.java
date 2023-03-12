@@ -17,6 +17,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class QR {
     private ArrayList<QRComment> commentsList;
@@ -35,19 +37,14 @@ public class QR {
     /**
      * Constructor for creating new QR
      * @param qrContents
-     * @param discoverer
      */
-    public QR(String qrContents, Player discoverer) throws Exception {
+    public QR(String qrContents) {
         // use hash to create contents
         this.qrHash = hashQR(qrContents);
         this.score = generateScore(qrHash);
         this.name = generateName(qrHash);
         this.avatar = generateAvatar(qrHash);
         this.commentsList = new ArrayList<>();
-        if (qrUsers.contains(discoverer)) {
-            throw new Exception("Discoverer already exists in qrUsers list.");
-        }
-        qrUsers.add(discoverer);
     }
 
     /**
@@ -56,12 +53,14 @@ public class QR {
      * @param avatar
      * @param score
      * @param commentsList
+     * @param qrUsers
      */
-    public QR(String name, String avatar, int score, ArrayList<QRComment> commentsList) {
+    public QR(String name, String avatar, int score, ArrayList<QRComment> commentsList, ArrayList<Player> qrUsers) {
         this.name = name;
         this.avatar = avatar;
         this.score = score;
         this.commentsList = commentsList;
+        this.qrUsers = qrUsers;
     }
 
     /**
@@ -126,7 +125,7 @@ public class QR {
     private String generateName(String qrHash) {
         // returning empty string to avoid error lines
         // actually implement this
-        return "";
+        return "test";
     }
 
     private String generateAvatar(String qrHash) {
@@ -145,7 +144,7 @@ public class QR {
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+        CollectionReference collectionReference = db.collection(QR.class.getSimpleName());
 
         // Create hashmap for data
         HashMap<String, Object> data = new HashMap<>();
@@ -176,7 +175,6 @@ public class QR {
         return score;
     }
     public String getAvatar(){ return avatar;}
-
     public String getName(){ return name;}
     public ArrayList<QRComment> getCommentsList() {
         return commentsList;
@@ -186,6 +184,13 @@ public class QR {
     }
     public ArrayList<Player> getPlayerList() {
         return this.qrUsers;
+    }
+    public void addToPlayerList(Player player) throws Exception {
+        if (qrUsers.contains(player)) {
+            throw new Exception("Discoverer already exists in qrUsers list.");
+        }
+
+        this.qrUsers.add(player);
     }
 
     // getter and setter for photo
