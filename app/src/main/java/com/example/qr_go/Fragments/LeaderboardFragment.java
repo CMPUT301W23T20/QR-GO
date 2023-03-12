@@ -86,7 +86,7 @@ public class LeaderboardFragment extends Fragment {
 
                 if(userList.contains(query)){
                     leaderboardAdapter.filter(query);
-                }else{
+                } else{
                     //Toast.makeText(MainActivity.this, "No Match found",Toast.LENGTH_LONG).show();
                 }
                 return false;
