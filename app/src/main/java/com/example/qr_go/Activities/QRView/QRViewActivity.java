@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.qr_go.Activities.Profile.ProfileQRListViewActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.QR.QRComment;
 import com.example.qr_go.QR.QR;
@@ -26,7 +25,7 @@ public class QRViewActivity extends QRActivity {
     private TextView nameText;
     private TextView scoreText;
     private Button playerListButton;
-    private RecyclerView commentList;
+    private RecyclerView commentListRecyclerView;
 
 
     public QRViewActivity() {
@@ -41,7 +40,7 @@ public class QRViewActivity extends QRActivity {
         getViews();
 
         try {
-            getIDFromBundle();
+            getInfoFromBundle();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -82,7 +81,7 @@ public class QRViewActivity extends QRActivity {
     /**
      * Gets views from fragment
      */
-    public void getViews() {
+    private void getViews() {
         // get views from fragment
         this.nameText = findViewById(R.id.name_text);
         this.backButton = findViewById(R.id.back_button);

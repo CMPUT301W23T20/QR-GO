@@ -67,6 +67,11 @@ public class ProfileQRListAdapter extends RecyclerView.Adapter<ProfileQRListAdap
             });
         }
 
+        /**
+         * Sets details in view
+         * @param qr
+         * QR needed to be represented
+         */
         void SetDetails(QR qr) {
             qrName.setText(qr.getName());
             qrScore.setText(String.valueOf(qr.getScore()));

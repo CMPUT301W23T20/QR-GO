@@ -52,7 +52,7 @@
         </activity>
 
         <activity
-            android:name=".Activities.Profile.ProfileQRListViewActivity"
+            android:name=".Activities.Profile.ThisProfileQRListViewActivity"
             android:exported="true">
         </activity>
 
