@@ -35,13 +35,15 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
     private Button backButton;
     private TextView totalText;
     private RecyclerView qrList;
-    private ProfileQRListAdapter qrListAdapter;
     private ArrayList<QR> qrDataList;
+    private ProfileQRListAdapter qrListAdapter;
     private Player player;
     private DataBaseHelper dbHelper = new DataBaseHelper();
 
     public ThisProfileQRListViewActivity() {
         super();
+        qrDataList = new ArrayList<>();
+        qrListAdapter = new ProfileQRListAdapter(ThisProfileQRListViewActivity.this, qrDataList, ThisProfileQRListViewActivity.this);
     }
 
     @Override
@@ -50,6 +52,8 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
         setContentView(R.layout.activity_profile_qr_list);
 
         getViews();
+
+        qrList.setAdapter(qrListAdapter);
 
         try {
             getIDFromBundle();
@@ -172,7 +176,7 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
+            int i = viewHolder.getAdapterPosition();
 
             // get database information
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -183,24 +187,37 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            player = new Player((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QR>) documentSnapshot.get("qrList"),
-                                    (int) Integer.parseInt((String)documentSnapshot.get("rank")), (int) Integer.parseInt((String)documentSnapshot.get("highestScore")),
-                                    (int)Integer.parseInt((String)documentSnapshot.get("lowestScore")), (int)Integer.parseInt((String)documentSnapshot.get("totalScore")));
+                            String username = (String)documentSnapshot.get("username");
+                            String deviceID = (String)documentSnapshot.get("deviceID");
 
-                            // add data list from player
-                            qrDataList = new ArrayList<QR>();
-                            qrDataList.addAll(player.getQRList());
+                            ArrayList<QR> qrListFromDoc = dbHelper.convertQRListFromDB((List<Map<String, Object>>) documentSnapshot.get("qrList"));
 
-                            // remove QR from account
-                            qrDataList.remove(viewHolder.getAdapterPosition());
+                            int rank = ((Long)documentSnapshot.get("rank")).intValue();
+                            int highestScore = ((Long)documentSnapshot.get("highestScore")).intValue();
+                            int lowestScore = ((Long)documentSnapshot.get("lowestScore")).intValue();
+                            int totalScore = ((Long)documentSnapshot.get("totalScore")).intValue();
+
+
+
+                            player = new Player(username, android_id, qrListFromDoc, rank, highestScore, lowestScore, totalScore);
+
+                            // sort highest to lowest score
+                            Collections.sort(qrDataList);
+                            Collections.reverse(qrDataList);
+
+                            // remove qr from account
+                            player.deleteQR(i);
+
+                            // remove qr from this data set
+                            qrDataList.remove(i);
 
                             // update DB
                             dbHelper.updateDB(player);
 
+                            qrListAdapter.notifyItemRemoved(i);
                         }
                     });
-            updateProfileInfo();
-            qrListAdapter.notifyDataSetChanged();
+
         }
     };
 }
