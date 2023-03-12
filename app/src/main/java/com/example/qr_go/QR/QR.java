@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * QR code that player scans
+ */
 public class QR implements Comparable<QR> {
     private ArrayList<QRComment> commentsList;
     private String qrHash;

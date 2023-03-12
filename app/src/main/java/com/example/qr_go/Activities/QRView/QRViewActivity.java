@@ -19,6 +19,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a QR
+ */
 public class QRViewActivity extends QRActivity {
     private QR qr;
     private Button backButton;

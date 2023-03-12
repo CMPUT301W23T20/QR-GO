@@ -18,6 +18,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+/**
+ * Represents list of players that have scanned a QR
+ */
 public class QRPlayerListViewActivity extends QRActivity {
     QRPlayerListAdapter qrPlayerListAdapter;
     private ArrayList<Player> dataPlayerList;

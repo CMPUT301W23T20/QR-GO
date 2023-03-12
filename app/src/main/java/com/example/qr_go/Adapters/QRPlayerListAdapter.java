@@ -15,6 +15,9 @@ import com.example.qr_go.R;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter for list of players that have scanned a QR
+ */
 public class QRPlayerListAdapter extends ArrayAdapter<Player> {
 
     public QRPlayerListAdapter(Context context, ArrayList<Player> qrPlayerList) {

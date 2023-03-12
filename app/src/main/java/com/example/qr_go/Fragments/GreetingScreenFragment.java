@@ -15,6 +15,9 @@ import com.example.qr_go.Actor.Player;
 import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.R;
 
+/**
+ * Represents greeting screen if player on device is not already in database
+ */
 public class GreetingScreenFragment extends Fragment {
 
     final String TAG = "Sample";

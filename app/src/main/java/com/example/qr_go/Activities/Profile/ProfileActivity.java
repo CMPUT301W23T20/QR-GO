@@ -4,6 +4,9 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
+/**
+ * Parent class to profile related activities
+ */
 public class ProfileActivity extends FragmentActivity {
 
     protected String android_id;
