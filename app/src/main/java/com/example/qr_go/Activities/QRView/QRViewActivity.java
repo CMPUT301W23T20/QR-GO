@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.qr_go.Activities.Profile.ProfileQRListViewActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.QR.QRComment;
 import com.example.qr_go.QR.QR;
@@ -41,7 +40,7 @@ public class QRViewActivity extends QRActivity {
         getViews();
 
         try {
-            getIDFromBundle();
+            getInfoFromBundle();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

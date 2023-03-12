@@ -5,8 +5,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.example.qr_go.QR.QR;
-
 public class QRActivity extends FragmentActivity {
     protected String android_id;
     protected String qr_hash;
@@ -16,7 +14,12 @@ public class QRActivity extends FragmentActivity {
         android_id = "";
     }
 
-    public void getIDFromBundle() throws Exception{
+    /**
+     * Gets android ID and hash from bundle
+     * @throws Exception
+     * Throws exception if no ID was passed in intent
+     */
+    public void getInfoFromBundle() throws Exception{
         if(getIntent() == null || getIntent().getExtras() == null) {
             throw new Exception("Must have intent with \"android_id\" and \"qr_hash\"");
         }

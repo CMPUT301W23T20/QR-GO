@@ -144,6 +144,7 @@ public class Player extends Actor {
 
         CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 
+
         // Create hashmap for data
         HashMap<String, Object> data = new HashMap<>();
         data.put("username", getUsername());

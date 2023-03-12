@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.qr_go.Activities.Profile.PlayerProfileViewActivity;
-import com.example.qr_go.Activities.Profile.ProfileQRListViewActivity;
+import com.example.qr_go.Activities.Profile.OtherProfileQRListViewActivity;
+import com.example.qr_go.Activities.Profile.ThisProfileQRListViewActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.MainActivity;
 import com.example.qr_go.QR.QR;
@@ -33,19 +33,27 @@ public class PlayerProfileFragment extends Fragment {
     private TextView totalScoreTextView;
     private TextView totalScannedTextView;
     private final String android_id;
+    private final boolean isThisDevice;
     private Player model;
     private View view;
     private String test;
 
     private MainActivity mainActivity;
 
-
-    public PlayerProfileFragment(String android_id) {
+    /**
+     * Constructor
+     * @param android_id
+     * Android ID of player
+     * @param isThisDevice
+     * If the android ID belongs to player on this device
+     */
+    public PlayerProfileFragment(String android_id, boolean isThisDevice) {
         this.android_id = android_id;
+        this.isThisDevice = isThisDevice;
     }
 
-    public static Fragment newInstance(String android_id) {
-        PlayerProfileFragment fragment = new PlayerProfileFragment(android_id);
+    public static Fragment newInstance(String android_id, boolean isThisDevice) {
+        PlayerProfileFragment fragment = new PlayerProfileFragment(android_id, isThisDevice);
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -67,15 +75,18 @@ public class PlayerProfileFragment extends Fragment {
         qrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent myIntent = new Intent(getActivity(), ProfileQRListViewActivity.class);
+                Intent myIntent;
+                // allow QR deletion if profile is this player
+                if(isThisDevice) {
+                    myIntent = new Intent(getActivity(), ThisProfileQRListViewActivity.class);
+                }
+                // don't allow QR deletion if profile is other player
+                else {
+                    myIntent = new Intent(getActivity(), OtherProfileQRListViewActivity.class);
+                }
                 myIntent.putExtra("android_id", android_id);
                 startActivity(myIntent);
-//                getChildFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.profile_container, new ProfileQRListFragment(android_id))
-//                        .addToBackStack(null)
-//                        .commit();
+
             }
         });
 
@@ -119,9 +130,15 @@ public class PlayerProfileFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        model = new Player((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QR>) documentSnapshot.get("qrList"),
-                                (int) Integer.parseInt((String)documentSnapshot.get("rank")), (int) Integer.parseInt((String)documentSnapshot.get("highestScore")),
-                                (int)Integer.parseInt((String)documentSnapshot.get("lowestScore")), (int)Integer.parseInt((String)documentSnapshot.get("totalScore")));
+                        String username = (String)documentSnapshot.get("username");
+                        String deviceID = (String)documentSnapshot.get("deviceID");
+                        ArrayList<QR> qrList = (ArrayList<QR>) documentSnapshot.get("qrList");
+                        int rank = (int) Integer.parseInt((String)documentSnapshot.get("rank"));
+                        int highestScore = (int) Integer.parseInt((String)documentSnapshot.get("highestScore"));
+                        int lowestScore = (int)Integer.parseInt((String)documentSnapshot.get("lowestScore"));
+                        int totalScore = (int)Integer.parseInt((String)documentSnapshot.get("totalScore"));
+
+                        model = new Player(username, deviceID, qrList, rank, highestScore, lowestScore, totalScore);
 
                         // update UI
                         usernameTextView.setText(model.getUsername());

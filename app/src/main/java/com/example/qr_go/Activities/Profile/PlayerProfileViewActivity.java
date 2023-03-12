@@ -44,7 +44,7 @@ public class PlayerProfileViewActivity extends ProfileActivity {
         qrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(PlayerProfileViewActivity.this, ProfileQRListViewActivity.class);
+                Intent myIntent = new Intent(PlayerProfileViewActivity.this, ThisProfileQRListViewActivity.class);
                 myIntent.putExtra("android_id", android_id);
                 PlayerProfileViewActivity.this.startActivity(myIntent);
             }
