@@ -90,7 +90,9 @@ public class QRPlayerListViewActivity extends QRActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         qr = new QR((String)documentSnapshot.get("name"), (String)documentSnapshot.get("avatar"),
-                                (int) Integer.parseInt((String)documentSnapshot.get("score")), (ArrayList<QRComment>)documentSnapshot.get("commentsList"));
+                                (int) Integer.parseInt((String)documentSnapshot.get("score")),
+                                (ArrayList<QRComment>)documentSnapshot.get("commentsList"),
+                                (ArrayList<Player>)documentSnapshot.get("playerList"));
 
 
                         // set total text

@@ -22,9 +22,18 @@ import androidx.fragment.app.Fragment;
 
 import com.example.qr_go.Activities.Scan.CameraActivity;
 import com.example.qr_go.Activities.Scan.CaptureAct;
+import com.example.qr_go.Actor.Player;
+import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
+
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ScanFragment#newInstance} factory method to
@@ -39,9 +48,9 @@ public class ScanFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private String android_id;
+    private Player player;
+    private QR qr;
 
     View view;
 
@@ -53,24 +62,22 @@ public class ScanFragment extends Fragment {
 
     }
 
-    public ScanFragment() {
-        // Required empty public constructor
+    public ScanFragment(String android_id) {
+        this.android_id = android_id;
     }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param android_id Android ID
      * @return A new instance of fragment FragmentScan.
      */
     // TODO: Rename and change types and number of parameters
-    public static ScanFragment newInstance(String param1, String param2) {
-        ScanFragment fragment = new ScanFragment();
+    public static ScanFragment newInstance(String android_id) {
+        ScanFragment fragment = new ScanFragment(android_id);
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM1, android_id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,10 +85,7 @@ public class ScanFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -140,6 +144,46 @@ public class ScanFragment extends Fragment {
             // show score of QR code here
             builder.setTitle("Result");
             builder.setMessage(result.getContents());
+
+            // add QR to DB and Player
+            // create new QR
+            qr = new QR(result.getContents());
+
+            // get player from database
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+            // put data into class
+            db.collection(Player.class.getSimpleName()).document(android_id).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            String username = (String)documentSnapshot.get("username");
+                            String deviceID = (String)documentSnapshot.get("deviceID");
+                            ArrayList<QR> qrList = (ArrayList<QR>) documentSnapshot.get("qrList");
+                            int rank = (int) Integer.parseInt((String)documentSnapshot.get("rank"));
+                            int highestScore = (int) Integer.parseInt((String)documentSnapshot.get("highestScore"));
+                            int lowestScore = (int)Integer.parseInt((String)documentSnapshot.get("lowestScore"));
+                            int totalScore = (int)Integer.parseInt((String)documentSnapshot.get("totalScore"));
+
+                            player = new Player(username, android_id, qrList, rank, highestScore, lowestScore, totalScore);
+
+                            // add player to QR's list
+                            try {
+                                qr.addToPlayerList(player);
+                            } catch (Exception e) {
+                                // throw new RuntimeException(e);
+                            }
+
+                            // add QR to player's list
+                            player.addQR(qr);
+
+                            // update DB
+                            player.updateDB();
+                            qr.updateDB();
+                        }
+                    });
+
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -151,5 +195,4 @@ public class ScanFragment extends Fragment {
             // show fragment for camera here to record object
         }
     });
-
 }
