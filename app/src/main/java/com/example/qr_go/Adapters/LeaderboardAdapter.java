@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Represents an array adapter for the leaderboard
+ */
 public class LeaderboardAdapter extends ArrayAdapter<LeaderboardContent>{
 
     Context mContext;
