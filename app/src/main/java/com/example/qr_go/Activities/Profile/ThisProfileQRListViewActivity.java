@@ -189,7 +189,7 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
                             qrDataList.remove(viewHolder.getAdapterPosition());
 
                             // update DB
-                            dbHelper.updateDB(player);
+                            player.updateDB();
 
                         }
                     });

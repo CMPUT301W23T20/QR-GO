@@ -23,7 +23,6 @@ import androidx.fragment.app.Fragment;
 import com.example.qr_go.Activities.Scan.CameraActivity;
 import com.example.qr_go.Activities.Scan.CaptureAct;
 import com.example.qr_go.Actor.Player;
-import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -52,7 +51,6 @@ public class ScanFragment extends Fragment {
     private String android_id;
     private Player player;
     private QR qr;
-    private DataBaseHelper dbHelper = new DataBaseHelper();
 
     View view;
 
@@ -181,8 +179,8 @@ public class ScanFragment extends Fragment {
                             player.addQR(qr);
 
                             // update DB
-                            dbHelper.updateDB(player);
-                            dbHelper.updateDB(qr);
+                            player.updateDB();
+                            qr.updateDB();
                         }
                     });
 

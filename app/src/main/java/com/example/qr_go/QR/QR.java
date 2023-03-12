@@ -140,6 +140,37 @@ public class QR {
     public void deleteComment(int i) { getCommentsList().remove(i);
     }
 
+    public void updateDB() {
+        // get database information
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        CollectionReference collectionReference = db.collection(QR.class.getSimpleName());
+
+        // Create hashmap for data
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("name", getName());
+        data.put("score", String.valueOf(getScore()));
+        data.put("avatar", getAvatar());
+        data.put("commentsList", getCommentsList());
+        // add data to database
+        // document named after user the hash
+        collectionReference
+                .document(getQrHash())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("updateDB()", "Data added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("updateDB()", "Data not added: " + e);
+                    }
+                });
+    }
+
     public int getScore() {
         return score;
     }
