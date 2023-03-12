@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Provides functions that help retrieve data from database
+ */
 public class DataBaseHelper {
 
     public ArrayList<QR> convertQRListFromDB(List<Map<String, Object>> qrList) {

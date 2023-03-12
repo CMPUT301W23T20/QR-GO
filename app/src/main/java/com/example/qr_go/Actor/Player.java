@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+/**
+ * Player of QR-GO
+ */
 public class Player extends Actor {
     private ArrayList<QR> qrList;
     private int rank;

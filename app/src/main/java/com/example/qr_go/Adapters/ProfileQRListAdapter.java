@@ -15,6 +15,9 @@ import com.example.qr_go.R;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter for list of QRs player has scanned
+ */
 public class ProfileQRListAdapter extends RecyclerView.Adapter<ProfileQRListAdapter.QRViewHolder> {
     private final RecyclerViewInterface recyclerViewInterface;
     private Context context;

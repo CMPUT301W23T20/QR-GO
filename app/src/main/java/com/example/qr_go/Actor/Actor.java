@@ -6,6 +6,9 @@ package com.example.qr_go.Actor;
 
 import android.provider.Settings;
 
+/**
+ * Entity that uses the application
+ */
 public class Actor {
     private String username;
     private String deviceID;

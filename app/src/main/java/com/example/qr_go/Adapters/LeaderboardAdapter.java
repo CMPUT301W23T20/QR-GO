@@ -1,7 +1,6 @@
 package com.example.qr_go.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.qr_go.Activities.Profile.PlayerProfileViewActivity;
-import com.example.qr_go.Activities.Profile.ProfileActivity;
-import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Content.LeaderboardContent;
-import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;

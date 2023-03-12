@@ -31,6 +31,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents profile of Player on this device
+ */
 public class ThisProfileQRListViewActivity extends ProfileActivity implements RecyclerViewInterface {
     private Button backButton;
     private TextView totalText;

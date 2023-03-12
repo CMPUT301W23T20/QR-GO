@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
+/**
+ * Parent class to all QR related activities
+ */
 public class QRActivity extends FragmentActivity {
     protected String android_id;
     protected String qr_hash;

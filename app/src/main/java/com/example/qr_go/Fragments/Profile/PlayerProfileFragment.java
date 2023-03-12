@@ -29,7 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * Represents a player's profile
+ */
 public class PlayerProfileFragment extends Fragment {
     private TextView usernameTextView;
     private Button qrButton;

@@ -2,6 +2,9 @@ package com.example.qr_go.QR;
 
 import com.example.qr_go.Actor.Actor;
 
+/**
+ * Comment on QR codes
+ */
 public class QRComment {
     private String comment;
     private final Actor commenter;

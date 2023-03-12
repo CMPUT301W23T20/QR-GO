@@ -24,8 +24,6 @@ import android.widget.LinearLayout;
 
 
 import com.example.qr_go.Activities.MapsActivity;
-import com.example.qr_go.Activities.Profile.PlayerProfileViewActivity;
-import com.example.qr_go.Activities.Scan.ScanActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.QRFragmentPagerAdapter;
 import com.example.qr_go.Fragments.GreetingScreenFragment;
@@ -41,6 +39,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Connects activities and fragments together
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, LocationListener {
 
     private ViewPager2 viewPager;

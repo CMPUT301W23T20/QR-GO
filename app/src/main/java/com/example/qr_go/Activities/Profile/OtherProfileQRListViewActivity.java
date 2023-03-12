@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents profile of Player not on this device
+ */
 public class OtherProfileQRListViewActivity extends ProfileActivity implements RecyclerViewInterface {
     private Button backButton;
     private TextView totalText;
