@@ -100,7 +100,7 @@ public class GetLocationActivity extends AppCompatActivity implements LocationLi
 
     /**
      * This function is called whenever Location is updated
-     * It will store the address in a List, this will be stored with the QR code 
+     * It will store the address in a List, this will be stored with the QR code
      * @param location the updated location
      */
     @Override
