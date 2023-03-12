@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.example.qr_go.Activities.Scan.CameraActivity;
 import com.example.qr_go.Activities.Scan.CaptureAct;
 import com.example.qr_go.Actor.Player;
+import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,6 +52,7 @@ public class ScanFragment extends Fragment {
     private String android_id;
     private Player player;
     private QR qr;
+    private DataBaseHelper dbHelper = new DataBaseHelper();
 
     View view;
 
@@ -161,10 +163,10 @@ public class ScanFragment extends Fragment {
                             String username = (String)documentSnapshot.get("username");
                             String deviceID = (String)documentSnapshot.get("deviceID");
                             ArrayList<QR> qrList = (ArrayList<QR>) documentSnapshot.get("qrList");
-                            int rank = (int) Integer.parseInt((String)documentSnapshot.get("rank"));
-                            int highestScore = (int) Integer.parseInt((String)documentSnapshot.get("highestScore"));
-                            int lowestScore = (int)Integer.parseInt((String)documentSnapshot.get("lowestScore"));
-                            int totalScore = (int)Integer.parseInt((String)documentSnapshot.get("totalScore"));
+                            int rank = ((Long)documentSnapshot.get("rank")).intValue();
+                            int highestScore = ((Long)documentSnapshot.get("highestScore")).intValue();
+                            int lowestScore = ((Long)documentSnapshot.get("lowestScore")).intValue();
+                            int totalScore = ((Long)documentSnapshot.get("totalScore")).intValue();
 
                             player = new Player(username, android_id, qrList, rank, highestScore, lowestScore, totalScore);
 
@@ -179,8 +181,8 @@ public class ScanFragment extends Fragment {
                             player.addQR(qr);
 
                             // update DB
-                            player.updateDB();
-                            qr.updateDB();
+                            dbHelper.updateDB(player);
+                            dbHelper.updateDB(qr);
                         }
                     });
 
