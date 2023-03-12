@@ -106,13 +106,12 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
                         String username = (String)documentSnapshot.get("username");
                         String deviceID = (String)documentSnapshot.get("deviceID");
 
-                        // convert list from db to arraylist
                         ArrayList<QR> qrListFromDoc = dbHelper.convertQRListFromDB((List<Map<String, Object>>) documentSnapshot.get("qrList"));
 
-                        int rank = (int) Integer.parseInt((String)documentSnapshot.get("rank"));
-                        int highestScore = (int) Integer.parseInt((String)documentSnapshot.get("highestScore"));
-                        int lowestScore = (int)Integer.parseInt((String)documentSnapshot.get("lowestScore"));
-                        int totalScore = (int)Integer.parseInt((String)documentSnapshot.get("totalScore"));
+                        int rank = ((Long)documentSnapshot.get("rank")).intValue();
+                        int highestScore = ((Long)documentSnapshot.get("highestScore")).intValue();
+                        int lowestScore = ((Long)documentSnapshot.get("lowestScore")).intValue();
+                        int totalScore = ((Long)documentSnapshot.get("totalScore")).intValue();
 
 
 

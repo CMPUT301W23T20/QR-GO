@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.qr_go.Activities.Profile.OtherProfileQRListViewActivity;
 import com.example.qr_go.Activities.Profile.ThisProfileQRListViewActivity;
 import com.example.qr_go.Actor.Player;
+import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.MainActivity;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
@@ -25,6 +26,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class PlayerProfileFragment extends Fragment {
@@ -37,6 +40,7 @@ public class PlayerProfileFragment extends Fragment {
     private Player model;
     private View view;
     private String test;
+    private DataBaseHelper dbHelper = new DataBaseHelper();
 
     private MainActivity mainActivity;
 
@@ -132,13 +136,15 @@ public class PlayerProfileFragment extends Fragment {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String username = (String)documentSnapshot.get("username");
                         String deviceID = (String)documentSnapshot.get("deviceID");
-                        ArrayList<QR> qrList = (ArrayList<QR>) documentSnapshot.get("qrList");
-                        int rank = (int) Integer.parseInt((String)documentSnapshot.get("rank"));
-                        int highestScore = (int) Integer.parseInt((String)documentSnapshot.get("highestScore"));
-                        int lowestScore = (int)Integer.parseInt((String)documentSnapshot.get("lowestScore"));
-                        int totalScore = (int)Integer.parseInt((String)documentSnapshot.get("totalScore"));
 
-                        model = new Player(username, deviceID, qrList, rank, highestScore, lowestScore, totalScore);
+                        ArrayList<QR> qrListFromDoc = dbHelper.convertQRListFromDB((List<Map<String, Object>>) documentSnapshot.get("qrList"));
+
+                        int rank = ((Long)documentSnapshot.get("rank")).intValue();
+                        int highestScore = ((Long)documentSnapshot.get("highestScore")).intValue();
+                        int lowestScore = ((Long)documentSnapshot.get("lowestScore")).intValue();
+                        int totalScore = ((Long)documentSnapshot.get("totalScore")).intValue();
+
+                        model = new Player(username, deviceID, qrListFromDoc, rank, highestScore, lowestScore, totalScore);
 
                         // update UI
                         usernameTextView.setText(model.getUsername());
