@@ -4,6 +4,9 @@ import com.google.common.collect.Sets;
 
 import java.io.Serializable;
 
+/**
+ * Represents the content present in a part of the leaderboard such as username and score
+ */
 public class LeaderboardContent implements Serializable {
     private String username;
     private int score;

@@ -15,6 +15,9 @@ import com.example.qr_go.R;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the fragment that holds the leaderboard
+ */
 public class LeaderboardFragment extends Fragment {
 
 
@@ -29,10 +32,12 @@ public class LeaderboardFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-
+    // instance of the searchview
     SearchView searchView;
     private ListView leaderboardList;
+    // will contain usernames and scores
     private ArrayList<LeaderboardContent> dataList;
+    // will contain just the usernames
     private ArrayList<String> userList;
     private LeaderboardAdapter leaderboardAdapter;
 
@@ -79,12 +84,14 @@ public class LeaderboardFragment extends Fragment {
         leaderboardList = view.findViewById(R.id.leaderboard_list);
         leaderboardAdapter = new LeaderboardAdapter(getActivity(),android.R.layout.simple_list_item_1, dataList);
         leaderboardList.setAdapter(leaderboardAdapter);
-
+        // runs the search query
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
+            // searches the query on the submission of content over SearchView editor
             public boolean onQueryTextSubmit(String query) {
-
+                // if username in userlist
                 if(userList.contains(query)){
+                    // call filter function
                     leaderboardAdapter.filter(query);
                 } else{
                     //Toast.makeText(MainActivity.this, "No Match found",Toast.LENGTH_LONG).show();
@@ -93,7 +100,9 @@ public class LeaderboardFragment extends Fragment {
             }
 
             @Override
+           // searches the query at the time of text change over SearchView editor.
             public boolean onQueryTextChange(String newText) {
+                // filter
                 leaderboardAdapter.filter(newText);
                 return false;
             }
