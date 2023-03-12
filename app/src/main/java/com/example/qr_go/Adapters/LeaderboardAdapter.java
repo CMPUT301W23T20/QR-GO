@@ -55,29 +55,18 @@ public class LeaderboardAdapter extends ArrayAdapter<LeaderboardContent>{
             view = convertView;
         }
 
-        // get database information
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
-//        Intent myIntent = new Intent(PlayerProfileViewActivity.this, ProfileQRListViewActivity.class);
-//        myIntent.putExtra("android_id", android_id);
-//        // put data into class
-//        db.collection(Player.class.getSimpleName()).document(android_id).get()
-//                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                        player = new Player((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QR>) documentSnapshot.get("qrList"),
-//                                (int) Integer.parseInt((String)documentSnapshot.get("rank")), (int) Integer.parseInt((String)documentSnapshot.get("highestScore")),
-//                                (int)Integer.parseInt((String)documentSnapshot.get("lowestScore")), (int)Integer.parseInt((String)documentSnapshot.get("totalScore")));
-//
-//                        // update UI
-//                        usernameTextView.setText(player.getUsername());
-//                        totalScoreTextView.setText("Total Score: " + player.getTotalScore());
-//                        totalScannedTextView.setText("Total Scanned: " + player.getTotalQR());
-//                    }
-//
-//
+        LeaderboardContent row= getItem(position);
+        TextView playerName = view.findViewById(R.id.player_text);
+        TextView score = view.findViewById(R.id.score_text);
+
+        playerName.setText(row.getUserName());
+        score.setText(""+ row.getScore());
+
+
         return view;
-//    }
+
+
+
     }
 
     /**
