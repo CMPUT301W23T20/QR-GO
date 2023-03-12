@@ -25,14 +25,30 @@ import com.example.qr_go.R;
 import java.util.List;
 import java.util.Locale;
 
+//Source: Youtube.com
+//URL: https://www.youtube.com/@allcodingtutorials1857
+//Author:https://www.youtube.com/@CodingwithDev
+
+
+/**
+ * This class is called after scanning a QR code and recording the object
+ * It allows the player the choice to obtain the geolocation of the object to be stored
+ */
 public class GetLocationActivity extends AppCompatActivity implements LocationListener {
     Button button_location;
-
     Button done_button;
     TextView textView_location;
     LocationManager locationManager;
 
-
+    /**
+     * This function is called right when the activity is created
+     * It ensures that the Get Location button works, it retrieves the user's geolocation and stores it
+     * It also ensures the Done button will bring the player back to MainActivity
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +82,9 @@ public class GetLocationActivity extends AppCompatActivity implements LocationLi
         });
     }
 
+    /**
+     * This function requests the locationManager to get the location of the user
+     */
     @SuppressLint("MissingPermission")
     private void getLocation(){
         try{
@@ -79,6 +98,11 @@ public class GetLocationActivity extends AppCompatActivity implements LocationLi
 
     }
 
+    /**
+     * This function is called whenever Location is updated
+     * It will store the address in a List, this will be stored with the QR code
+     * @param location the updated location
+     */
     @Override
     public void onLocationChanged(@NonNull Location location) {
         Toast.makeText(this,""+location.getLatitude()+","+location.getLongitude(),Toast.LENGTH_SHORT).show();

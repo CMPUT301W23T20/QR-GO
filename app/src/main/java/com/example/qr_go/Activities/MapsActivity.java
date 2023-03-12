@@ -17,14 +17,29 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 //import com.google.type.LatLng;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+//Source: Youtube.com
+//URL: https://www.youtube.com/watch?v=JzxjNNCYt_o&t=252s
+//Author: https://www.youtube.com/@android_knowledge
 
+
+/**
+ * This class is an activity that shows Google Maps with markers showing geolocations
+ * of scanned QR codes
+ */
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     GoogleMap gMap;
     FrameLayout map;
-
     Button back;
 
+    /**
+     * This function is called when the activity is created
+     * It ensures that the map button and Back button works
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +59,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
-
+    /**
+     * This function is called, displaying the actual google map
+     * It also adds markers to it according to QR code's geolocation
+     * @param googleMap
+     */
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.gMap = googleMap;

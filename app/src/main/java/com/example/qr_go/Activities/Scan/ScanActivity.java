@@ -13,7 +13,12 @@ import com.example.qr_go.R;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
-
+/**
+ * This class is no longer being used. Instead, we are using ScanFragment so that
+ * the navigation bar and UI works smoother
+ * @see com.example.qr_go.Fragments.ScanFragment
+ * @deprecated
+ */
 public class ScanActivity extends AppCompatActivity {
 
     Button btn_scan;
