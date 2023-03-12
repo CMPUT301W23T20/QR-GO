@@ -31,7 +31,7 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
     private RecyclerView qrList;
     private ProfileQRListAdapter qrListAdapter;
     private ArrayList<QR> qrDataList;
-    private Player model;
+    private Player player;
 
     public ThisProfileQRListViewActivity() {
         super();
@@ -106,12 +106,12 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
                         int lowestScore = (int)Integer.parseInt((String)documentSnapshot.get("lowestScore"));
                         int totalScore = (int)Integer.parseInt((String)documentSnapshot.get("totalScore"));
 
-                        model = new Player(username, deviceID, qrListFromDoc, rank, highestScore, lowestScore, totalScore);
+                        player = new Player(username, deviceID, qrListFromDoc, rank, highestScore, lowestScore, totalScore);
 
                         // add data list from player
                         qrDataList = new ArrayList<QR>();
 
-                        qrDataList.addAll(model.getQRList());
+                        qrDataList.addAll(player.getQRList());
 
                         // test
                         qrDataList.add(new QR("herbert", "avatar", 300, new ArrayList<QRComment>()));
@@ -123,7 +123,7 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
                         qrList.setAdapter(qrListAdapter);
 
                         // set total text
-                        totalText.setText("Total QRs: " + model.getTotalQR());
+                        totalText.setText("Total QRs: " + player.getTotalQR());
                     }
                 });
     }

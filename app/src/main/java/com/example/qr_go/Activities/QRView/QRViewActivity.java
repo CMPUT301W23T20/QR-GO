@@ -25,7 +25,7 @@ public class QRViewActivity extends QRActivity {
     private TextView nameText;
     private TextView scoreText;
     private Button playerListButton;
-    private RecyclerView commentList;
+    private RecyclerView commentListRecyclerView;
 
 
     public QRViewActivity() {
@@ -81,7 +81,7 @@ public class QRViewActivity extends QRActivity {
     /**
      * Gets views from fragment
      */
-    public void getViews() {
+    private void getViews() {
         // get views from fragment
         this.nameText = findViewById(R.id.name_text);
         this.backButton = findViewById(R.id.back_button);

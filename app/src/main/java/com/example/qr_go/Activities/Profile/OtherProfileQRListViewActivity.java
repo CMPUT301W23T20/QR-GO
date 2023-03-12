@@ -26,10 +26,10 @@ import java.util.ArrayList;
 public class OtherProfileQRListViewActivity extends ProfileActivity implements RecyclerViewInterface {
     private Button backButton;
     private TextView totalText;
-    private RecyclerView qrList;
+    private RecyclerView qrListRecyclerView;
     private ProfileQRListAdapter qrListAdapter;
     private ArrayList<QR> qrDataList;
-    private Player model;
+    private Player player;
 
     public OtherProfileQRListViewActivity() {
         super();
@@ -92,26 +92,26 @@ public class OtherProfileQRListViewActivity extends ProfileActivity implements R
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        model = new Player((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QR>) documentSnapshot.get("qrList"),
+                        player = new Player((String)documentSnapshot.get("username"), (String)documentSnapshot.get("deviceID"), (ArrayList<QR>) documentSnapshot.get("qrList"),
                                 (int) Integer.parseInt((String)documentSnapshot.get("rank")), (int) Integer.parseInt((String)documentSnapshot.get("highestScore")),
                                 (int)Integer.parseInt((String)documentSnapshot.get("lowestScore")), (int)Integer.parseInt((String)documentSnapshot.get("totalScore")));
 
                         // add data list from player
                         qrDataList = new ArrayList<QR>();
 
-                        qrDataList.addAll(model.getQRList());
+                        qrDataList.addAll(player.getQRList());
 
                         // test
                         qrDataList.add(new QR("herbert", "avatar", 300, new ArrayList<QRComment>()));
 
                         // initialize adapter
-                        qrList = findViewById(R.id.qr_list);
-                        qrList.setLayoutManager(new LinearLayoutManager(OtherProfileQRListViewActivity.this));
+                        qrListRecyclerView = findViewById(R.id.qr_list);
+                        qrListRecyclerView.setLayoutManager(new LinearLayoutManager(OtherProfileQRListViewActivity.this));
                         qrListAdapter = new ProfileQRListAdapter(OtherProfileQRListViewActivity.this, qrDataList, OtherProfileQRListViewActivity.this);
-                        qrList.setAdapter(qrListAdapter);
+                        qrListRecyclerView.setAdapter(qrListAdapter);
 
                         // set total text
-                        totalText.setText("Total QRs: " + model.getTotalQR());
+                        totalText.setText("Total QRs: " + player.getTotalQR());
                     }
                 });
     }
@@ -121,7 +121,7 @@ public class OtherProfileQRListViewActivity extends ProfileActivity implements R
      */
     public void getViews() {
         // get views from fragment
-        this.qrList = findViewById(R.id.qr_list);
+        this.qrListRecyclerView = findViewById(R.id.qr_list);
         this.backButton = findViewById(R.id.qr_list_back_button);
         this.totalText = findViewById(R.id.total_text);
     }
