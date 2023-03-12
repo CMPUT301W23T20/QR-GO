@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 
 import com.example.qr_go.Activities.Profile.PlayerProfileViewActivity;
 import com.example.qr_go.Activities.Profile.ProfileActivity;
-import com.example.qr_go.Activities.Profile.ProfileQRListViewActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Content.LeaderboardContent;
 import com.example.qr_go.QR.QR;
