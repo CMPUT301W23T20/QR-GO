@@ -105,8 +105,10 @@ public class QRViewActivity extends QRActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        qr = new QR((String)documentSnapshot.get("name"), (String)documentSnapshot.get("avatar"),
-                                (int) Integer.parseInt((String)documentSnapshot.get("score")),
+                        String name = (String)documentSnapshot.get("name");
+                        String avatar = (String)documentSnapshot.get("avatar");
+                        int score = ((Long)documentSnapshot.get("score")).intValue();
+                        qr = new QR(name , avatar, score,
                                 (ArrayList<QRComment>)documentSnapshot.get("commentsList"),
                                 (ArrayList<Player>)documentSnapshot.get("playerList"));
 

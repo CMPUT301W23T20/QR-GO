@@ -34,6 +34,9 @@ import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -162,7 +165,7 @@ public class ScanFragment extends Fragment {
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             String username = (String)documentSnapshot.get("username");
                             String deviceID = (String)documentSnapshot.get("deviceID");
-                            ArrayList<QR> qrList = (ArrayList<QR>) documentSnapshot.get("qrList");
+                            ArrayList<QR> qrList = dbHelper.convertQRListFromDB((List<Map<String, Object>>)documentSnapshot.get("qrList"));
                             int rank = ((Long)documentSnapshot.get("rank")).intValue();
                             int highestScore = ((Long)documentSnapshot.get("highestScore")).intValue();
                             int lowestScore = ((Long)documentSnapshot.get("lowestScore")).intValue();

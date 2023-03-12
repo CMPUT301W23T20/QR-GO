@@ -11,6 +11,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class Player extends Actor {
@@ -82,6 +83,10 @@ public class Player extends Actor {
 
         // add to total
         updateTotalScore(1, qr.getScore());
+
+        // sort list
+        Collections.sort(this.qrList);
+        Collections.reverse(this.qrList);
     }
 
     /**
@@ -115,24 +120,26 @@ public class Player extends Actor {
      * Updates the highest and lowest scores based on the current state of the qrList
      */
     private void updateHighestLowest() {
+        if(getQRList().size() > 0) {
+            // reset highest and lowest scores
+            setHighestScore(getQRList().get(0).getScore());
+            setLowestScore(getQRList().get(0).getScore());
+            // iterate through qrList
+            for(int i = 0; i < getQRList().size(); i++) {
+                QR qr = getQRList().get(i);
 
-        // reset highest and lowest scores
-        setHighestScore(getQRList().get(0).getScore());
-        setLowestScore(getQRList().get(0).getScore());
-        // iterate through qrList
-        for(int i = 0; i < getQRList().size(); i++) {
-            QR qr = getQRList().get(i);
+                // replace highest score if the current QR score is larger
+                if(qr.getScore() > getHighestScore()) {
+                    setHighestScore(qr.getScore());
+                }
 
-            // replace highest score if the current QR score is larger
-            if(qr.getScore() > getHighestScore()) {
-                setHighestScore(qr.getScore());
-            }
-
-            // replace lowest score if the current QR score is smaller
-            if(qr.getScore() < getLowestScore()) {
-                setLowestScore(qr.getScore());
+                // replace lowest score if the current QR score is smaller
+                if(qr.getScore() < getLowestScore()) {
+                    setLowestScore(qr.getScore());
+                }
             }
         }
+
     }
 
     /**

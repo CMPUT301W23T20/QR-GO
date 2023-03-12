@@ -12,6 +12,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,11 +30,34 @@ public class DataBaseHelper {
             String avatar = (String)currentInQRList.get("avatar");
             Long scoreLong = (Long)currentInQRList.get("score");
             int score = scoreLong.intValue();
+            // dummy arraylist since we never use these
+            ArrayList<QRComment> commentsList = new ArrayList<>();
+            ArrayList<Player> playerList = new ArrayList<>();
 
-            QR currentQR = new QR(name , avatar, score,
-                    (ArrayList<QRComment>)currentInQRList.get("commentsList"),
-                    (ArrayList<Player>)currentInQRList.get("playerList"));
+            QR currentQR = new QR(name , avatar, score, commentsList, playerList);
             result.add(currentQR);
+        }
+
+        return result;
+    }
+
+    public ArrayList<Player> convertPlayerListFromDB(List<Map<String, Object>> playerList) {
+        ArrayList<Player> result = new ArrayList<>();
+
+        for(int i = 0; i < playerList.size(); i++) {
+            Map<String, Object> currentInPlayerList = playerList.get(i);
+            String username = (String)currentInPlayerList.get("username");
+            String deviceID = (String)currentInPlayerList.get("deviceID");
+
+            ArrayList<QR> qrList = new ArrayList<>();
+
+            int rank = ((Long)currentInPlayerList.get("rank")).intValue();
+            int highestScore = ((Long)currentInPlayerList.get("highestScore")).intValue();
+            int lowestScore = ((Long)currentInPlayerList.get("lowestScore")).intValue();
+            int totalScore = ((Long)currentInPlayerList.get("totalScore")).intValue();
+
+            Player currentPlayer = new Player(username, deviceID, qrList, rank, highestScore, lowestScore, totalScore);
+            result.add(currentPlayer);
         }
 
         return result;
@@ -47,7 +72,7 @@ public class DataBaseHelper {
         // Create hashmap for data
         HashMap<String, Object> data = new HashMap<>();
         data.put("name", qr.getName());
-        data.put("score", String.valueOf(qr.getScore()));
+        data.put("score", qr.getScore());
         data.put("avatar", qr.getAvatar());
         data.put("commentsList", qr.getCommentsList());
         // add data to database
