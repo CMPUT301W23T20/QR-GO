@@ -136,44 +136,6 @@ public class Player extends Actor {
     }
 
     /**
-     * Updates firestone database with player's information. Document named after user device ID.
-     */
-    public void updateDB() {
-        // get database information
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
-
-
-        // Create hashmap for data
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("username", getUsername());
-        data.put("qrList", getQRList());
-        data.put("rank", String.valueOf(getRank()));
-        data.put("highestScore", String.valueOf(getHighestScore()));
-        data.put("lowestScore", String.valueOf(getLowestScore()));
-        data.put("totalScore", String.valueOf(getTotalScore()));
-
-        // add data to database
-        // document named after user deviceID
-        collectionReference
-                .document(getDeviceID())
-                .set(data)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d("updateDB()", "Data added successfully");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("updateDB()", "Data not added: " + e);
-                    }
-                });
-    }
-
-    /**
      * Checks if data has changed
      * @param highestScore
      * Highest score to check against current instance

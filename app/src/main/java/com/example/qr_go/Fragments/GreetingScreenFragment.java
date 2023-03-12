@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.qr_go.Actor.Player;
+import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.R;
 
 public class GreetingScreenFragment extends Fragment {
@@ -20,6 +21,7 @@ public class GreetingScreenFragment extends Fragment {
     private Button confirmButton;
     private EditText addUsernameText;
     private String android_id;
+    private DataBaseHelper dbHelper = new DataBaseHelper();
 
     public GreetingScreenFragment(String android_id) {
         this.android_id = android_id;
@@ -52,7 +54,7 @@ public class GreetingScreenFragment extends Fragment {
                 // create player and push to db
                 Player player = new Player(username, android_id);
 
-                player.updateDB();
+                dbHelper.updateDB(player);
 
                 getActivity().onBackPressed();
             }
