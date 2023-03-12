@@ -25,6 +25,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,6 +123,10 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
                         qrDataList = new ArrayList<QR>();
 
                         qrDataList.addAll(player.getQRList());
+
+                        // sort highest to lowest score
+                        Collections.sort(qrDataList);
+                        Collections.reverse(qrDataList);
 
                         // initialize adapter
                         qrList = findViewById(R.id.qr_list);

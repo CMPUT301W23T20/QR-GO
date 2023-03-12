@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class QR {
+public class QR implements Comparable<QR> {
     private ArrayList<QRComment> commentsList;
     private String qrHash;
     private final int score;
@@ -160,6 +160,18 @@ public class QR {
         }
 
         this.qrUsers.add(player);
+    }
+
+    @Override
+    public int compareTo(QR qr) {
+        if(this.score > qr.getScore()) {
+            return 1;
+        }
+
+        else if(this.score == qr.getScore()) {
+            return 0;
+        }
+        return -1;
     }
 
     // getter and setter for photo
