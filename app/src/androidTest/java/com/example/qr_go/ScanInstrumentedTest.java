@@ -20,6 +20,9 @@ import com.example.qr_go.Activities.Scan.CameraActivity;
 import com.example.qr_go.Activities.Scan.GetLocationActivity;
 import com.robotium.solo.Solo;
 
+/**
+ * This is the intent test for testing the QR Scanner, Camera, and getting geolocation
+ */
 @RunWith(AndroidJUnit4.class)
 public class ScanInstrumentedTest {
     private Solo solo;
@@ -46,7 +49,7 @@ public class ScanInstrumentedTest {
     }
 
     /**
-     * Ensures the QR scanner returns the correct result for the QR code, and that it goes to CameraActivity after
+     * Ensures the QR scanner returns the correct result for the QR code, and that it goes to CameraActivity and GetLocationActivity after
      * @throws Exception
      */
     @Test
