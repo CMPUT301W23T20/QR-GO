@@ -26,7 +26,7 @@ import android.widget.LinearLayout;
 import com.example.qr_go.Activities.MapsActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.QRFragmentPagerAdapter;
-import com.example.qr_go.Fragments.GreetingScreenFragment;
+import com.example.qr_go.Activities.GreetingScreenActivity;
 import com.example.qr_go.Fragments.LeaderboardFragment;
 import com.example.qr_go.Fragments.Profile.PlayerProfileFragment;
 import com.example.qr_go.Fragments.ScanFragment;
@@ -159,11 +159,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if(!task.getResult().exists()) {
-                            getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .add(R.id.main_container, new GreetingScreenFragment(getDeviceId()))
-                                    .addToBackStack(null)
-                                    .commit();
+                            Intent myIntent = new Intent(MainActivity.this, GreetingScreenActivity.class);
+                            myIntent.putExtra("android_id", getDeviceId());
+                            MainActivity.this.startActivity(myIntent);
                         }
                     }
                 });
