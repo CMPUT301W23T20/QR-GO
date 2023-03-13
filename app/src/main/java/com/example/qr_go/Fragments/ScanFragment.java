@@ -46,18 +46,16 @@ import java.util.Map;
 public class ScanFragment extends Fragment {
 
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String android_id;
     private Player player;
     private QR qr;
     private DataBaseHelper dbHelper = new DataBaseHelper();
 
-    View view;
+    private View view;
 
     //for passing data
     private OnFragmentInteractionListener listener;
@@ -67,6 +65,10 @@ public class ScanFragment extends Fragment {
 
     }
 
+    /**
+     * fragment constructor
+     * @param android_id
+     */
     public ScanFragment(String android_id) {
         this.android_id = android_id;
     }
@@ -76,9 +78,9 @@ public class ScanFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param android_id Android ID
-     * @return A new instance of fragment FragmentScan.
+     * @return
+     *      A new instance of fragment FragmentScan.
      */
-    // TODO: Rename and change types and number of parameters
     public static ScanFragment newInstance(String android_id) {
         ScanFragment fragment = new ScanFragment(android_id);
         Bundle args = new Bundle();
@@ -90,9 +92,21 @@ public class ScanFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
+    /**
+     * This create a view of the scan fragment.
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     *
+     * @return
+     *      Return the view of the Scan fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -106,17 +120,6 @@ public class ScanFragment extends Fragment {
             scanCode();
 
         });
-
-//        recordButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(cameraIntent,REQUEST_CODE);
-//
-//            }
-//        });
-
-
         return view;
     }
 
@@ -130,6 +133,9 @@ public class ScanFragment extends Fragment {
         }
     }
 
+    /**
+     * Starts CaptureActivity
+     */
     private void scanCode(){
         ScanOptions options = new ScanOptions();
         options.setPrompt("Place QR code in the center");
