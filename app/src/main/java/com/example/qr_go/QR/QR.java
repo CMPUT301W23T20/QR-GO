@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,8 @@ public class QR implements Comparable<QR> {
     private final String name;
     private final String avatar;
     private ArrayList<Player> qrUsers; // array of people who have discovered this QR
+
+
 
 
 
@@ -125,16 +128,62 @@ public class QR implements Comparable<QR> {
         return score;
     }
 
+    /**
+     * generates a name from a dictionary
+     * @param qrHash
+     * @return
+     */
     private String generateName(String qrHash) {
-        // returning empty string to avoid error lines
-        // actually implement this
-        return "test";
+        StringBuilder nameBuilder = new StringBuilder();
+
+        // Define the naming dictionary
+        HashMap<Character, String[]> dictionary = new HashMap<>();
+        dictionary.put('0', new String[] { "Squiggly", "Wiggly" });
+        dictionary.put('1', new String[] { "Inky", "Binky" });
+        dictionary.put('2', new String[] { "Woogly", "Boogly" });
+        dictionary.put('3', new String[] { "Booty", "Fruity" });
+        dictionary.put('4', new String[] { "Scooby", "Dooby" });
+        dictionary.put('5', new String[] { "Hard", "Soft" });
+        dictionary.put('6', new String[] { "Brown", "Blue" });
+        dictionary.put('7', new String[] { "Quirky", "Sassy" });
+        dictionary.put('8', new String[] { "Mean", "Bean" });
+        dictionary.put('9', new String[] { "Hairy", "Chubby" });
+        dictionary.put('A', new String[] { "Smashing", "Bonkers" });
+        dictionary.put('B', new String[] { "Nutty", "Funky" });
+        dictionary.put('C', new String[] { "Boujee", "Gucci" });
+        dictionary.put('D', new String[] { "Powerful", "Weak" });
+        dictionary.put('E', new String[] { "Stupid", "Smart" });
+        dictionary.put('F', new String[] { "Moody", "Greasy" });
+
+        // Extract the first 6 hexadecimal characters from the hash
+        String hexPrefix = qrHash.substring(0, 6);
+
+        // Convert each hexadecimal digit to its corresponding word from the naming dictionary
+        for (char c : hexPrefix.toCharArray()) {
+            String[] words = dictionary.get(Character.toUpperCase(c));
+            if (words != null) {
+                nameBuilder.append(words[0]).append(" ");
+            }
+        }
+
+        // Trim the name to 5 words if it is longer
+        String name = nameBuilder.toString().trim();
+        String[] words = name.split(" ");
+        if (words.length > 5) {
+            name = String.join(" ", Arrays.copyOfRange(words, 0, 5));
+        }
+
+        return name;
     }
+
+
 
     private String generateAvatar(String qrHash) {
         // returning empty string to avoid error lines
         // actually implement this
-        return "";
+        Avatar qrAvatar = new Avatar();
+        return qrAvatar.generateAvatar(qrHash);
+
     }
 
     public void addComment(String comment, Actor commenter) {
