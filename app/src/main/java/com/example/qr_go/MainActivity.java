@@ -26,7 +26,7 @@ import android.widget.LinearLayout;
 import com.example.qr_go.Activities.MapsActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.QRFragmentPagerAdapter;
-import com.example.qr_go.Activities.GreetingScreenActivity;
+import com.example.qr_go.Activities.Profile.GreetingScreenActivity;
 import com.example.qr_go.Fragments.LeaderboardFragment;
 import com.example.qr_go.Fragments.Profile.PlayerProfileFragment;
 import com.example.qr_go.Fragments.ScanFragment;
