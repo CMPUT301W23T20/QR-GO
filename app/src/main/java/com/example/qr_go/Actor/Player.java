@@ -4,14 +4,19 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.qr_go.QR.QR;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
+/**
+ * Player of QR-GO
+ */
 public class Player extends Actor {
     private ArrayList<QR> qrList;
     private int rank;
@@ -65,22 +70,26 @@ public class Player extends Actor {
      */
     public void addQR(QR qr) {
         // add QR to end of list
-        qrList.add(qr);
+        getQRList().add(qr);
 
         // update highest and lowest
 
         // replace highest score if the current QR score is larger
-        if(qr.getScore() > highestScore) {
-            highestScore = qr.getScore();
+        if(qr.getScore() > getHighestScore()) {
+            setHighestScore(qr.getScore());
         }
 
         // replace lowest score if the current QR score is smaller or if it is the only QR in list
-        if(qr.getScore() < lowestScore || qrList.size() == 1) {
-            lowestScore = qr.getScore();
+        if(qr.getScore() < getLowestScore() || getQRList().size() == 1) {
+            setLowestScore(qr.getScore());
         }
 
-        // update total
-        totalScore += qr.getScore();
+        // add to total
+        updateTotalScore(1, qr.getScore());
+
+        // sort list
+        Collections.sort(this.qrList);
+        Collections.reverse(this.qrList);
     }
 
     /**
@@ -91,22 +100,22 @@ public class Player extends Actor {
     public void deleteQR(int i) {
 
         // save copy of deleted QR code
-        QR deletedQR = qrList.get(i);
+        QR deletedQR = getQRList().get(i);
 
         // delete QR at index i
-        qrList.remove(i);
+        getQRList().remove(i);
 
         // update highest and lowest
-        if(deletedQR.getScore() == highestScore) {
+        if(deletedQR.getScore() == getHighestScore()) {
             updateHighestLowest();
         }
 
-        if(deletedQR.getScore() == lowestScore) {
+        if(deletedQR.getScore() == getLowestScore()) {
             updateHighestLowest();
         }
 
-        // update total
-        totalScore -= deletedQR.getScore();
+        // subtract from total
+        updateTotalScore(-1, deletedQR.getScore());
     }
 
 
@@ -114,24 +123,47 @@ public class Player extends Actor {
      * Updates the highest and lowest scores based on the current state of the qrList
      */
     private void updateHighestLowest() {
+        if(getQRList().size() > 0) {
+            // reset highest and lowest scores
+            setHighestScore(getQRList().get(0).getScore());
+            setLowestScore(getQRList().get(0).getScore());
+            // iterate through qrList
+            for(int i = 0; i < getQRList().size(); i++) {
+                QR qr = getQRList().get(i);
 
-        // reset highest and lowest scores
-        highestScore = qrList.get(0).getScore();
-        lowestScore = qrList.get(0).getScore();
-        // iterate through qrList
-        for(int i = 0; i < qrList.size(); i++) {
-            QR qr = qrList.get(i);
+                // replace highest score if the current QR score is larger
+                if(qr.getScore() > getHighestScore()) {
+                    setHighestScore(qr.getScore());
+                }
 
-            // replace highest score if the current QR score is larger
-            if(qr.getScore() > highestScore) {
-                highestScore = qr.getScore();
-            }
-
-            // replace lowest score if the current QR score is smaller
-            if(qr.getScore() < lowestScore) {
-                lowestScore = qr.getScore();
+                // replace lowest score if the current QR score is smaller
+                if(qr.getScore() < getLowestScore()) {
+                    setLowestScore(qr.getScore());
+                }
             }
         }
+
+    }
+
+    /**
+     * Checks if data has changed
+     * @param highestScore
+     * Highest score to check against current instance
+     * @param lowestScore
+     * Lowest score to check against current instance
+     * @param totalScore
+     * Total score to check against current instance
+     * @return
+     * True if data has changed False otherwise
+     */
+    public boolean dataChanged(int rank, int highestScore, int lowestScore, int totalScore) {
+        if(getRank() == rank || getHighestScore() == highestScore || getLowestScore() == lowestScore || getTotalScore() == totalScore) {
+            return false;
+        }
+
+        return true;
+
+
     }
 
     // getters and setters
@@ -146,6 +178,15 @@ public class Player extends Actor {
     }
 
     /**
+     * Sets players highest score
+     * @param highestScore
+     * New highest score
+     */
+    public void setHighestScore(int highestScore) {
+        this.highestScore = highestScore;
+    }
+
+    /**
      * Gets player's lowest score
      * @return
      * Player's lowest score
@@ -155,12 +196,49 @@ public class Player extends Actor {
     }
 
     /**
+     * Sets players highest score
+     * @param lowestScore
+     * New highest score
+     */
+    public void setLowestScore(int lowestScore) {
+        this.lowestScore = lowestScore;
+    }
+
+    /**
      * Gets player's total score
      * @return
      * Player's total score
      */
     public int getTotalScore() {
         return totalScore;
+    }
+
+    /**
+     * Updates player's total score
+     * @param operation
+     * 1 to add, -1 to subtract
+     * @param score
+     * Score to be updated with
+     */
+    public void updateTotalScore(int operation, int score) {
+        assert(operation == 1 || operation == -1);
+
+        if(operation == 1) {
+            this.totalScore += score;
+        }
+
+        else {
+            this.totalScore -= score;
+        }
+    }
+
+    /**
+     * Gets player's rank
+     * @return
+     * Player's rank
+     */
+    public int getRank() {
+        return rank;
     }
 
     /**
@@ -180,14 +258,6 @@ public class Player extends Actor {
     public ArrayList<QR> getQRList() {
         return qrList;
     }
-    /**
-     * Gets player's rank
-     * @return
-     * Player's rank
-     */
-    public int getRank() {
-        return rank;
-    }
 
     /**
      * Gets total number of QRs scanned
@@ -196,42 +266,5 @@ public class Player extends Actor {
      */
     public int getTotalQR() {
         return qrList.size();
-    }
-
-    /**
-     * Updates firestone database with player's information. Document named after user device ID.
-     */
-    public void updateDB() {
-        // get database information
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
-
-        // Create hashmap for data
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("username", this.getUsername());
-        data.put("qrList", this.getQRList());
-        data.put("rank", this.getRank());
-        data.put("highestScore", this.getHighestScore());
-        data.put("lowestScore", this.getLowestScore());
-        data.put("totalScore", this.getTotalScore());
-
-        // add data to database
-        // document named after user deviceID
-        collectionReference
-                .document(this.getDeviceID())
-                .set(data)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d("updateDB()", "Data added successfully");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("updateDB()", "Data not added: " + e);
-                    }
-                });
     }
 }
