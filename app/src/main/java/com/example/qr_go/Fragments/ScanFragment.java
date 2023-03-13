@@ -171,6 +171,7 @@ public class ScanFragment extends Fragment {
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             String username = (String)documentSnapshot.get("username");
                             String deviceID = (String)documentSnapshot.get("deviceID");
+                            String contact = (String)documentSnapshot.get("contact");
                             ArrayList<QR> qrList = dbHelper.convertQRListFromDB((List<Map<String, Object>>)documentSnapshot.get("qrList"));
                             int rank = ((Long)documentSnapshot.get("rank")).intValue();
                             int highestScore = ((Long)documentSnapshot.get("highestScore")).intValue();
@@ -178,6 +179,7 @@ public class ScanFragment extends Fragment {
                             int totalScore = ((Long)documentSnapshot.get("totalScore")).intValue();
 
                             player = new Player(username, android_id, qrList, rank, highestScore, lowestScore, totalScore);
+                            player.setContact(contact);
 
                             // add player to QR's list
                             try {
