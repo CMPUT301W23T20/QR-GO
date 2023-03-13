@@ -110,6 +110,7 @@ public class DataBaseHelper {
         // Create hashmap for data
         HashMap<String, Object> data = new HashMap<>();
         data.put("username", player.getUsername());
+        data.put("contact", player.getContact());
         data.put("qrList", player.getQRList());
         data.put("rank", player.getRank());
         data.put("highestScore", player.getHighestScore());

@@ -1,15 +1,12 @@
-package com.example.qr_go.Fragments;
+package com.example.qr_go.Activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,7 +27,7 @@ import java.util.ArrayList;
 /**
  * Represents greeting screen if player on device is not already in database
  */
-public class GreetingScreenFragment extends Fragment {
+public class GreetingScreenActivity extends FragmentActivity {
 
     final String TAG = "Sample";
     private Button confirmButton;
@@ -40,43 +37,39 @@ public class GreetingScreenFragment extends Fragment {
     private String username;
     private String contact;
     private String message;
-    private ArrayList<String> ArrayUsername;
+    private ArrayList<String> uniqueArrayUsername;
     private FirebaseFirestore db;
     private CollectionReference collectionReference;
     private DataBaseHelper dbHelper = new DataBaseHelper();
 
 
-    public GreetingScreenFragment(String android_id) {
-        this.android_id = android_id;
-    }
-
-    public static Fragment newInstance(String android_id) {
-        GreetingScreenFragment fragment = new GreetingScreenFragment(android_id);
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    public GreetingScreenActivity() {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.fragment_greeting_screen);
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_greeting_screen, container, false);
+        confirmButton = findViewById(R.id.confirmButton);
+        addUsernameText = findViewById(R.id.addUsernameText);
+        addContactText = findViewById(R.id.addContactText);
 
-        confirmButton = view.findViewById(R.id.confirmButton);
-        addUsernameText = view.findViewById(R.id.addUsernameText);
-        addContactText = view.findViewById(R.id.addContactText);
-        ArrayUsername = new ArrayList<String>();
+        uniqueArrayUsername = new ArrayList<String>();
 
         db = FirebaseFirestore.getInstance();
 
         collectionReference = db.collection("Player");
 
+        // add all usernames in db to collection
         addToArrayUsername();
+
+        // get android id from bundle
+        try {
+            getIDFromBundle();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,19 +78,21 @@ public class GreetingScreenFragment extends Fragment {
                 contact = addContactText.getText().toString();
                 if (lengthCheck() && uniqueCheck() && validateEmailAddress()) {
                     // create player and push to db
+
                     Player player = new Player(username, android_id);
+                    player.setContact(contact);
 
                     dbHelper.updateDB(player);
 
+                    finish();
 
-                    getActivity().onBackPressed();
+
                 }
                 else {
                     message();
                 }
             }
         });
-        return view;
     }
 
     protected Boolean lengthCheck() {
@@ -122,7 +117,7 @@ public class GreetingScreenFragment extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 //                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                ArrayUsername.add(document.get("Username").toString());
+                                uniqueArrayUsername.add(document.get("username").toString());
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -133,7 +128,7 @@ public class GreetingScreenFragment extends Fragment {
     }
     protected Boolean uniqueCheck() {
 //        System.out.println(ArrayUsername);
-        boolean uniqueCheckCaseInsensitive = ArrayUsername.stream().anyMatch(username::equalsIgnoreCase);
+        boolean uniqueCheckCaseInsensitive = uniqueArrayUsername.stream().anyMatch(username::equalsIgnoreCase);
         if (uniqueCheckCaseInsensitive) {
             message = "Username already taken.";
             addUsernameText.setText("");
@@ -160,7 +155,20 @@ public class GreetingScreenFragment extends Fragment {
     }
 
     protected void message() {
-//        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Gets android ID from bundle
+     * @throws Exception
+     * Throws exception if no ID was passed in intent
+     */
+    public void getIDFromBundle() throws Exception{
+        if(getIntent() == null || getIntent().getExtras() == null) {
+            throw new Exception("Must have intent with \"android_id\"");
+        }
+        Bundle extras = getIntent().getExtras();
+        android_id = extras.getString("android_id");
     }
 
 }

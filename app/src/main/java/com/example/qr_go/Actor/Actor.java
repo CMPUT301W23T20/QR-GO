@@ -13,9 +13,12 @@ public class Actor {
     private String username;
     private String deviceID;
 
+    private String contact;
+
     public Actor(String username, String deviceID) {
         this.username = username;
         this.deviceID = deviceID;
+        this.contact = "";
     }
 
     /**
@@ -35,4 +38,7 @@ public class Actor {
     public String getDeviceID() {
         return deviceID;
     }
+
+    public String getContact() { return contact;}
+    public void setContact(String contact) {this.contact = contact;}
 }
