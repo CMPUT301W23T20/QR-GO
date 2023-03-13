@@ -34,6 +34,7 @@ import java.util.Map;
  */
 public class PlayerProfileFragment extends Fragment {
     private TextView usernameTextView;
+    private TextView contactTextView;
     private Button qrButton;
     private TextView totalScoreTextView;
     private TextView totalScannedTextView;
@@ -137,6 +138,7 @@ public class PlayerProfileFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String username = (String)documentSnapshot.get("username");
+                        String contact = (String)documentSnapshot.get("contact");
                         String deviceID = (String)documentSnapshot.get("deviceID");
 
                         ArrayList<QR> qrListFromDoc = dbHelper.convertQRListFromDB((List<Map<String, Object>>) documentSnapshot.get("qrList"));
@@ -150,6 +152,7 @@ public class PlayerProfileFragment extends Fragment {
 
                         // update UI
                         usernameTextView.setText(model.getUsername());
+                        contactTextView.setText("Contact: " + contact);
                         totalScoreTextView.setText("Total Score: " + model.getTotalScore());
                         totalScannedTextView.setText("Total Scanned: " + model.getTotalQR());
                     }
@@ -166,5 +169,6 @@ public class PlayerProfileFragment extends Fragment {
         qrButton = view.findViewById(R.id.my_qr_codes_button);
         totalScoreTextView = view.findViewById(R.id.total_score_text);
         totalScannedTextView = view.findViewById(R.id.total_scanned_text);
+        contactTextView = view.findViewById(R.id.contact_text);
     }
 }

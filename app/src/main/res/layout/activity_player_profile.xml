@@ -20,6 +20,12 @@
             android:layout_height="62dp"
             android:gravity="center_vertical"
             android:textSize="30sp" />
+        <TextView
+            android:id="@+id/contact_text"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:gravity="center_vertical"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/my_qr_codes_button"
