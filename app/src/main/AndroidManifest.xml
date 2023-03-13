@@ -67,7 +67,7 @@
         </activity>
 
         <activity
-            android:name=".Activities.GreetingScreenActivity"
+            android:name=".Activities.Profile.GreetingScreenActivity"
             android:exported="true">
         </activity>
 

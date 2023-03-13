@@ -1,4 +1,4 @@
-package com.example.qr_go.Activities;
+package com.example.qr_go.Activities.Profile;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -25,7 +25,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 /**
- * Represents greeting screen if player on device is not already in database
+ * This is a class that creates a greeting screen if player on device is not already in database
  */
 public class GreetingScreenActivity extends FragmentActivity {
 
@@ -42,9 +42,22 @@ public class GreetingScreenActivity extends FragmentActivity {
     private CollectionReference collectionReference;
     private DataBaseHelper dbHelper = new DataBaseHelper();
 
+    /**
+     * Constructor method for GreetingScreenActivity
+     */
 
     public GreetingScreenActivity() {
     }
+
+    /**
+     * Creates the layout that takes in user's username and contact information
+     * When confirm is pressed checks if the username is not empty, username is unique and contact information is in email format
+     * Passes data to Player with username and contact information
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +74,7 @@ public class GreetingScreenActivity extends FragmentActivity {
 
         collectionReference = db.collection("Player");
 
-        // add all usernames in db to collection
+        // add all usernames in database to an array
         addToArrayUsername();
 
         // get android id from bundle
@@ -75,6 +88,7 @@ public class GreetingScreenActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 username = addUsernameText.getText().toString();
+                username = username.trim();
                 contact = addContactText.getText().toString();
                 if (lengthCheck() && uniqueCheck() && validateEmailAddress()) {
                     // create player and push to db
@@ -95,6 +109,11 @@ public class GreetingScreenActivity extends FragmentActivity {
         });
     }
 
+    /**
+     * Checks the length of username
+     * @return
+     * Return true if username length is greater than 0, false otherwise
+     */
     protected Boolean lengthCheck() {
         if (username.length()>0) {
             return true;
@@ -106,6 +125,10 @@ public class GreetingScreenActivity extends FragmentActivity {
             return false;
         }
     }
+
+    /**
+     * Adds all usernames from database into an array
+     */
 
     protected void addToArrayUsername() {
 
@@ -126,6 +149,12 @@ public class GreetingScreenActivity extends FragmentActivity {
                 });
 
     }
+
+    /**
+     * Checks if username is unique, case insensitive
+     * @return
+     * Return true if username is unique, false otherwise
+     */
     protected Boolean uniqueCheck() {
 //        System.out.println(ArrayUsername);
         boolean uniqueCheckCaseInsensitive = uniqueArrayUsername.stream().anyMatch(username::equalsIgnoreCase);
@@ -141,6 +170,12 @@ public class GreetingScreenActivity extends FragmentActivity {
 
     }
 
+    /**
+     * Checks if email is in the correct format or if it's empty
+     * @return
+     * Return true if email is in correct format or empty, false otherwise
+     */
+
     protected Boolean validateEmailAddress() {
 
         if(contact.isEmpty() || Patterns.EMAIL_ADDRESS.matcher(contact).matches()) {
@@ -153,6 +188,10 @@ public class GreetingScreenActivity extends FragmentActivity {
         }
 
     }
+
+    /**
+     * Displays error message for user
+     */
 
     protected void message() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
