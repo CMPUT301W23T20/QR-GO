@@ -16,9 +16,9 @@ import com.example.qr_go.R;
 import com.google.android.gms.maps.GoogleMap;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link MapFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * This class is no longer being used.
+ * @see MapsActivity
+ * @deprecated
  */
 public class MapFragment extends Fragment {
 

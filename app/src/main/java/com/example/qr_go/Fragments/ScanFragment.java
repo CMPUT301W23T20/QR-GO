@@ -37,11 +37,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+// Source: Youtube.com
+//URL: https://www.youtube.com/watch?v=tkf59VvBzhc
+//Authour: https://www.youtube.com/@codingbeginnerKH
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ScanFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * This class is the Scan fragment that displays the QR Scanner
  */
 public class ScanFragment extends Fragment {
 
