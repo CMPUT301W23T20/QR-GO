@@ -1,0 +1,12 @@
+com.example.qr_go
+com.example.qr_go.Activities
+com.example.qr_go.Activities.Profile
+com.example.qr_go.Activities.QRView
+com.example.qr_go.Activities.Scan
+com.example.qr_go.Actor
+com.example.qr_go.Adapters
+com.example.qr_go.Content
+com.example.qr_go.Fragments
+com.example.qr_go.Fragments.Profile
+com.example.qr_go.Interfaces
+com.example.qr_go.QR
