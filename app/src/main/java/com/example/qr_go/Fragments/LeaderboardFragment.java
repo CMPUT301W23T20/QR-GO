@@ -1,19 +1,37 @@
 package com.example.qr_go.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.LeaderboardAdapter;
 import com.example.qr_go.Content.LeaderboardContent;
+import com.example.qr_go.DataBaseHelper;
+import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents the fragment that holds the leaderboard
@@ -36,10 +54,11 @@ public class LeaderboardFragment extends Fragment {
     SearchView searchView;
     private ListView leaderboardList;
     // will contain usernames and scores
-    private ArrayList<LeaderboardContent> dataList;
+    private ArrayList<Player> dataList;
     // will contain just the usernames
     private ArrayList<String> userList;
     private LeaderboardAdapter leaderboardAdapter;
+    private DataBaseHelper dbHelper;
 
     public LeaderboardFragment() {
         // Required empty public constructor
@@ -82,20 +101,49 @@ public class LeaderboardFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         searchView = (SearchView) view.findViewById(R.id.searchView);
 
-        dataList = new ArrayList<LeaderboardContent>();
+        dataList = new ArrayList<Player>();
         userList = new ArrayList<String>();
 
-        String[] users = {"Edm", "Vancouver", "To"};
-        int[] scores = {124, 13, 1};
+        // get database information
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        for (int i = 0; i < users.length; i++){
-            dataList.add(new LeaderboardContent(users[i], scores[i]));
-            userList.add(users[i]);
-        }
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 
-        leaderboardList = view.findViewById(R.id.leaderboard_list);
-        leaderboardAdapter = new LeaderboardAdapter(getActivity(),android.R.layout.simple_list_item_1, dataList);
-        leaderboardList.setAdapter(leaderboardAdapter);
+        // add db to
+        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                dataList.clear();
+
+                for(QueryDocumentSnapshot doc: value) {
+                    // create new player
+                    String username = (String)doc.get("username");
+                    String deviceID = (String)doc.get("deviceID");
+
+                    int rank = ((Long)doc.get("rank")).intValue();
+                    int highestScore = ((Long)doc.get("highestScore")).intValue();
+                    int lowestScore = ((Long)doc.get("lowestScore")).intValue();
+                    int totalScore = ((Long)doc.get("totalScore")).intValue();
+
+                    Player player = new Player(username, deviceID, new ArrayList<>(), rank, highestScore, lowestScore, totalScore);
+
+                    // add player to data list
+                    dataList.add(player);
+
+                    // sort highest to lowest score
+                    Collections.sort(dataList);
+                    Collections.reverse(dataList);
+
+                    // set adapters
+                    leaderboardList = view.findViewById(R.id.leaderboard_list);
+                    leaderboardAdapter = new LeaderboardAdapter(getActivity(),android.R.layout.simple_list_item_1, dataList);
+                    leaderboardList.setAdapter(leaderboardAdapter);
+                }
+            }
+        });
+
+
+
         // runs the search query
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
