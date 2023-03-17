@@ -10,33 +10,34 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Content.LeaderboardContent;
 import com.example.qr_go.R;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 /**
  * Represents an array adapter for the leaderboard
  */
-public class LeaderboardAdapter extends ArrayAdapter<LeaderboardContent>{
+public class LeaderboardAdapter extends ArrayAdapter<Player>{
 
     Context mContext;
     LayoutInflater inflater;
-    private List<LeaderboardContent> leaderboardContentList = null;
-    private ArrayList<LeaderboardContent> arraylist;
+    private ArrayList<Player> playerList = null;
+    private ArrayList<Player> searchList;
 //    public LeaderboardAdapter(Context context, ArrayList<LeaderboardContent>rows){
 //        super(context, 0, rows);
 //    }
 
-    public LeaderboardAdapter(Context context, int simple_list_item_1, List<LeaderboardContent> leaderboardContentList) {
+    public LeaderboardAdapter(Context context, int simple_list_item_1, ArrayList<Player> leaderboardContentList) {
         super(context, 0, leaderboardContentList);
         mContext = context;
-        this.leaderboardContentList = leaderboardContentList;
+        this.playerList = leaderboardContentList;
         inflater = LayoutInflater.from(mContext);
-        this.arraylist = new ArrayList<LeaderboardContent>();
-        this.arraylist.addAll(leaderboardContentList);
+        // added this
+        this.searchList = new ArrayList<Player>();
+        this.searchList.addAll(playerList);
     }
 
     @NonNull
@@ -49,18 +50,14 @@ public class LeaderboardAdapter extends ArrayAdapter<LeaderboardContent>{
             view = convertView;
         }
 
-        LeaderboardContent row= getItem(position);
         TextView playerName = view.findViewById(R.id.player_text);
         TextView score = view.findViewById(R.id.score_text);
 
-        playerName.setText(row.getUserName());
-        score.setText(""+ row.getScore());
+        playerName.setText(playerList.get(position).getUsername());
+        score.setText("Total Score: " + playerList.get(position).getTotalScore());
 
 
         return view;
-
-
-
     }
 
     /**
@@ -70,13 +67,13 @@ public class LeaderboardAdapter extends ArrayAdapter<LeaderboardContent>{
      */
     public void filter(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
-        leaderboardContentList.clear();
+        playerList.clear();
         if (charText.length() == 0) {
-            leaderboardContentList.addAll(arraylist);
+            playerList.addAll(searchList);
         } else {
-            for (LeaderboardContent wp : arraylist) {
-                if (wp.getUserName().toLowerCase(Locale.getDefault()).contains(charText)) {
-                    leaderboardContentList.add(wp);
+            for (Player wp : searchList) {
+                if (wp.getUsername().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    playerList.add(wp);
                 }
             }
         }

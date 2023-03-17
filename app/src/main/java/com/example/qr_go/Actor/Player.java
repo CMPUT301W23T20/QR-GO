@@ -17,7 +17,7 @@ import java.util.HashMap;
 /**
  * Player of QR-GO
  */
-public class Player extends Actor {
+public class Player extends Actor implements Comparable<Player> {
     private ArrayList<QR> qrList;
     private int rank;
     private int highestScore;
@@ -266,5 +266,24 @@ public class Player extends Actor {
      */
     public int getTotalQR() {
         return qrList.size();
+    }
+
+    @Override
+    public int compareTo(Player player) {
+        if(this.totalScore > player.getTotalScore()) {
+            return 1;
+        }
+
+        else if(this.totalScore == player.getTotalScore()) {
+            if(this.getTotalQR() > player.getTotalQR()) {
+                return 1;
+            }
+
+            if(this.getTotalQR() == player.getTotalQR()) {
+                return 0;
+            }
+                return -1;
+        }
+        return -1;
     }
 }
