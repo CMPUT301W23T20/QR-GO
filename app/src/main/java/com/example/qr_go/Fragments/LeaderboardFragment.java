@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.LeaderboardAdapter;
 import com.example.qr_go.Content.LeaderboardContent;
 import com.example.qr_go.DataBaseHelper;
+import com.example.qr_go.MainActivity;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -114,6 +116,7 @@ public class LeaderboardFragment extends Fragment {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 dataList.clear();
+                userList.clear();
 
                 for(QueryDocumentSnapshot doc: value) {
                     // create new player
@@ -129,6 +132,7 @@ public class LeaderboardFragment extends Fragment {
 
                     // add player to data list
                     dataList.add(player);
+                    userList.add(username);
 
                     // sort highest to lowest score
                     Collections.sort(dataList);
@@ -154,7 +158,7 @@ public class LeaderboardFragment extends Fragment {
                     // call filter function
                     leaderboardAdapter.filter(query);
                 } else{
-                    //Toast.makeText(MainActivity.this, "No Match found",Toast.LENGTH_LONG).show();
+                   // Toast.makeText(MainActivity.this, "No Match found", Toast.LENGTH_LONG).show();
                 }
                 return false;
             }

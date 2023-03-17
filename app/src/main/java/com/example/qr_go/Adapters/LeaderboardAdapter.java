@@ -25,7 +25,6 @@ public class LeaderboardAdapter extends ArrayAdapter<Player>{
     Context mContext;
     LayoutInflater inflater;
     private ArrayList<Player> playerList = null;
-
     private ArrayList<Player> searchList;
 //    public LeaderboardAdapter(Context context, ArrayList<LeaderboardContent>rows){
 //        super(context, 0, rows);
@@ -36,6 +35,9 @@ public class LeaderboardAdapter extends ArrayAdapter<Player>{
         mContext = context;
         this.playerList = leaderboardContentList;
         inflater = LayoutInflater.from(mContext);
+        // added this
+        this.searchList = new ArrayList<Player>();
+        this.searchList.addAll(playerList);
     }
 
     @NonNull
@@ -64,12 +66,12 @@ public class LeaderboardAdapter extends ArrayAdapter<Player>{
      * Filters out content on the leaderboard based on the user's input
      */
     public void filter(String charText) {
-        // please fix momo :3
         charText = charText.toLowerCase(Locale.getDefault());
-
-        if(charText.length() > 0) {
-            playerList.clear();
-            for (Player wp : playerList) {
+        playerList.clear();
+        if (charText.length() == 0) {
+            playerList.addAll(searchList);
+        } else {
+            for (Player wp : searchList) {
                 if (wp.getUsername().toLowerCase(Locale.getDefault()).contains(charText)) {
                     playerList.add(wp);
                 }
