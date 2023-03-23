@@ -15,7 +15,7 @@
         />
 
     <Button
-        android:id="@+id/btncamera_id"
+        android:id="@+id/cameraBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/text"
@@ -24,10 +24,10 @@
         />
 
     <ImageView
-        android:id="@+id/imageview1"
+        android:id="@+id/displayImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/btncamera_id"
+        android:layout_below="@+id/cameraBtn"
         />
 
 </RelativeLayout>
