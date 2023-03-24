@@ -59,6 +59,8 @@ public class QRViewActivity extends QRActivity {
             }
         });
 
+        updateQRInfo();
+
         playerListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
