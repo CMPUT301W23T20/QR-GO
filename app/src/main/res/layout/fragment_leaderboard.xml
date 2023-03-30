@@ -13,12 +13,31 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:iconifiedByDefault="false"
-        android:queryHint="Search Here" />
+        android:queryHint="Search Here"
+        android:submitBackground="@drawable/bg_white_rounded"
+        android:background="@drawable/bg_white_rounded"/>
 
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp" >
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Top users    Score" />
+        android:text="Users" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:text="Total Score" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:text="Highest Scan" />
+    </TableRow>
+
 
     <ListView
         android:id="@+id/leaderboard_list"
@@ -28,18 +47,27 @@
 
 
     </ListView>
-
-    <Button
-        android:id="@+id/filter_button"
-        android:layout_width="wrap_content"
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Unique Code" />
+        android:layout_marginTop="15dp" >
+        <Button
+            android:id="@+id/filter_button"
+            android:textSize="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:text="Unique Code" />
 
-    <Button
-        android:id="@+id/score_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Total Score" />
+        <Button
+            android:id="@+id/score_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Score"
+            android:layout_marginLeft="80dp"
+            android:textSize="12dp" />
+    </TableRow>
 
 
 </LinearLayout>
