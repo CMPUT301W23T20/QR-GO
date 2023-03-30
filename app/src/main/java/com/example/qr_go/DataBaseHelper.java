@@ -73,8 +73,8 @@ public class DataBaseHelper {
 
         for(int i = 0; i < commentList.size(); i++) {
             Map<String, Object> currentInCommentList = commentList.get(i);
-            String commenter = (String)currentInCommentList.get("comment");
-            String comment = (String)currentInCommentList.get("commenter");
+            String comment = (String)currentInCommentList.get("comment");
+            String commenter = (String)currentInCommentList.get("commenter");
 
 
             QRComment currentComment = new QRComment(comment, commenter);

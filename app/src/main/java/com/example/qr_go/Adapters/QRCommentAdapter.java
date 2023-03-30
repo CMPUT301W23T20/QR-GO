@@ -36,7 +36,7 @@ public class QRCommentAdapter extends RecyclerView.Adapter<QRCommentAdapter.Comm
     @NonNull
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.content_profile_qr_list, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.content_comment, parent, false);
 
         return new QRCommentAdapter.CommentViewHolder(view);
     }

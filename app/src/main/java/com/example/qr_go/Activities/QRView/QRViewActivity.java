@@ -1,16 +1,19 @@
 package com.example.qr_go.Activities.QRView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.RadioAccessSpecifier;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.qr_go.Activities.Profile.ThisProfileQRListViewActivity;
 import com.example.qr_go.Actor.Player;
-import com.example.qr_go.Adapters.ProfileQRListAdapter;
 import com.example.qr_go.Adapters.QRCommentAdapter;
 import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.Interfaces.RecyclerViewInterface;
@@ -35,14 +38,12 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
     private TextView nameText;
     private TextView scoreText;
     private Button playerListButton;
-    private QRCommentAdapter commentAdapter;
-    private RecyclerView commentListRecyclerView;
-    private ArrayList<QRComment> commentDataList;
+    private Button commentListButton;
+
     private DataBaseHelper dbHelper;
 
     public QRViewActivity() {
-        commentDataList = new ArrayList<>();
-        commentAdapter = new QRCommentAdapter(QRViewActivity.this, commentDataList, QRViewActivity.this);
+        dbHelper = new DataBaseHelper();
     }
 
     @Override
@@ -52,13 +53,13 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
 
         getViews();
 
-        commentListRecyclerView.setAdapter(commentAdapter);
-
         try {
             getInfoFromBundle();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        updateQRInfo();
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,12 +72,20 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
             }
         });
 
-        updateQRInfo();
-
         playerListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(QRViewActivity.this, QRPlayerListViewActivity.class);
+                myIntent.putExtra("android_id", android_id);
+                myIntent.putExtra("qr_hash", qr_hash);
+                QRViewActivity.this.startActivity(myIntent);
+            }
+        });
+
+        commentListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(QRViewActivity.this, QRCommentViewActivity.class);
                 myIntent.putExtra("android_id", android_id);
                 myIntent.putExtra("qr_hash", qr_hash);
                 QRViewActivity.this.startActivity(myIntent);
@@ -104,6 +113,7 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
         this.backButton = findViewById(R.id.back_button);
         this.scoreText = findViewById(R.id.score_text);
         this.playerListButton = findViewById(R.id.player_list_button);
+        this.commentListButton = findViewById(R.id.comment_list_button);
     }
 
     /**
@@ -120,24 +130,23 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
         // put data into class
         collectionReference.document(qr_hash).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String name = (String)documentSnapshot.get("name");
                         String avatar = (String)documentSnapshot.get("avatar");
                         int score = ((Long)documentSnapshot.get("score")).intValue();
+                        ArrayList<QRComment> commentList = dbHelper.convertQRCommentListFromDB((List<Map<String, Object>>)documentSnapshot.get("commentsList"));
+
 
                         qr = new QR(qr_hash, name , avatar, score,
-                                (ArrayList<QRComment>)documentSnapshot.get("commentsList"),
-                                (ArrayList<Player>)documentSnapshot.get("playerList"));
+                                commentList,
+                                new ArrayList<>());
 
 
                         // set total text
                         nameText.setText(qr.getName());
                         scoreText.setText("" + qr.getScore());
-
-                        // initialize adapter for comments
-
-
                     }
                 });
     }
@@ -146,4 +155,6 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
     public void onItemClick(int i) {
 
     }
+
+
 }
