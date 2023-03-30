@@ -3,12 +3,13 @@ package com.example.qr_go;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.example.qr_go.QR.Avatar;
 import com.example.qr_go.QR.QR;
 
 import org.junit.Test;
 
 public class QRTest {
-    String qrContents = "https://www.google.com";
+    String qrContents = "mohamed";
     QR qr = new QR(qrContents);
 
     @Test
@@ -37,10 +38,11 @@ public class QRTest {
     }
     @Test
     public void testGetAvatar() {
-        String avatar = qr.getAvatar();
+        Avatar avatarGenerator = new Avatar();
+        String avatar = avatarGenerator.generateAvatar(qr.getQrHash());
 
-        // Call getName() method and check if it returns a valid string
-        System.err.println("avatar:\n " + avatar);
-
+        // Print the generated avatar to the console
+        System.out.println("Generated avatar:\n" + avatar);
     }
+
 }
