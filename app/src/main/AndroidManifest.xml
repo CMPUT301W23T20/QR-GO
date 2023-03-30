@@ -72,6 +72,11 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".Activities.QRView.QRCommentViewActivity"
+            android:exported="true">
+        </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.android.fileprovider"

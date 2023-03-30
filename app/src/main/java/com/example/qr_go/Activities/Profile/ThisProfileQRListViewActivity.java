@@ -167,7 +167,8 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
     public void onItemClick(int i) {
         Intent myIntent = new Intent(ThisProfileQRListViewActivity.this, QRViewActivity.class);
         myIntent.putExtra("android_id", android_id);
-        myIntent.putExtra("qr_hash", qrDataList.get(i).getQrHash());//Optional parameters
+        myIntent.putExtra("qr_hash", qrDataList.get(i).getQrHash());
+        System.out.println(qrDataList.get(i).getQrHash());
         ThisProfileQRListViewActivity.this.startActivity(myIntent);
     }
 

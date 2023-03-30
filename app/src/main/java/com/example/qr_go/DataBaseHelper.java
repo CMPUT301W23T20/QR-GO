@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.qr_go.Actor.Player;
+import com.example.qr_go.Adapters.QRCommentAdapter;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.QR.QRComment;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,13 +32,14 @@ public class DataBaseHelper {
             Map<String, Object> currentInQRList = qrList.get(i);
             String name = (String)currentInQRList.get("name");
             String avatar = (String)currentInQRList.get("avatar");
+            String qr_hash = (String)currentInQRList.get("qrHash");
             Long scoreLong = (Long)currentInQRList.get("score");
             int score = scoreLong.intValue();
             // dummy arraylist since we never use these
             ArrayList<QRComment> commentsList = new ArrayList<>();
             ArrayList<Player> playerList = new ArrayList<>();
 
-            QR currentQR = new QR(name , avatar, score, commentsList, playerList);
+            QR currentQR = new QR(qr_hash, name, avatar, score, commentsList, playerList);
             result.add(currentQR);
         }
 
@@ -66,6 +68,22 @@ public class DataBaseHelper {
         return result;
     }
 
+    public ArrayList<QRComment> convertQRCommentListFromDB(List<Map<String, Object>> commentList) {
+        ArrayList<QRComment> result = new ArrayList<>();
+
+        for(int i = 0; i < commentList.size(); i++) {
+            Map<String, Object> currentInCommentList = commentList.get(i);
+            String comment = (String)currentInCommentList.get("comment");
+            String commenter = (String)currentInCommentList.get("commenter");
+
+
+            QRComment currentComment = new QRComment(comment, commenter);
+            result.add(currentComment);
+        }
+
+        return result;
+    }
+
     public void updateDB(QR qr) {
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -75,6 +93,7 @@ public class DataBaseHelper {
         // Create hashmap for data
         HashMap<String, Object> data = new HashMap<>();
         data.put("name", qr.getName());
+        data.put("qr_hash", qr.getQrHash());
         data.put("score", qr.getScore());
         data.put("avatar", qr.getAvatar());
         data.put("commentsList", qr.getCommentsList());

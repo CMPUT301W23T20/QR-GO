@@ -62,7 +62,8 @@ public class QR implements Comparable<QR> {
      * @param commentsList
      * @param qrUsers
      */
-    public QR(String name, String avatar, int score, ArrayList<QRComment> commentsList, ArrayList<Player> qrUsers) {
+    public QR(String qr_hash, String name, String avatar, int score, ArrayList<QRComment> commentsList, ArrayList<Player> qrUsers) {
+        this.qrHash = qr_hash;
         this.name = name;
         this.avatar = avatar;
         this.score = score;
@@ -238,7 +239,7 @@ public class QR implements Comparable<QR> {
 
     }
 
-    public void addComment(String comment, Actor commenter) {
+    public void addComment(String comment, String commenter) {
         getCommentsList().add(new QRComment(comment, commenter));
     }
     public void deleteComment(int i) { getCommentsList().remove(i);

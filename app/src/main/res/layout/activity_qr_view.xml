@@ -64,5 +64,12 @@
             android:gravity="center_vertical"
             android:text="Players" />
 
+        <Button
+            android:id="@+id/comment_list_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Comments" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

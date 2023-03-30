@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.qr_go.Actor.Player;
-import com.example.qr_go.Content.LeaderboardContent;
 import com.example.qr_go.R;
 
 import java.util.ArrayList;
