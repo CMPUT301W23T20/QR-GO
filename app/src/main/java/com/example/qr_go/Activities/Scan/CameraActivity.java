@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
@@ -21,13 +22,16 @@ import android.widget.Toast;
 
 import com.example.qr_go.MainActivity;
 import com.example.qr_go.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -40,6 +44,13 @@ import java.util.Date;
 //      https://www.youtube.com/watch?v=dKX2V992pWI&list=RDCMUCR1t5eSmLxLUdBnK2XwZOuw&index=1
 // Author: https://www.youtube.com/@SmallAcademy
 
+//From stackoverflow.com
+// URL: https://stackoverflow.com/questions/47847694/how-to-return-datasnapshot-value-as-a-result-of-a-method/47853774
+// Author: https://stackoverflow.com/users/5246885/alex-mamo
+
+//From geeksforgeeks.org
+// URL: https://www.geeksforgeeks.org/how-to-compress-image-in-android-before-uploading-it-to-firebase-storage/
+// Author: https://auth.geeksforgeeks.org/user/prajithshetty7/articles
 
 /**
  * This class displays the activity which gives the player the option to record a photo
@@ -48,14 +59,19 @@ import java.util.Date;
 public class CameraActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 22;
     ImageView selectedImage;
-    Button cameraBtn;
+    Button yesBtn;
+    Button noBtn;
     String currentPhotoPath;
-
+    Uri PhotoUri;
     StorageReference storageReference;
+    Uri contentUri;
+    Bitmap bmp;
+    ByteArrayOutputStream baos;
 
     /**
      * This function is called right when the activity starts
      * It ensures that when the button for the camera is clicked, it will show a camera
+     *
      * @param savedInstanceState state If the activity is being re-initialized after
      *     previously being shut down then this Bundle contains the data it most
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
@@ -67,14 +83,22 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
 
         selectedImage = findViewById(R.id.displayImageView);
-        cameraBtn=findViewById(R.id.cameraBtn);
+        yesBtn = findViewById(R.id.yesBtn);
+        noBtn = findViewById(R.id.noBtn);
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        cameraBtn.setOnClickListener(new View.OnClickListener() {
+        yesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dispatchTakePictureIntent();
+            }
+        });
+
+        noBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToGetLocationActivity();
             }
         });
     }
@@ -82,7 +106,7 @@ public class CameraActivity extends AppCompatActivity {
 
     /**
      * This function is called after a picture is taken
-     * It creates a Bitmap object which is the photo, this will be stored with the QR code
+     * It creates the URI for the photo which will be stored in firebase storage
      * It then starts the next activity, which is GetLocationActivity
      *
      * @param requestCode The integer request code originally supplied to
@@ -102,30 +126,69 @@ public class CameraActivity extends AppCompatActivity {
 //                selectedImage.setImageURI(Uri.fromFile(f));
                 Log.d("tag", "Absolute Url of Image is " + Uri.fromFile(f));
 
+                // Adds photo into gallery
+
                 Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                Uri contentUri = Uri.fromFile(f);
+                contentUri = Uri.fromFile(f);
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
 
-                uploadImageToFirebase(f.getName(), contentUri);
+                // Adds photo to firebase storage
+                uploadCompressedImageToFirebase(f.getName(), contentUri, new MyCallback() {
+                    @Override
+                    public void onCallback(Uri uri) {
+                        PhotoUri = uri;
+                        System.out.println("PhotoUri is " + PhotoUri);
+                        Picasso.get().load(PhotoUri).into(selectedImage);
+                    }
+                });
 
-                //pass photo to be stored here
-                Intent locationIntent = new Intent(CameraActivity.this, GetLocationActivity.class);
-                startActivity(locationIntent);
+
+                // Go to GetLocationActivity
+                goToGetLocationActivity();
+
             }
         }
     }
 
-    private void uploadImageToFirebase(String name, Uri contentUri) {
+    /**
+     * This function compresses the image and adds it to firebase
+     *
+     * @param name The name of the photo
+     * @param contentUri The path of the photo
+     * @param myCallback Callback interface
+     */
+
+    private void uploadCompressedImageToFirebase(String name, Uri contentUri, MyCallback myCallback) {
+
+        // create a bitmap from the Uri
+        // this compresses the high resolution from the Uri to a lower resolution bitmap
+        bmp = null;
+        try {
+            bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), contentUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        baos = new ByteArrayOutputStream();
+
+        // here we can choose quality factor
+        // in third parameter(ex. here it is 25)
+        bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+
+        byte[] fileInBytes = baos.toByteArray();
+
+
         StorageReference image = storageReference.child("images/" + name);
-        image.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        image.putBytes(fileInBytes).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(selectedImage);
+//                        Picasso.get().load(uri).into(selectedImage);
                         Log.d("tag", "onSuccess: Uploaded Image URL is " + uri.toString());
+                        myCallback.onCallback(uri);
+
                     }
                 });
             }
@@ -137,6 +200,22 @@ public class CameraActivity extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * This interface creates a callback which allows us to wait for Firebase to return the uri
+     *
+     */
+
+    public interface MyCallback{
+        void onCallback(Uri uri);
+    }
+
+    /**
+     *  Creates an image file
+     *
+     * @return A file where the image should be stored
+     * @throws IOException
+     */
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -155,6 +234,10 @@ public class CameraActivity extends AppCompatActivity {
         return image;
     }
 
+    /**
+     * Opens the camera and calls createImageFile to create a file where the photo is stored
+     *
+     */
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -173,5 +256,16 @@ public class CameraActivity extends AppCompatActivity {
         }
 
     }
+
+    /**
+     * Starts a new activity GetLocationActivity
+     *
+     */
+
+    public void goToGetLocationActivity() {
+        Intent locationIntent = new Intent(CameraActivity.this, GetLocationActivity.class);
+        startActivity(locationIntent);
+    }
+
 
 }
