@@ -138,12 +138,6 @@ public class LeaderboardFragment extends Fragment {
                     userList.add(username);
                     // sort highest to lowest score
                     Collections.sort(dataList);
-                    //                    Collections.sort(dataList, new Comparator<Player>() {
-                    //                        @Override
-                    //                        public int compare(Player player, Player t1) {
-                    //                            return player.getHighestScore() - t1.getHighestScore();
-                    //                        }
-                    //                    });
                     Collections.reverse(dataList);
 
                     // set adapters
