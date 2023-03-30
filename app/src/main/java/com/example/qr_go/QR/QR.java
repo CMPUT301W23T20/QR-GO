@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * QR code that player scans
  */
@@ -133,50 +134,101 @@ public class QR implements Comparable<QR> {
      * @param qrHash
      * @return
      */
-    private String generateName(String qrHash) {
-        StringBuilder nameBuilder = new StringBuilder();
 
-        // Define the naming dictionary
-        HashMap<Character, String[]> dictionary = new HashMap<>();
-        dictionary.put('0', new String[] { "Squiggly", "Wiggly" });
-        dictionary.put('1', new String[] { "Inky", "Binky" });
-        dictionary.put('2', new String[] { "Woogly", "Boogly" });
-        dictionary.put('3', new String[] { "Booty", "Fruity" });
-        dictionary.put('4', new String[] { "Scooby", "Dooby" });
-        dictionary.put('5', new String[] { "Hard", "Soft" });
-        dictionary.put('6', new String[] { "Brown", "Blue" });
-        dictionary.put('7', new String[] { "Quirky", "Sassy" });
-        dictionary.put('8', new String[] { "Mean", "Bean" });
-        dictionary.put('9', new String[] { "Hairy", "Chubby" });
-        dictionary.put('A', new String[] { "Smashing", "Bonkers" });
-        dictionary.put('B', new String[] { "Nutty", "Funky" });
-        dictionary.put('C', new String[] { "Boujee", "Gucci" });
-        dictionary.put('D', new String[] { "Powerful", "Weak" });
-        dictionary.put('E', new String[] { "Stupid", "Smart" });
-        dictionary.put('F', new String[] { "Moody", "Greasy" });
+    public static String generateName(String qrHash) {
+        // Define a mapping from each hexadecimal character to a unique adjective
+        Map<Character, String> adjectives = new HashMap<>();
+        adjectives.put('0', "chubby");
+        adjectives.put('1', "fast");
+        adjectives.put('2', "stinky");
+        adjectives.put('3', "furry");
+        adjectives.put('4', "spiky");
+        adjectives.put('5', "shiny");
+        adjectives.put('6', "slimy");
+        adjectives.put('7', "grumpy");
+        adjectives.put('8', "greasy");
+        adjectives.put('9', "silly");
+        adjectives.put('a', "fancy");
+        adjectives.put('b', "lumpy");
+        adjectives.put('c', "stupid");
+        adjectives.put('d', "tiny");
+        adjectives.put('e', "sassy");
+        adjectives.put('f', "dramatic");
 
-        // Extract the first 6 hexadecimal characters from the hash
+        // Extract the first 6 characters of the input hexadecimal string
         String hexPrefix = qrHash.substring(0, 6);
 
-        // Convert each hexadecimal digit to its corresponding word from the naming dictionary
-        for (char c : hexPrefix.toCharArray()) {
-            String[] words = dictionary.get(Character.toUpperCase(c));
-            if (words != null) {
-                nameBuilder.append(words[0]).append(" ");
-            }
+        // Generate 5 adjectives based on the first 5 characters
+        String[] adjectiveArray = new String[5];
+        for (int i = 0; i < 5; i++) {
+            char hexChar = hexPrefix.charAt(i);
+            String adjective = adjectives.get(hexChar);
+            adjectiveArray[i] = adjective;
         }
 
-        // Trim the name to 5 words if it is longer
-        String name = nameBuilder.toString().trim();
-        String[] words = name.split(" ");
-        if (words.length > 5) {
-            name = String.join(" ", Arrays.copyOfRange(words, 0, 5));
+        // Generate a noun based on the last character
+        char lastHexChar = hexPrefix.charAt(5);
+        String noun;
+        switch (lastHexChar) {
+            case '0':
+                noun = "dog";
+                break;
+            case '1':
+                noun = "cat";
+                break;
+            case '2':
+                noun = "tortoise";
+                break;
+            case '3':
+                noun = "hamster";
+                break;
+            case '4':
+                noun = "rabbit";
+                break;
+            case '5':
+                noun = "parrot";
+                break;
+            case '6':
+                noun = "goldfish";
+                break;
+            case '7':
+                noun = "pegasus";
+                break;
+            case '8':
+                noun = "snake";
+                break;
+            case '9':
+                noun = "rat";
+                break;
+            case 'a':
+                noun = "spider";
+                break;
+            case 'b':
+                noun = "goose";
+                break;
+            case 'c':
+                noun = "octopus";
+                break;
+            case 'd':
+                noun = "lizard";
+                break;
+            case 'e':
+                noun = "bee";
+                break;
+            case 'f':
+                noun = "monkey";
+                break;
+            default:
+                // This should never happen, but just in case...
+                noun = "unknown";
         }
 
+        // Concatenate the adjectives and noun into a single string
+        String name = String.join("-", adjectiveArray) + "-" + noun;
+
+        // Return the resulting name
         return name;
     }
-
-
 
     private String generateAvatar(String qrHash) {
         // returning empty string to avoid error lines
