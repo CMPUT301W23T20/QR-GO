@@ -32,13 +32,14 @@ public class DataBaseHelper {
             Map<String, Object> currentInQRList = qrList.get(i);
             String name = (String)currentInQRList.get("name");
             String avatar = (String)currentInQRList.get("avatar");
+            String qr_hash = (String)currentInQRList.get("qrHash");
             Long scoreLong = (Long)currentInQRList.get("score");
             int score = scoreLong.intValue();
             // dummy arraylist since we never use these
             ArrayList<QRComment> commentsList = new ArrayList<>();
             ArrayList<Player> playerList = new ArrayList<>();
 
-            QR currentQR = new QR(name , avatar, score, commentsList, playerList);
+            QR currentQR = new QR(qr_hash, name, avatar, score, commentsList, playerList);
             result.add(currentQR);
         }
 
@@ -92,6 +93,7 @@ public class DataBaseHelper {
         // Create hashmap for data
         HashMap<String, Object> data = new HashMap<>();
         data.put("name", qr.getName());
+        data.put("qr_hash", qr.getQrHash());
         data.put("score", qr.getScore());
         data.put("avatar", qr.getAvatar());
         data.put("commentsList", qr.getCommentsList());

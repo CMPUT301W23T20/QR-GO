@@ -40,7 +40,6 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
     private ArrayList<QRComment> commentDataList;
     private DataBaseHelper dbHelper;
 
-
     public QRViewActivity() {
         commentDataList = new ArrayList<>();
         commentAdapter = new QRCommentAdapter(QRViewActivity.this, commentDataList, QRViewActivity.this);
@@ -116,10 +115,10 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
 
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+        CollectionReference collectionReference = db.collection(QR.class.getSimpleName());
 
         // put data into class
-        db.collection(Player.class.getSimpleName()).document(android_id).get()
+        collectionReference.document(qr_hash).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -127,16 +126,14 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
                         String avatar = (String)documentSnapshot.get("avatar");
                         int score = ((Long)documentSnapshot.get("score")).intValue();
 
-                        ArrayList<QRComment> commentList = dbHelper.convertQRCommentListFromDB((List<Map<String, Object>>) documentSnapshot.get("commentsList"));
-
-                        qr = new QR(name , avatar, score,
-                                commentList,
-                                new ArrayList<>());
+                        qr = new QR(qr_hash, name , avatar, score,
+                                (ArrayList<QRComment>)documentSnapshot.get("commentsList"),
+                                (ArrayList<Player>)documentSnapshot.get("playerList"));
 
 
                         // set total text
                         nameText.setText(qr.getName());
-                        scoreText.setText(qr.getScore());
+                        scoreText.setText("" + qr.getScore());
 
                         // initialize adapter for comments
 
