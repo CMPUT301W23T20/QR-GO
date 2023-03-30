@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qr_go.Actor.Player;
+import com.example.qr_go.Interfaces.RecyclerViewInterface;
 import com.example.qr_go.QR.QRComment;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
@@ -29,7 +30,6 @@ public class QRViewActivity extends QRActivity {
     private TextView scoreText;
     private Button playerListButton;
     private RecyclerView commentListRecyclerView;
-
 
     public QRViewActivity() {
 
@@ -103,29 +103,34 @@ public class QRViewActivity extends QRActivity {
 
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+        CollectionReference collectionReference = db.collection(QR.class.getSimpleName());
 
         // put data into class
-        db.collection(Player.class.getSimpleName()).document(android_id).get()
+        collectionReference.document(qr_hash).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String name = (String)documentSnapshot.get("name");
                         String avatar = (String)documentSnapshot.get("avatar");
                         int score = ((Long)documentSnapshot.get("score")).intValue();
-                        qr = new QR(name , avatar, score,
+                        qr = new QR(qr_hash, name , avatar, score,
                                 (ArrayList<QRComment>)documentSnapshot.get("commentsList"),
                                 (ArrayList<Player>)documentSnapshot.get("playerList"));
 
 
                         // set total text
                         nameText.setText(qr.getName());
-                        scoreText.setText(qr.getScore());
+                        scoreText.setText("" + qr.getScore());
 
                         // initialize adapter for comments
                         // to do*
 
                     }
                 });
+    }
+
+    @Override
+    public void onItemClick(int i) {
+
     }
 }

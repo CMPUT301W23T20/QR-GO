@@ -61,7 +61,8 @@ public class QR implements Comparable<QR> {
      * @param commentsList
      * @param qrUsers
      */
-    public QR(String name, String avatar, int score, ArrayList<QRComment> commentsList, ArrayList<Player> qrUsers) {
+    public QR(String qr_hash, String name, String avatar, int score, ArrayList<QRComment> commentsList, ArrayList<Player> qrUsers) {
+        this.qrHash = qr_hash;
         this.name = name;
         this.avatar = avatar;
         this.score = score;
