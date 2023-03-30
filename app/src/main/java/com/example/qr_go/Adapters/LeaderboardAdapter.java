@@ -52,9 +52,11 @@ public class LeaderboardAdapter extends ArrayAdapter<Player>{
 
         TextView playerName = view.findViewById(R.id.player_text);
         TextView score = view.findViewById(R.id.score_text);
+        TextView highestScore = view.findViewById(R.id.high_score_text);
 
         playerName.setText(playerList.get(position).getUsername());
         score.setText("Total Score: " + playerList.get(position).getTotalScore());
+        highestScore.setText("High"+ playerList.get(position).getHighestScore());
 
 
         return view;

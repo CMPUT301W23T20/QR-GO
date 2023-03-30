@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,22 +11,35 @@
         android:id="@+id/searchView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:queryHint="Search Here"
+        android:layout_alignParentTop="true"
         android:iconifiedByDefault="false"
-        android:layout_alignParentTop="true" />
+        android:queryHint="Search Here" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Top users    Score"
-        />
+        android:text="Top users    Score" />
 
     <ListView
+        android:id="@+id/leaderboard_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/leaderboard_list"/>
+        android:layout_weight="1">
 
+
+    </ListView>
+
+    <Button
+        android:id="@+id/filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Unique Code" />
+
+    <Button
+        android:id="@+id/score_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Score" />
 
 
 </LinearLayout>

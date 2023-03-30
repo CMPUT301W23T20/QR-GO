@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,6 +108,7 @@ public class LeaderboardFragment extends Fragment {
         dataList = new ArrayList<Player>();
         userList = new ArrayList<String>();
 
+
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -133,9 +136,14 @@ public class LeaderboardFragment extends Fragment {
                     // add player to data list
                     dataList.add(player);
                     userList.add(username);
-
                     // sort highest to lowest score
                     Collections.sort(dataList);
+                    //                    Collections.sort(dataList, new Comparator<Player>() {
+                    //                        @Override
+                    //                        public int compare(Player player, Player t1) {
+                    //                            return player.getHighestScore() - t1.getHighestScore();
+                    //                        }
+                    //                    });
                     Collections.reverse(dataList);
 
                     // set adapters
@@ -145,6 +153,37 @@ public class LeaderboardFragment extends Fragment {
                 }
             }
         });
+
+        Button button2= view.findViewById(R.id.score_button);
+        button2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Collections.sort(dataList);
+                Collections.reverse(dataList);
+
+                leaderboardList = view.findViewById(R.id.leaderboard_list);
+                leaderboardAdapter = new LeaderboardAdapter(getActivity(),android.R.layout.simple_list_item_1, dataList);
+                leaderboardList.setAdapter(leaderboardAdapter);
+            }
+        });
+
+
+        Button button = view.findViewById(R.id.filter_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Collections.sort(dataList, new Comparator<Player>() {
+                    @Override
+                    public int compare(Player player, Player t1) {
+                        return player.getHighestScore() - t1.getHighestScore();
+                    }
+                });
+                Collections.reverse(dataList);
+                leaderboardList = view.findViewById(R.id.leaderboard_list);
+                leaderboardAdapter = new LeaderboardAdapter(getActivity(),android.R.layout.simple_list_item_1, dataList);
+                leaderboardList.setAdapter(leaderboardAdapter);
+            }
+        });
+
+
 
 
 
