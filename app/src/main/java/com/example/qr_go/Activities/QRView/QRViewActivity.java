@@ -8,7 +8,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.qr_go.Activities.Profile.ThisProfileQRListViewActivity;
 import com.example.qr_go.Actor.Player;
+import com.example.qr_go.Adapters.ProfileQRListAdapter;
+import com.example.qr_go.Adapters.QRCommentAdapter;
+import com.example.qr_go.DataBaseHelper;
+import com.example.qr_go.Interfaces.RecyclerViewInterface;
 import com.example.qr_go.QR.QRComment;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
@@ -18,21 +23,27 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a QR
  */
-public class QRViewActivity extends QRActivity {
+public class QRViewActivity extends QRActivity implements RecyclerViewInterface {
     private QR qr;
     private Button backButton;
     private TextView nameText;
     private TextView scoreText;
     private Button playerListButton;
+    private QRCommentAdapter commentAdapter;
     private RecyclerView commentListRecyclerView;
+    private ArrayList<QRComment> commentDataList;
+    private DataBaseHelper dbHelper;
 
 
     public QRViewActivity() {
-
+        commentDataList = new ArrayList<>();
+        commentAdapter = new QRCommentAdapter(QRViewActivity.this, commentDataList, QRViewActivity.this);
     }
 
     @Override
@@ -41,6 +52,8 @@ public class QRViewActivity extends QRActivity {
         setContentView(R.layout.activity_qr_view);
 
         getViews();
+
+        commentListRecyclerView.setAdapter(commentAdapter);
 
         try {
             getInfoFromBundle();
@@ -113,9 +126,12 @@ public class QRViewActivity extends QRActivity {
                         String name = (String)documentSnapshot.get("name");
                         String avatar = (String)documentSnapshot.get("avatar");
                         int score = ((Long)documentSnapshot.get("score")).intValue();
+
+                        ArrayList<QRComment> commentList = dbHelper.convertQRCommentListFromDB((List<Map<String, Object>>) documentSnapshot.get("commentsList"));
+
                         qr = new QR(name , avatar, score,
-                                (ArrayList<QRComment>)documentSnapshot.get("commentsList"),
-                                (ArrayList<Player>)documentSnapshot.get("playerList"));
+                                commentList,
+                                new ArrayList<>());
 
 
                         // set total text
@@ -123,9 +139,14 @@ public class QRViewActivity extends QRActivity {
                         scoreText.setText(qr.getScore());
 
                         // initialize adapter for comments
-                        // to do*
+
 
                     }
                 });
+    }
+
+    @Override
+    public void onItemClick(int i) {
+
     }
 }

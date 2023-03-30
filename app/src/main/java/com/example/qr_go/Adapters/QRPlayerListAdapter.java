@@ -36,7 +36,7 @@ public class QRPlayerListAdapter extends ArrayAdapter<Player> {
         }
         Player player = getItem(position);
 
-        TextView playerName = view.findViewById(R.id.player_text);
+        TextView playerName = view.findViewById(R.id.commenter_text);
         TextView playerRank = view.findViewById(R.id.rank_text);
 
         playerName.setText(player.getUsername());

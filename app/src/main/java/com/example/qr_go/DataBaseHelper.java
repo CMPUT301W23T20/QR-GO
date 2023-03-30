@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.qr_go.Actor.Player;
+import com.example.qr_go.Adapters.QRCommentAdapter;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.QR.QRComment;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -61,6 +62,22 @@ public class DataBaseHelper {
 
             Player currentPlayer = new Player(username, deviceID, qrList, rank, highestScore, lowestScore, totalScore);
             result.add(currentPlayer);
+        }
+
+        return result;
+    }
+
+    public ArrayList<QRComment> convertQRCommentListFromDB(List<Map<String, Object>> commentList) {
+        ArrayList<QRComment> result = new ArrayList<>();
+
+        for(int i = 0; i < commentList.size(); i++) {
+            Map<String, Object> currentInCommentList = commentList.get(i);
+            String commenter = (String)currentInCommentList.get("comment");
+            String comment = (String)currentInCommentList.get("commenter");
+
+
+            QRComment currentComment = new QRComment(comment, commenter);
+            result.add(currentComment);
         }
 
         return result;

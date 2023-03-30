@@ -186,7 +186,7 @@ public class QR implements Comparable<QR> {
 
     }
 
-    public void addComment(String comment, Actor commenter) {
+    public void addComment(String comment, String commenter) {
         getCommentsList().add(new QRComment(comment, commenter));
     }
     public void deleteComment(int i) { getCommentsList().remove(i);
