@@ -71,6 +71,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         this.gMap.addMarker(new MarkerOptions().position(tester).title("QR SCORE: 300"));
         this.gMap.moveCamera(CameraUpdateFactory.newLatLng(tester));
 
-
     }
 }
