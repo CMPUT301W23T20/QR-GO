@@ -94,11 +94,11 @@ public class QRCommentViewActivity extends QRActivity implements RecyclerViewInt
                                     String avatar = (String)documentSnapshot.get("avatar");
                                     int score = ((Long)documentSnapshot.get("score")).intValue();
                                     ArrayList<QRComment> commentList = dbHelper.convertQRCommentListFromDB((List<Map<String, Object>>)documentSnapshot.get("commentsList"));
-
+                                    ArrayList<String> playerList = dbHelper.convertPlayerListFromDB((List<String>)documentSnapshot.get("playerList"));
 
                                     QR qr = new QR(qr_hash, name , avatar, score,
                                             commentList,
-                                            new ArrayList<>());
+                                            playerList);
 
                                     db.collection(Player.class.getSimpleName()).document(getDeviceId()).get()
                                             .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
