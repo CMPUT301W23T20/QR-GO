@@ -37,7 +37,7 @@ public class DataBaseHelper {
             int score = scoreLong.intValue();
             // dummy arraylist since we never use these
             ArrayList<QRComment> commentsList = new ArrayList<>();
-            ArrayList<Player> playerList = new ArrayList<>();
+            ArrayList<String> playerList = new ArrayList<>();
 
             QR currentQR = new QR(qr_hash, name, avatar, score, commentsList, playerList);
             result.add(currentQR);
@@ -46,23 +46,12 @@ public class DataBaseHelper {
         return result;
     }
 
-    public ArrayList<Player> convertPlayerListFromDB(List<Map<String, Object>> playerList) {
-        ArrayList<Player> result = new ArrayList<>();
+    public ArrayList<String> convertPlayerListFromDB(List<String> playerList) {
+        ArrayList<String> result = new ArrayList<>();
 
         for(int i = 0; i < playerList.size(); i++) {
-            Map<String, Object> currentInPlayerList = playerList.get(i);
-            String username = (String)currentInPlayerList.get("username");
-            String deviceID = (String)currentInPlayerList.get("deviceID");
-
-            ArrayList<QR> qrList = new ArrayList<>();
-
-            int rank = ((Long)currentInPlayerList.get("rank")).intValue();
-            int highestScore = ((Long)currentInPlayerList.get("highestScore")).intValue();
-            int lowestScore = ((Long)currentInPlayerList.get("lowestScore")).intValue();
-            int totalScore = ((Long)currentInPlayerList.get("totalScore")).intValue();
-
-            Player currentPlayer = new Player(username, deviceID, qrList, rank, highestScore, lowestScore, totalScore);
-            result.add(currentPlayer);
+            String currentInPlayerList = playerList.get(i);
+            result.add(currentInPlayerList);
         }
 
         return result;
@@ -97,6 +86,7 @@ public class DataBaseHelper {
         data.put("score", qr.getScore());
         data.put("avatar", qr.getAvatar());
         data.put("commentsList", qr.getCommentsList());
+        data.put("playerList", qr.getPlayerList());
         data.put("latitude", qr.getLatitude());
         data.put("longitude",qr.getLongitude());
         // add data to database

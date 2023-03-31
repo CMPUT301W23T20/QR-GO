@@ -185,12 +185,7 @@ public class ScanFragment extends Fragment {
                             player = new Player(username, android_id, qrList, rank, highestScore, lowestScore, totalScore);
                             player.setContact(contact);
 
-                            // add player to QR's list
-                            try {
-                                qr.addToPlayerList(player);
-                            } catch (Exception e) {
-                                // throw new RuntimeException(e);
-                            }
+                            qr.addToPlayerList(player.getDeviceID());
 
                             // add QR to player's list
                             player.addQR(qr);
