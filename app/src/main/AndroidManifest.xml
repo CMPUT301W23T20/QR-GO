@@ -87,6 +87,8 @@
             android:exported="true">
         </activity>
 
+        <service android:name=".MusicService" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.android.fileprovider"
@@ -101,5 +103,6 @@
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAAUZ6VMDZh8RHsaIRJPIDI9BFr_XbylCM"/>
     </application>
+
 
 </manifest>
