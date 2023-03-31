@@ -1,26 +1,15 @@
 package com.example.qr_go.QR;
 
-import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
-
-import com.example.qr_go.Actor.Actor;
-import com.example.qr_go.Actor.Player;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -40,7 +29,7 @@ public class QR implements Comparable<QR>, Parcelable {
 
 
     // private picture
-    private String photo;
+    private String photoURI;
     // private geolocation
     private float latitude;
     private float longitude;
@@ -57,6 +46,7 @@ public class QR implements Comparable<QR>, Parcelable {
         this.avatar = generateAvatar(qrHash);
         this.commentsList = new ArrayList<>();
         this.qrUsers = new ArrayList<>();
+        this.photoURI = null;
     }
 
     /**
@@ -81,7 +71,7 @@ public class QR implements Comparable<QR>, Parcelable {
         score = in.readInt();
         name = in.readString();
         avatar = in.readString();
-        photo = in.readString();
+        photoURI = in.readString();
     }
 
     public static final Creator<QR> CREATOR = new Creator<QR>() {
@@ -313,7 +303,7 @@ public class QR implements Comparable<QR>, Parcelable {
         dest.writeInt(score);
         dest.writeString(name);
         dest.writeString(avatar);
-        dest.writeString(photo);
+        dest.writeString(photoURI);
     }
 
     // getter and setter for photo
@@ -332,5 +322,11 @@ public class QR implements Comparable<QR>, Parcelable {
 
     public void setLongitude(float longitude) {
         this.longitude = longitude;
+    }
+    public String getPhotoURI() {
+        return photoURI;
+    }
+    public void setPhotoURI(String photoURI) {
+        this.photoURI = photoURI;
     }
 }

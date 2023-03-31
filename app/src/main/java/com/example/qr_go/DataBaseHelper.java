@@ -89,6 +89,7 @@ public class DataBaseHelper {
         data.put("playerList", qr.getPlayerList());
         data.put("latitude", qr.getLatitude());
         data.put("longitude",qr.getLongitude());
+        data.put("photoURI", qr.getPhotoURI());
         // add data to database
         // document named after user the hash
         collectionReference

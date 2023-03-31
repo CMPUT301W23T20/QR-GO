@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.MainActivity;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
@@ -68,8 +69,13 @@ public class CameraActivity extends AppCompatActivity {
     Uri contentUri;
     Bitmap bmp;
     ByteArrayOutputStream baos;
+    DataBaseHelper dbHelper;
 
     QR qr;
+
+    public CameraActivity() {
+        dbHelper = new DataBaseHelper();
+    }
 
     /**
      * This function is called right when the activity starts
@@ -142,9 +148,9 @@ public class CameraActivity extends AppCompatActivity {
                 uploadCompressedImageToFirebase(f.getName(), contentUri, new MyCallback() {
                     @Override
                     public void onCallback(Uri uri) {
-                        PhotoUri = uri;
-                        System.out.println("PhotoUri is " + PhotoUri);
-                        Picasso.get().load(PhotoUri).into(selectedImage);
+                        // put uri in QR
+                        qr.setPhotoURI(uri.toString());
+                        dbHelper.updateDB(qr);
                     }
                 });
 
