@@ -8,4 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#e1e8e8</color>
+    <color name="richblack">#010203 </color>
+    <color name="green">#004643</color>
+    <color name="beige">#efd6ac</color>
+    <color name ="spotblack">#191414</color>
+    <color name = "spotgreen">#1DB954</color>
+
+
 </resources>

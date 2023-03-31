@@ -110,7 +110,7 @@ public class PlayerProfileActivity extends ProfileActivity {
                         model = new Player(username, deviceID, qrListFromDoc, rank, highestScore, lowestScore, totalScore);
 
                         // update UI
-                        usernameTextView.setText(model.getUsername());
+                        usernameTextView.setText("Username: " + model.getUsername());
                         contactTextView.setText("Contact: " + contact);
                         totalScoreTextView.setText("Total Score: " + model.getTotalScore());
                         totalScannedTextView.setText("Total Scanned: " + model.getTotalQR());
