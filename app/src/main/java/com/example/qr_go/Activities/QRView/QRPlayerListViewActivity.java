@@ -3,33 +3,47 @@ package com.example.qr_go.Activities.QRView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.QRPlayerListAdapter;
+import com.example.qr_go.DataBaseHelper;
+import com.example.qr_go.Interfaces.RecyclerViewInterface;
 import com.example.qr_go.QR.QR;
-import com.example.qr_go.QR.QRComment;
 import com.example.qr_go.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents list of players that have scanned a QR
  */
-public class QRPlayerListViewActivity extends QRActivity {
+public class QRPlayerListViewActivity extends QRActivity implements RecyclerViewInterface {
     QRPlayerListAdapter qrPlayerListAdapter;
-    private ArrayList<Player> dataPlayerList;
-    private ListView playerListView;
+    private ArrayList<String> dataPlayerList;
+    private RecyclerView playerListView;
     private QR qr;
     private Button backButton;
-    private TextView nameText;
+    private TextView playerText;
+    private DataBaseHelper dbHelper;
 
-    public QRPlayerListViewActivity() {}
+    public QRPlayerListViewActivity() {
+        dbHelper = new DataBaseHelper();
+        dataPlayerList = new ArrayList<>();
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +68,8 @@ public class QRPlayerListViewActivity extends QRActivity {
                 finish();
             }
         });
+
+        updateQRInfo();
     }
 
     @Override
@@ -73,7 +89,8 @@ public class QRPlayerListViewActivity extends QRActivity {
     public void getViews() {
         // get views from fragment
         this.backButton = findViewById(R.id.back_button);
-        this.nameText = findViewById(R.id.name_text);
+        this.playerText = findViewById(R.id.player_text);
+        this.playerListView = findViewById(R.id.player_list);
     }
 
     /**
@@ -85,28 +102,40 @@ public class QRPlayerListViewActivity extends QRActivity {
 
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+        CollectionReference collectionReference = db.collection(QR.class.getSimpleName());
 
         // put data into class
-        db.collection(Player.class.getSimpleName()).document(android_id).get()
+        collectionReference.document(qr_hash).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        qr = new QR(qr_hash, (String)documentSnapshot.get("name"), (String)documentSnapshot.get("avatar"),
-                                (int) Integer.parseInt((String)documentSnapshot.get("score")),
-                                (ArrayList<QRComment>)documentSnapshot.get("commentsList"),
-                                (ArrayList<Player>)documentSnapshot.get("playerList"));
+                        ArrayList<String> deviceIDList = dbHelper.convertPlayerListFromDB((List<String>)documentSnapshot.get("playerList"));
 
+                        ArrayList<String> usernameList = new ArrayList<>();
 
-                        // set total text
-                        nameText.setText(qr.getName());
-                        dataPlayerList = qr.getPlayerList();
+                        db.collection(Player.class.getSimpleName()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                for(QueryDocumentSnapshot doc: value) {
+                                    if(deviceIDList.contains(doc.getId())) {
+                                        usernameList.add((String)doc.get("username"));
+                                    }
+                                }
 
-                        // initialize adapter for player list
-                        playerListView = findViewById(R.id.players_list_view);
-                        qrPlayerListAdapter = new QRPlayerListAdapter(QRPlayerListViewActivity.this, dataPlayerList);
-                        playerListView.setAdapter(qrPlayerListAdapter);
+                                dataPlayerList.addAll(usernameList);
+
+                                playerListView.setLayoutManager(new LinearLayoutManager(QRPlayerListViewActivity.this));
+                                qrPlayerListAdapter = new QRPlayerListAdapter(QRPlayerListViewActivity.this, dataPlayerList, QRPlayerListViewActivity.this);
+                                playerListView.setAdapter(qrPlayerListAdapter);
+
+                            }
+                        });
                     }
                 });
+    }
+
+    @Override
+    public void onItemClick(int i) {
+
     }
 }

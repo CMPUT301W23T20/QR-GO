@@ -33,7 +33,7 @@ public class QR implements Comparable<QR>, Parcelable {
     private final int score;
     private final String name;
     private final String avatar;
-    private ArrayList<Player> qrUsers; // array of people who have discovered this QR
+    private ArrayList<String> qrUsers; // array of people who have discovered this QR
 
 
 
@@ -56,6 +56,7 @@ public class QR implements Comparable<QR>, Parcelable {
         this.name = generateName(qrHash);
         this.avatar = generateAvatar(qrHash);
         this.commentsList = new ArrayList<>();
+        this.qrUsers = new ArrayList<>();
     }
 
     /**
@@ -66,7 +67,7 @@ public class QR implements Comparable<QR>, Parcelable {
      * @param commentsList
      * @param qrUsers
      */
-    public QR(String qr_hash, String name, String avatar, int score, ArrayList<QRComment> commentsList, ArrayList<Player> qrUsers) {
+    public QR(String qr_hash, String name, String avatar, int score, ArrayList<QRComment> commentsList, ArrayList<String> qrUsers) {
         this.qrHash = qr_hash;
         this.name = name;
         this.avatar = avatar;
@@ -280,15 +281,13 @@ public class QR implements Comparable<QR>, Parcelable {
     public String getQrHash() {
         return qrHash;
     }
-    public ArrayList<Player> getPlayerList() {
+    public ArrayList<String> getPlayerList() {
         return this.qrUsers;
     }
-    public void addToPlayerList(Player player) throws Exception {
-        if (qrUsers.contains(player)) {
-            throw new Exception("Discoverer already exists in qrUsers list.");
+    public void addToPlayerList(String player) {
+        if (!qrUsers.contains(player)) {
+            this.qrUsers.add(player);
         }
-
-        this.qrUsers.add(player);
     }
 
     @Override
