@@ -1,28 +1,23 @@
 package com.example.qr_go.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.qr_go.Activities.Profile.PlayerProfileActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.LeaderboardAdapter;
-import com.example.qr_go.Content.LeaderboardContent;
 import com.example.qr_go.DataBaseHelper;
-import com.example.qr_go.MainActivity;
-import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,9 +28,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Represents the fragment that holds the leaderboard
@@ -45,14 +37,11 @@ public class LeaderboardFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     private View view;
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String thisDeviceID;
 
     // instance of the searchview
     SearchView searchView;
@@ -64,26 +53,18 @@ public class LeaderboardFragment extends Fragment {
     private LeaderboardAdapter leaderboardAdapter;
     private DataBaseHelper dbHelper;
 
-    public LeaderboardFragment() {
-        // Required empty public constructor
+    public LeaderboardFragment(String thisDeviceID) {
+        this.thisDeviceID = thisDeviceID;
     }
 
-    public static LeaderboardFragment newInstance(String param1, String param2) {
-        LeaderboardFragment fragment = new LeaderboardFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+    public static LeaderboardFragment newInstance(String thisDeviceID) {
+        LeaderboardFragment fragment = new LeaderboardFragment(thisDeviceID);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     /**
@@ -124,7 +105,7 @@ public class LeaderboardFragment extends Fragment {
                 for(QueryDocumentSnapshot doc: value) {
                     // create new player
                     String username = (String)doc.get("username");
-                    String deviceID = (String)doc.get("deviceID");
+                    String deviceID = doc.getId();
 
                     int rank = ((Long)doc.get("rank")).intValue();
                     int highestScore = ((Long)doc.get("highestScore")).intValue();
@@ -148,15 +129,28 @@ public class LeaderboardFragment extends Fragment {
             }
         });
 
+        leaderboardList = view.findViewById(R.id.leaderboard_list);
+
         Button button2= view.findViewById(R.id.score_button);
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Collections.sort(dataList);
                 Collections.reverse(dataList);
 
-                leaderboardList = view.findViewById(R.id.leaderboard_list);
                 leaderboardAdapter = new LeaderboardAdapter(getActivity(),android.R.layout.simple_list_item_1, dataList);
                 leaderboardList.setAdapter(leaderboardAdapter);
+            }
+        });
+
+        leaderboardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String android_id = dataList.get(i).getDeviceID();
+                Boolean isThisDevice = android_id == thisDeviceID;
+                Intent myIntent = new Intent(getActivity(), PlayerProfileActivity.class);
+                myIntent.putExtra("android_id", android_id);
+                myIntent.putExtra("isThisDevice", isThisDevice);
+                startActivity(myIntent);
             }
         });
 

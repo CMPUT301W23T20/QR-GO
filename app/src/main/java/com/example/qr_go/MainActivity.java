@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewPager = findViewById(R.id.viewPager);
         //fragments.add(MapFragment.newInstance("Map","321"));
         fragments.add(ScanFragment.newInstance(getDeviceId()));
-        fragments.add(LeaderboardFragment.newInstance("Leaderboard","321"));
+        fragments.add(LeaderboardFragment.newInstance(getDeviceId()));
         fragments.add(PlayerProfileFragment.newInstance(getDeviceId(), true));
         QRFragmentPagerAdapter pagerAdapter = new QRFragmentPagerAdapter(
                 getSupportFragmentManager(),

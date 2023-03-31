@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -32,14 +35,16 @@ import java.util.Map;
 public class OtherProfileQRListViewActivity extends ProfileActivity implements RecyclerViewInterface {
     private Button backButton;
     private TextView totalText;
-    private RecyclerView qrListRecyclerView;
-    private ProfileQRListAdapter qrListAdapter;
+    private RecyclerView qrList;
     private ArrayList<QR> qrDataList;
+    private ProfileQRListAdapter qrListAdapter;
     private Player player;
     private DataBaseHelper dbHelper = new DataBaseHelper();
 
     public OtherProfileQRListViewActivity() {
         super();
+        qrDataList = new ArrayList<>();
+        qrListAdapter = new ProfileQRListAdapter(OtherProfileQRListViewActivity.this, qrDataList, OtherProfileQRListViewActivity.this);
     }
 
     @Override
@@ -48,6 +53,8 @@ public class OtherProfileQRListViewActivity extends ProfileActivity implements R
         setContentView(R.layout.activity_profile_qr_list);
 
         getViews();
+
+        qrList.setAdapter(qrListAdapter);
 
         try {
             getIDFromBundle();
@@ -67,6 +74,7 @@ public class OtherProfileQRListViewActivity extends ProfileActivity implements R
         });
 
         updateProfileInfo();
+
     }
 
     @Override
@@ -118,11 +126,15 @@ public class OtherProfileQRListViewActivity extends ProfileActivity implements R
 
                         qrDataList.addAll(player.getQRList());
 
+                        // sort highest to lowest score
+                        Collections.sort(qrDataList);
+                        Collections.reverse(qrDataList);
+
                         // initialize adapter
-                        qrListRecyclerView = findViewById(R.id.qr_list);
-                        qrListRecyclerView.setLayoutManager(new LinearLayoutManager(OtherProfileQRListViewActivity.this));
+                        qrList = findViewById(R.id.qr_list);
+                        qrList.setLayoutManager(new LinearLayoutManager(OtherProfileQRListViewActivity.this));
                         qrListAdapter = new ProfileQRListAdapter(OtherProfileQRListViewActivity.this, qrDataList, OtherProfileQRListViewActivity.this);
-                        qrListRecyclerView.setAdapter(qrListAdapter);
+                        qrList.setAdapter(qrListAdapter);
 
                         // set total text
                         totalText.setText("Total QRs: " + player.getTotalQR());
@@ -130,12 +142,13 @@ public class OtherProfileQRListViewActivity extends ProfileActivity implements R
                 });
     }
 
+
     /**
      * Gets views from fragment
      */
     public void getViews() {
         // get views from fragment
-        this.qrListRecyclerView = findViewById(R.id.qr_list);
+        this.qrList = findViewById(R.id.qr_list);
         this.backButton = findViewById(R.id.qr_list_back_button);
         this.totalText = findViewById(R.id.total_text);
     }
@@ -149,7 +162,8 @@ public class OtherProfileQRListViewActivity extends ProfileActivity implements R
     public void onItemClick(int i) {
         Intent myIntent = new Intent(OtherProfileQRListViewActivity.this, QRViewActivity.class);
         myIntent.putExtra("android_id", android_id);
-        myIntent.putExtra("qr_hash", qrDataList.get(i).getQrHash());//Optional parameters
+        myIntent.putExtra("qr_hash", qrDataList.get(i).getQrHash());
+        System.out.println(qrDataList.get(i).getName());
         OtherProfileQRListViewActivity.this.startActivity(myIntent);
     }
 }

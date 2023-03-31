@@ -3,6 +3,7 @@ package com.example.qr_go.Activities.QRView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -99,7 +100,7 @@ public class QRCommentViewActivity extends QRActivity implements RecyclerViewInt
                                             commentList,
                                             new ArrayList<>());
 
-                                    db.collection(Player.class.getSimpleName()).document(android_id).get()
+                                    db.collection(Player.class.getSimpleName()).document(getDeviceId()).get()
                                             .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                 @Override
                                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -163,6 +164,16 @@ public class QRCommentViewActivity extends QRActivity implements RecyclerViewInt
                         commentAdapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+    /**
+     * This returns the device's ID
+     * @return
+     *      Return the String ID
+     */
+    public String getDeviceId() {
+        String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        return deviceId;
     }
 
     @Override
