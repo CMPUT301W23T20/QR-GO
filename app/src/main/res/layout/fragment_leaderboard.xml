@@ -27,14 +27,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="30dp"
             android:textSize="18dp"
             android:text="Users" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="80dp"
             android:text="Total Score"
             android:textSize="18dp" />
 
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="30dp"
             android:text="Highest Scan"
             android:textSize="18dp" />
     </TableRow>

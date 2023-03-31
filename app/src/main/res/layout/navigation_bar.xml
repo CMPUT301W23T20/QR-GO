@@ -19,10 +19,11 @@
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="102dp"
-            android:layout_height="48dp"
+            android:layout_width="109dp"
+            android:layout_height="73dp"
+            android:background="@color/green"
             android:layout_weight="1"
-            app:srcCompat="@drawable/map_icon" />
+            app:srcCompat="@drawable/map" />
     </LinearLayout>
 
     <LinearLayout
@@ -37,10 +38,11 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="92dp"
-            android:layout_height="54dp"
+            android:layout_width="wrap_content"
+            android:layout_height="95dp"
+            android:background="@color/green"
             android:layout_weight="1"
-            app:srcCompat="@drawable/scan_icon" />
+            app:srcCompat="@drawable/camera2" />
 
     </LinearLayout>
 
@@ -57,7 +59,8 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="@color/green"
+            android:layout_height="88dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/leaderboard_icon" />
     </LinearLayout>
@@ -74,8 +77,9 @@
 
         <ImageView
             android:id="@+id/imageView4"
+            android:background="@color/green"
             android:layout_width="91dp"
-            android:layout_height="62dp"
+            android:layout_height="72dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/user_icon" />
     </LinearLayout>

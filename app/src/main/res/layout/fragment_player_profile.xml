@@ -41,6 +41,15 @@
             android:gravity="center_vertical"
             android:textSize="30sp" />
 
+        <Switch
+            android:id="@+id/music_switch"
+            android:layout_width="163dp"
+            android:layout_height="50dp"
+            android:checked="true"
+            android:gravity="center_vertical"
+            android:text="Music"
+            android:textSize="30sp" />
+
         <Button
             android:id="@+id/my_qr_codes_button"
             android:layout_width="wrap_content"
@@ -51,15 +60,7 @@
             android:text="QR Codes"
             android:textSize="30sp" />
 
-        <Switch
-            android:id="@+id/music_switch"
-            android:layout_width="163dp"
-            android:layout_height="50dp"
-            android:checked="true"
-            android:gravity="center_vertical"
 
-            android:text="Music"
-            android:textSize="30sp" />
 
     </LinearLayout>
 

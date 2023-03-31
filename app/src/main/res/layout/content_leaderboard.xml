@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
@@ -10,30 +10,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:gravity="left"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
         android:text="Player"
         android:textSize="25sp"/>
 
     <TextView
         android:id="@+id/score_text"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:padding="25dp"
+        android:singleLine="false"
+        android:maxEms="8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="70dp"
+        android:layout_toLeftOf="@+id/high_score_text"
+        android:layout_toRightOf="@+id/player_text"
+        android:layout_centerVertical="true"
         android:gravity="right"
-        android:layout_marginLeft="20dp"
-        android:text="Score"
         android:textSize="25sp" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
         android:id="@+id/high_score_text"
-        android:textSize="25sp"
-        android:gravity="right"
-        android:padding="25dp"
-        android:text="High Score"/>
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="50dp"
+        android:gravity="center"
+        android:maxEms="8"
+        android:singleLine="false"
+        android:text="High Score"
+        android:textSize="25sp" />
 
 
-
-</LinearLayout>
+</RelativeLayout>
