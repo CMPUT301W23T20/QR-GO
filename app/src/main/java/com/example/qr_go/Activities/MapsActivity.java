@@ -89,7 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+        CollectionReference collectionReference = db.collection(QR.class.getSimpleName());
 
         // add db to
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -101,22 +101,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     String name = (String)doc.get("name");
                     String avatar = (String)doc.get("avatar");
                     int score = ((Long)doc.get("score")).intValue();
+                    double latitude = ((double)doc.get("latitude"));
+                    double longitude = ((double)doc.get("longitude"));
 
 
                     QR qr = new QR(doc.getId(), name, avatar, score,
                             new ArrayList<>(),
                             new ArrayList<>());
 
+                    qr.setLatitude((float)latitude);
+                    qr.setLongitude((float)longitude);
+
                     qrList.add(qr);
                 }
 
-                // do whatever the fuck you want with the new qrList data that we just created
+                for(QR qr: qrList){
+                    float latitude = qr.getLatitude();
+                    float longitude = qr.getLongitude();
+                    String name  = qr.getName();
+                    if(latitude == 0.0){
+                        continue;
+                    }
+                    int score = qr.getScore();
+                    String scoreStr = Integer.toString(score);
+
+                    LatLng tester = new LatLng(latitude,longitude);
+                    gMap.addMarker(new MarkerOptions().position(tester).title("SCORE: "+scoreStr +" | NAME: " +name));
+                    gMap.moveCamera(CameraUpdateFactory.newLatLng(tester));
+
+                }
+
             }
         });
 
-        LatLng tester = new LatLng(50,20);
-        this.gMap.addMarker(new MarkerOptions().position(tester).title("QR SCORE: 300"));
-        this.gMap.moveCamera(CameraUpdateFactory.newLatLng(tester));
 
 
     }
