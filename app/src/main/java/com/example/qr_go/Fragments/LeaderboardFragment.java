@@ -1,6 +1,7 @@
 package com.example.qr_go.Fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -132,6 +133,7 @@ public class LeaderboardFragment extends Fragment {
         leaderboardList = view.findViewById(R.id.leaderboard_list);
 
         Button button2= view.findViewById(R.id.score_button);
+      //  button2.setBackgroundColor(Color.parseColor("#2f4f4f"));
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Collections.sort(dataList);
@@ -156,6 +158,7 @@ public class LeaderboardFragment extends Fragment {
 
 
         Button button = view.findViewById(R.id.filter_button);
+      //  button.setBackgroundColor(Color.parseColor("#2f4f4f"));
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Collections.sort(dataList, new Comparator<Player>() {
