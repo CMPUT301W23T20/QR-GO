@@ -1,6 +1,8 @@
 package com.example.qr_go.QR;
 
 import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -25,7 +27,7 @@ import java.util.Map;
 /**
  * QR code that player scans
  */
-public class QR implements Comparable<QR> {
+public class QR implements Comparable<QR>, Parcelable {
     private ArrayList<QRComment> commentsList;
     private String qrHash;
     private final int score;
@@ -40,6 +42,8 @@ public class QR implements Comparable<QR> {
     // private picture
     private String photo;
     // private geolocation
+    private float latitude;
+    private float longitude;
 
     /**
      * Constructor for creating new QR
@@ -70,6 +74,26 @@ public class QR implements Comparable<QR> {
         this.commentsList = commentsList;
         this.qrUsers = qrUsers;
     }
+
+    protected QR(Parcel in) {
+        qrHash = in.readString();
+        score = in.readInt();
+        name = in.readString();
+        avatar = in.readString();
+        photo = in.readString();
+    }
+
+    public static final Creator<QR> CREATOR = new Creator<QR>() {
+        @Override
+        public QR createFromParcel(Parcel in) {
+            return new QR(in);
+        }
+
+        @Override
+        public QR[] newArray(int size) {
+            return new QR[size];
+        }
+    };
 
     /**
      * hashes the URL using sha256
@@ -279,6 +303,35 @@ public class QR implements Comparable<QR> {
         return -1;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(qrHash);
+        dest.writeInt(score);
+        dest.writeString(name);
+        dest.writeString(avatar);
+        dest.writeString(photo);
+    }
+
     // getter and setter for photo
     // getter and setter for geolocation
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
+
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
 }

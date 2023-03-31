@@ -19,8 +19,13 @@ import android.widget.TextView;
 import android.Manifest;
 import android.widget.Toast;
 
+import com.example.qr_go.Actor.Player;
+import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.MainActivity;
+import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +45,10 @@ public class GetLocationActivity extends AppCompatActivity implements LocationLi
     TextView textView_location;
     LocationManager locationManager;
 
+    private DataBaseHelper dbHelper = new DataBaseHelper();
+
+    QR qr;
+
     /**
      * This function is called right when the activity is created
      * It ensures that the Get Location button works, it retrieves the user's geolocation and stores it
@@ -53,6 +62,8 @@ public class GetLocationActivity extends AppCompatActivity implements LocationLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+
+        qr = getIntent().getParcelableExtra("QR");
 
         textView_location = findViewById(R.id.text_location);
         button_location = findViewById(R.id.button_location);
@@ -106,6 +117,12 @@ public class GetLocationActivity extends AppCompatActivity implements LocationLi
     @Override
     public void onLocationChanged(@NonNull Location location) {
         Toast.makeText(this,""+location.getLatitude()+","+location.getLongitude(),Toast.LENGTH_SHORT).show();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+        qr.setLatitude((float) location.getLatitude());
+        qr.setLongitude((float)location.getLongitude());
+        dbHelper.updateDB(qr);
 
         try{
             Geocoder geocoder = new Geocoder(GetLocationActivity.this, Locale.getDefault());
