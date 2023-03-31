@@ -116,7 +116,7 @@ public class GetLocationActivity extends AppCompatActivity implements LocationLi
      */
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        Toast.makeText(this,""+location.getLatitude()+","+location.getLongitude(),Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this,""+location.getLatitude()+","+location.getLongitude(),Toast.LENGTH_SHORT).show();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 
