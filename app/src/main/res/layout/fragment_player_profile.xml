@@ -18,18 +18,20 @@
             android:id="@+id/username_text"
             android:layout_width="match_parent"
             android:layout_height="62dp"
+            android:text="Username"
             android:gravity="center_vertical"
             android:textSize="30sp" />
         <TextView
             android:id="@+id/contact_text"
             android:layout_width="match_parent"
             android:layout_height="62dp"
+            android:text="Contact"
             android:gravity="center_vertical"
             android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/total_score_text"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/my_qr_codes_button"
+            android:layout_width="wrap_content"
             android:layout_height="62dp"
             android:gravity="center_vertical"
             android:textSize="30sp" />
@@ -38,6 +40,7 @@
             android:id="@+id/total_scanned_text"
             android:layout_width="match_parent"
             android:layout_height="62dp"
+            android:text="Total Score"
             android:gravity="center_vertical"
             android:textSize="30sp" />
 
@@ -45,8 +48,18 @@
             android:id="@+id/my_qr_codes_button"
             android:layout_width="wrap_content"
             android:layout_height="62dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="100dp"
+
+            android:text="Total Scanned"
+            android:gravity="center_vertical"
+            android:textSize="30sp" />
+
+        <Switch
+            android:id="@+id/music_switch"
+            android:layout_width="163dp"
+            android:layout_height="50dp"
+            android:checked="true"
+            android:text="Music"
+
             android:gravity="center_vertical"
             android:text="QR Codes"
             android:textSize="30sp" />

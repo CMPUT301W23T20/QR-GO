@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.qr_go.Activities.Profile.OtherProfileQRListViewActivity;
@@ -16,6 +18,7 @@ import com.example.qr_go.Activities.Profile.ThisProfileQRListViewActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.MainActivity;
+import com.example.qr_go.MusicService;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
 
@@ -38,6 +41,7 @@ public class PlayerProfileFragment extends Fragment {
     private Button qrButton;
     private TextView totalScoreTextView;
     private TextView totalScannedTextView;
+    private Switch musicSwitch;
     private final String android_id;
     private final boolean isThisDevice;
     private Player model;
@@ -94,6 +98,19 @@ public class PlayerProfileFragment extends Fragment {
                 myIntent.putExtra("android_id", android_id);
                 startActivity(myIntent);
 
+            }
+        });
+
+        // on below line we are adding check change listener for our switch.
+        musicSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b) {
+                    getActivity().startService(new Intent(getActivity(), MusicService.class));
+                }
+                else {
+                    getActivity().stopService(new Intent(getActivity(), MusicService.class));
+                }
             }
         });
 
@@ -170,5 +187,6 @@ public class PlayerProfileFragment extends Fragment {
         totalScoreTextView = view.findViewById(R.id.total_score_text);
         totalScannedTextView = view.findViewById(R.id.total_scanned_text);
         contactTextView = view.findViewById(R.id.contact_text);
+        musicSwitch = view.findViewById(R.id.music_switch);
     }
 }
