@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.qr_go.MainActivity;
+import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -68,6 +69,8 @@ public class CameraActivity extends AppCompatActivity {
     Bitmap bmp;
     ByteArrayOutputStream baos;
 
+    QR qr;
+
     /**
      * This function is called right when the activity starts
      * It ensures that when the button for the camera is clicked, it will show a camera
@@ -81,6 +84,8 @@ public class CameraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
+        qr = getIntent().getParcelableExtra("QR");
 
         selectedImage = findViewById(R.id.displayImageView);
         yesBtn = findViewById(R.id.yesBtn);
@@ -264,6 +269,7 @@ public class CameraActivity extends AppCompatActivity {
 
     public void goToGetLocationActivity() {
         Intent locationIntent = new Intent(CameraActivity.this, GetLocationActivity.class);
+        locationIntent.putExtra("QR",qr);
         startActivity(locationIntent);
     }
 

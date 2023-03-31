@@ -155,11 +155,14 @@ public class ScanFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             // show score of QR code here
             builder.setTitle("Result");
-            builder.setMessage(result.getContents());
+            qr = new QR(result.getContents());
+            int score = qr.getScore();
+            String scorestring = Integer.toString(score);
+            // show score of QR code here
+            builder.setMessage("You have scored "+scorestring+" points!");
 
             // add QR to DB and Player
             // create new QR
-            qr = new QR(result.getContents());
 
             // get player from database
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -203,6 +206,7 @@ public class ScanFragment extends Fragment {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     Intent cameraIntent = new Intent(getActivity(), CameraActivity.class);
+                    cameraIntent.putExtra("QR",qr);
                     startActivity(cameraIntent);
                 }
             }).show();
