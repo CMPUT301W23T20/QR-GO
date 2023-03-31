@@ -1,10 +1,12 @@
 package com.example.qr_go.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -14,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.qr_go.Activities.Profile.ThisProfileQRListViewActivity;
+import com.example.qr_go.Activities.QRView.QRViewActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.LeaderboardAdapter;
 import com.example.qr_go.Content.LeaderboardContent;
@@ -157,6 +161,13 @@ public class LeaderboardFragment extends Fragment {
                 leaderboardList = view.findViewById(R.id.leaderboard_list);
                 leaderboardAdapter = new LeaderboardAdapter(getActivity(),android.R.layout.simple_list_item_1, dataList);
                 leaderboardList.setAdapter(leaderboardAdapter);
+            }
+        });
+
+        leaderboardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                
             }
         });
 
