@@ -31,15 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:gravity="center_vertical"
-            android:textSize="30sp" />
+            android:textSize="25sp" />
 
-        <Button
-            android:id="@+id/my_qr_codes_button"
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:gravity="center_vertical"
-            android:text="QR Codes"
-            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/total_score_text"
@@ -53,6 +46,16 @@
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:gravity="center_vertical"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/my_qr_codes_button"
+            android:layout_width="wrap_content"
+            android:layout_height="62dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="100dp"
+            android:gravity="center_vertical"
+            android:text="QR Codes"
             android:textSize="30sp" />
 
     </LinearLayout>
