@@ -41,7 +41,6 @@ public class PlayerProfileFragment extends Fragment {
     private Button qrButton;
     private TextView totalScoreTextView;
     private TextView totalScannedTextView;
-    private Switch musicSwitch;
     private final String android_id;
     private final boolean isThisDevice;
     private Player model;
@@ -98,19 +97,6 @@ public class PlayerProfileFragment extends Fragment {
                 myIntent.putExtra("android_id", android_id);
                 startActivity(myIntent);
 
-            }
-        });
-
-        // on below line we are adding check change listener for our switch.
-        musicSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b) {
-                    getActivity().startService(new Intent(getActivity(), MusicService.class));
-                }
-                else {
-                    getActivity().stopService(new Intent(getActivity(), MusicService.class));
-                }
             }
         });
 
@@ -187,6 +173,5 @@ public class PlayerProfileFragment extends Fragment {
         totalScoreTextView = view.findViewById(R.id.total_score_text);
         totalScannedTextView = view.findViewById(R.id.total_scanned_text);
         contactTextView = view.findViewById(R.id.contact_text);
-        musicSwitch = view.findViewById(R.id.music_switch);
     }
 }

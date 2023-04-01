@@ -64,8 +64,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //setTheme(R.style.MyAppTheme);
         setContentView(R.layout.activity_main);
 
-        startService(new Intent(this, MusicService.class));
-
         if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{
@@ -269,6 +267,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MenuItem item = menu.findItem(R.id.music_switch1);
         item.setActionView(R.layout.music_switch_layout);
         Switch musicSwitch = item.getActionView().findViewById(R.id.music);
+
+        if(musicSwitch.isChecked()) {
+            MainActivity.this.startService(new Intent(MainActivity.this, MusicService.class));
+        }
+
         musicSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

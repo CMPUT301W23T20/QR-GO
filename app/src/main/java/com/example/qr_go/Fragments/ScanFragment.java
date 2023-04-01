@@ -153,12 +153,15 @@ public class ScanFragment extends Fragment {
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             // show score of QR code here
-            builder.setTitle("Result");
             qr = new QR(result.getContents());
+            String name = qr.getName();
+            String avatar = qr.getAvatar();
             int score = qr.getScore();
             String scorestring = Integer.toString(score);
             // show score of QR code here
-            builder.setMessage("You have scored "+scorestring+" points!");
+            builder.setTitle("You found a "+name+"!");
+            builder.setMessage("Score: "+scorestring+" points"+"\n"+avatar);
+
 
             // add QR to DB and Player
             // create new QR
@@ -195,7 +198,7 @@ public class ScanFragment extends Fragment {
                         }
                     });
 
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("Yay!", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
