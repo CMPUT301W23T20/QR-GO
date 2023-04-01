@@ -2,6 +2,7 @@ package com.example.qr_go;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -25,6 +27,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.Toast;
 
 
 import com.example.qr_go.Activities.MapsActivity;
@@ -54,9 +57,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<Fragment> fragments = new ArrayList<>();
     List<Address> address = null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setTheme(R.style.MyAppTheme);
         setContentView(R.layout.activity_main);
 
         startService(new Intent(this, MusicService.class));
@@ -75,6 +80,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     /**
      * This initialize a viewPager
@@ -279,8 +289,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-
+            case R.id.theme1:
+                Toast.makeText(this, "theme1", Toast.LENGTH_SHORT).show();
+                setTheme(R.style.Theme_QRGO);
+                break;
+            case R.id.theme2:
+                setTheme(R.style.MyAppTheme);
+                Toast.makeText(this, "theme2", Toast.LENGTH_SHORT).show();
+                break;
         }
+        recreate();
         return super.onOptionsItemSelected(item);
     }
 }

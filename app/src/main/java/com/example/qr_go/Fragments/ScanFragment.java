@@ -68,7 +68,6 @@ public class ScanFragment extends Fragment {
 
     /**
      * fragment constructor
-     * @param android_id
      */
     public ScanFragment(String android_id) {
         this.android_id = android_id;
