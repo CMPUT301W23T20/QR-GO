@@ -7,6 +7,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.qr_go.Fragments.Profile.PlayerProfileFragment">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/faintgreen" />
 
     <LinearLayout
         android:layout_width="match_parent"
