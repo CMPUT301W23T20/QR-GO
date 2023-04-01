@@ -45,7 +45,7 @@
             android:id="@+id/music_switch"
             android:layout_width="163dp"
             android:layout_height="50dp"
-            android:checked="true"
+            android:checked="false"
             android:gravity="center_vertical"
             android:text="Music"
             android:textSize="30sp" />
