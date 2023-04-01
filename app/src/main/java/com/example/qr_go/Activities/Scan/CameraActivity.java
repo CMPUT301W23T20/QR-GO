@@ -28,6 +28,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -38,6 +40,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 //From Youtube.com
 // URL: https://www.youtube.com/watch?v=s1aOlr3vbbk&list=RDCMUCR1t5eSmLxLUdBnK2XwZOuw&index=3
@@ -131,7 +134,8 @@ public class CameraActivity extends AppCompatActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == REQUEST_CODE) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 File f = new File(currentPhotoPath);
 //                selectedImage.setImageURI(Uri.fromFile(f));
@@ -149,8 +153,16 @@ public class CameraActivity extends AppCompatActivity {
                     @Override
                     public void onCallback(Uri uri) {
                         // put uri in QR
-                        qr.setPhotoURI(uri.toString());
-                        dbHelper.updateDB(qr);
+
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        CollectionReference collectionReference = db.collection(QR.class.getSimpleName());
+
+                        HashMap<String, Object> data = new HashMap<>();
+
+                        data.put("photoURI", uri.toString());
+
+                        collectionReference.document(qr.getQrHash())
+                                        .update(data);
                     }
                 });
 
@@ -199,7 +211,7 @@ public class CameraActivity extends AppCompatActivity {
 //                        Picasso.get().load(uri).into(selectedImage);
                         Log.d("tag", "onSuccess: Uploaded Image URL is " + uri.toString());
                         myCallback.onCallback(uri);
-
+                        System.out.println(uri);
                     }
                 });
             }
