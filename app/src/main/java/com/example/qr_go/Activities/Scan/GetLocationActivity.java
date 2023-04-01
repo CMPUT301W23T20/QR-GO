@@ -1,5 +1,6 @@
 package com.example.qr_go.Activities.Scan;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -25,8 +26,12 @@ import com.example.qr_go.MainActivity;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -118,11 +123,13 @@ public class GetLocationActivity extends AppCompatActivity implements LocationLi
     public void onLocationChanged(@NonNull Location location) {
        // Toast.makeText(this,""+location.getLatitude()+","+location.getLongitude(),Toast.LENGTH_SHORT).show();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+        CollectionReference collectionReference = db.collection(QR.class.getSimpleName());
 
-        qr.setLatitude((float) location.getLatitude());
-        qr.setLongitude((float)location.getLongitude());
-        dbHelper.updateDB(qr);
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("latitude", (float)location.getLatitude());
+        data.put("longitude", (float)location.getLongitude());
+
+        collectionReference.document(qr.getQrHash()).update(data);
 
         try{
             Geocoder geocoder = new Geocoder(GetLocationActivity.this, Locale.getDefault());
