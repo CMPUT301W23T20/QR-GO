@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:backgroundTint="@color/lightgreen"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -10,13 +11,15 @@
         android:layout_height="match_parent"
         android:background="#ffffff"
         android:clickable="true"
+        android:backgroundTint="@color/faintgreen"
         android:orientation="vertical">
-
 
         <Button
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/richblack"
+            android:textColor="@color/beige"
             android:text="Back" />
 
         <LinearLayout
@@ -57,19 +60,34 @@
             android:text="Score"
             android:textSize="17dp" />
 
-        <Button
-            android:id="@+id/player_list_button"
-            android:layout_width="match_parent"
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="Players" />
+            android:layout_marginTop="15dp">
 
-        <Button
-            android:id="@+id/comment_list_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="Comments" />
+            <Button
+                android:id="@+id/player_list_button"
+                android:layout_width="140dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginBottom="80dp"
+                android:textSize="17dp"
+                android:text="Players" />
+
+            <Button
+                android:id="@+id/comment_list_button"
+                android:layout_width="140dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginEnd="80dp"
+                android:textSize="17dp"
+                android:layout_marginBottom="60dp"
+
+                android:text="Comments" />
+        </TableRow>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
