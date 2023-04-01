@@ -12,7 +12,7 @@
         android:gravity="center_vertical"
         android:layout_centerVertical="true"
         android:checked="true"
-        android:text="music"
+        android:text="Music"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
 </RelativeLayout>
