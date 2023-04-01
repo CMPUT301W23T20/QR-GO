@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/qr_list_container"
@@ -15,6 +14,8 @@
         android:id="@+id/qr_list_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/richblack"
+        android:textColor="@color/beige"
         android:text="Back" />
 
     <LinearLayout
