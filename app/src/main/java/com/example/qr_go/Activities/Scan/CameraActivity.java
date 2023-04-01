@@ -131,7 +131,8 @@ public class CameraActivity extends AppCompatActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == REQUEST_CODE) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 File f = new File(currentPhotoPath);
 //                selectedImage.setImageURI(Uri.fromFile(f));
@@ -149,8 +150,8 @@ public class CameraActivity extends AppCompatActivity {
                     @Override
                     public void onCallback(Uri uri) {
                         // put uri in QR
-                        qr.setPhotoURI(uri.toString());
-                        dbHelper.updateDB(qr);
+                        // qr.setPhotoURI(uri.toString());
+                        // dbHelper.updateDB(qr);
                     }
                 });
 
@@ -199,7 +200,10 @@ public class CameraActivity extends AppCompatActivity {
 //                        Picasso.get().load(uri).into(selectedImage);
                         Log.d("tag", "onSuccess: Uploaded Image URL is " + uri.toString());
                         myCallback.onCallback(uri);
+                        System.out.println(uri);
 
+                        qr.setPhotoURI(uri.toString());
+                        dbHelper.updateDB(qr);
                     }
                 });
             }
