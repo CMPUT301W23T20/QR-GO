@@ -40,11 +40,5 @@
         android:layout_margin="80dp"
         android:text="No" />
 
-    <ImageView
-        android:id="@+id/displayImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/noBtn"
-        />
 
 </RelativeLayout>

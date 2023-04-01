@@ -2,11 +2,13 @@ package com.example.qr_go.Activities.QRView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.RadioAccessSpecifier;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,8 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
     private Button backButton;
     private TextView nameText;
     private TextView scoreText;
+    private ImageView imageView;
+    private Uri imageUri;
     private Button playerListButton;
     private Button commentListButton;
 
@@ -112,6 +117,7 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
         this.nameText = findViewById(R.id.name_text);
         this.backButton = findViewById(R.id.back_button);
         this.scoreText = findViewById(R.id.score_text);
+        this.imageView = findViewById(R.id.image_view);
         this.playerListButton = findViewById(R.id.player_list_button);
         this.commentListButton = findViewById(R.id.comment_list_button);
     }
@@ -135,6 +141,7 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String name = (String)documentSnapshot.get("name");
                         String avatar = (String)documentSnapshot.get("avatar");
+                        String image = (String)documentSnapshot.get("photoURI");
                         int score = ((Long)documentSnapshot.get("score")).intValue();
                         ArrayList<QRComment> commentList = dbHelper.convertQRCommentListFromDB((List<Map<String, Object>>)documentSnapshot.get("commentsList"));
 
@@ -147,6 +154,12 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
                         // set total text
                         nameText.setText(qr.getName());
                         scoreText.setText("" + qr.getScore());
+
+                        // set image view
+                        if (image != null) {
+                            imageUri = Uri.parse(image);
+                            Picasso.get().load(imageUri).into(imageView);
+                        }
                     }
                 });
     }
