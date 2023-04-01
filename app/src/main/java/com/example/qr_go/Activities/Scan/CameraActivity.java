@@ -63,11 +63,9 @@ import java.util.HashMap;
  */
 public class CameraActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 22;
-    ImageView selectedImage;
     Button yesBtn;
     Button noBtn;
     String currentPhotoPath;
-    Uri PhotoUri;
     StorageReference storageReference;
     Uri contentUri;
     Bitmap bmp;
@@ -96,7 +94,6 @@ public class CameraActivity extends AppCompatActivity {
 
         qr = getIntent().getParcelableExtra("QR");
 
-        selectedImage = findViewById(R.id.displayImageView);
         yesBtn = findViewById(R.id.yesBtn);
         noBtn = findViewById(R.id.noBtn);
 
@@ -138,7 +135,6 @@ public class CameraActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 File f = new File(currentPhotoPath);
-//                selectedImage.setImageURI(Uri.fromFile(f));
                 Log.d("tag", "Absolute Url of Image is " + Uri.fromFile(f));
 
                 // Adds photo into gallery
@@ -208,7 +204,6 @@ public class CameraActivity extends AppCompatActivity {
                 image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-//                        Picasso.get().load(uri).into(selectedImage);
                         Log.d("tag", "onSuccess: Uploaded Image URL is " + uri.toString());
                         myCallback.onCallback(uri);
                         System.out.println(uri);
