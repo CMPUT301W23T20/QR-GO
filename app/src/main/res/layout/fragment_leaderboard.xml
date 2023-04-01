@@ -12,6 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="2dp"
         android:iconifiedByDefault="false"
         android:queryHint="Search User"
         android:submitBackground="@drawable/bg_white_rounded"
@@ -65,8 +67,8 @@
             android:textSize="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:text="Unique Code" />
+            android:layout_marginLeft="50dp"
+            android:text="Highest Scan" />
 
         <Button
             android:id="@+id/score_button"
@@ -74,6 +76,7 @@
             android:layout_height="wrap_content"
             android:text="Total Score"
             android:layout_marginLeft="50dp"
+            android:layout_marginBottom="20dp"
             android:textSize="12dp" />
     </TableRow>
 

@@ -6,8 +6,12 @@
 
     <Button
         android:id="@+id/btn_scan"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:gravity="center"
+        android:layout_marginTop="150dp"
         android:text="Scan"
         android:textSize="70sp" />
 
@@ -15,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_anime" />
+        android:src="@drawable/greenbg" />
 
 
 </RelativeLayout>
