@@ -257,6 +257,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MenuItem item = menu.findItem(R.id.music_switch1);
         item.setActionView(R.layout.music_switch_layout);
         Switch musicSwitch = item.getActionView().findViewById(R.id.music);
+
+        if(musicSwitch.isChecked()) {
+            MainActivity.this.startService(new Intent(MainActivity.this, MusicService.class));
+        }
+
         musicSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
