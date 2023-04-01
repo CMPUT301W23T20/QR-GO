@@ -19,8 +19,12 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 import android.provider.Settings;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 
 
 import com.example.qr_go.Activities.MapsActivity;
@@ -246,5 +250,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    // create option menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.option, menu);
+        MenuItem item = menu.findItem(R.id.music_switch1);
+        item.setActionView(R.layout.music_switch_layout);
+        Switch musicSwitch = item.getActionView().findViewById(R.id.music);
+        musicSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b) {
+                   MainActivity.this.startService(new Intent(MainActivity.this, MusicService.class));
+                }
+                else {
+                   MainActivity.this.stopService(new Intent(MainActivity.this, MusicService.class));
+                }
+            }
+        });
+        //return super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    // optionMenu selection method
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
