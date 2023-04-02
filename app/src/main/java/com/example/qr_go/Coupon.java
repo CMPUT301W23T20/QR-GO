@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Coupon {
     private ArrayList<String> dataList = new ArrayList<>();
-    private final String gl = "Good luck next time!!";
+    private final String gl = "Good lyck next time!! Deep scanning for a discount code!!!";
     private final String cg = "Congratulation!! You get a free coffee!!! Contact the team with following coupon: ";
 
     public Coupon() {
