@@ -213,6 +213,21 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
                             Collections.sort(qrDataList);
                             Collections.reverse(qrDataList);
 
+                            String qrHashRemove = qrDataList.get(i).getQrHash();
+                            System.out.println(qrHashRemove);
+
+                            // remove player from qr
+                            db.collection(QR.class.getSimpleName()).document(qrHashRemove).get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            ArrayList<String> playerList = (ArrayList<String>) documentSnapshot.get("playerList");
+                                            playerList.remove(player.getDeviceID());
+
+                                            db.collection(QR.class.getSimpleName()).document(qrHashRemove).update("playerList", playerList);
+                                        }
+                                    });
+
                             // remove qr from account
                             player.deleteQR(i);
 
