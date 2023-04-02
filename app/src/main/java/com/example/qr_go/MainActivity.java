@@ -67,14 +67,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, TAG + " onCreate");
+        //Log.d(TAG, TAG + " onCreate");
         setCustomTheme();
         super.onCreate(savedInstanceState);
-        //Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
-        //setCustomTheme();
-        //setTheme(R.style.MyAppTheme);
-
-
         setContentView(R.layout.activity_main);
 
         if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -205,6 +200,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
+    /**
+     * This retrieve theme data from database and apply the theme to the app
+     */
     public void setCustomTheme() {
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -320,7 +318,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(musicSwitch.isChecked()) {
             MainActivity.this.startService(new Intent(MainActivity.this, MusicService.class));
         }
-
         musicSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -337,43 +334,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     // optionMenu selection method
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
-
         HashMap<String, Object> data = new HashMap<>();
 
         switch (item.getItemId()){
             case R.id.theme1:
-                Toast.makeText(this, "theme1", Toast.LENGTH_SHORT).show();
-                setTheme(R.style.Theme_QRGO);
-
-
+                Toast.makeText(this, "restart to view theme1", Toast.LENGTH_SHORT).show();
+                //setTheme(R.style.Theme_QRGO);
                 data.put("theme", R.style.Theme_QRGO);
-
                 // update db
                 collectionReference.document(getDeviceId()).update(data);
-
                 break;
             case R.id.theme2:
-                MainActivity.this.setTheme(R.style.MyAppTheme);
-                Toast.makeText(this, "theme2", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(this, "restart to view theme2", Toast.LENGTH_SHORT).show();
+                //MainActivity.this.setTheme(R.style.MyAppTheme);
                 data.put("theme", R.style.MyAppTheme);
-
                 // update db
                 collectionReference.document(getDeviceId()).update(data);
                 /*TaskStackBuilder.create(MainActivity.this)
                         .addNextIntent(new Intent(MainActivity.this, MainActivity.class))
                         .addNextIntent(getIntent())
                         .startActivities();*/
-
         }
-
-        //recreate();
         return super.onOptionsItemSelected(item);
     }
 }

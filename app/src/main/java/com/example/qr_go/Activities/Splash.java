@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.example.qr_go.MainActivity;
 import com.example.qr_go.R;
 
-
+/**
+ * This is the class to create the loading screen
+ */
 public class Splash extends AppCompatActivity {
     Handler handler;
 
