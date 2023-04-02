@@ -68,7 +68,7 @@ public class ScanInstrumentedTest {
         // checks that it switches to CameraActivity
         assertTrue(solo.waitForActivity(CameraActivity.class));
         // Clicks on the button Yes that will open the camera
-        solo.clickOnView(solo.getView(R.id.btncamera_id));
+        solo.clickOnView(solo.getView(R.id.btn_scan));
         // here will have to manually capture the picture and approve it, I've checked and I don't think Robotium
         // has a method that clicks the camera capture button
         //now checks if activity is switched to GetLocationActivity

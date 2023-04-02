@@ -2,11 +2,11 @@
     <!-- Base application theme. -->
     <style name="Theme.QRGO" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimary">@color/richblack</item>
         <item name="colorPrimaryVariant">@color/green</item>
         <item name="colorOnPrimary">@color/beige</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/spotgreen</item>
         <item name="colorSecondaryVariant">@color/green</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
