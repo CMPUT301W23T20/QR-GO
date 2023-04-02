@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.example.qr_go.QR.QRComment;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -177,6 +179,18 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
             return false;
         }
 
+        /**
+         * Deletes QR from profile on swipe
+         * @param viewHolder The ViewHolder which has been swiped by the user.
+         * @param direction  The direction to which the ViewHolder is swiped. It is one of
+         *                   {@link #UP}, {@link #DOWN},
+         *                   {@link #LEFT} or {@link #RIGHT}. If your
+         *                   {@link #getMovementFlags(RecyclerView, ViewHolder)}
+         *                   method
+         *                   returned relative flags instead of {@link #LEFT} / {@link #RIGHT};
+         *                   `direction` will be relative as well. ({@link #START} or {@link
+         *                   #END}).
+         */
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int i = viewHolder.getAdapterPosition();
@@ -233,6 +247,8 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
                             dbHelper.updateDB(player);
 
                             qrListAdapter.notifyItemRemoved(i);
+
+                            Snackbar.make(findViewById(android.R.id.content), "QR Deleted!", Snackbar.LENGTH_SHORT).show();
                         }
                     });
 

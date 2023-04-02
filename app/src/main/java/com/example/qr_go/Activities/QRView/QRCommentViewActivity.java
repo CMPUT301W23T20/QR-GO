@@ -114,8 +114,11 @@ public class QRCommentViewActivity extends QRActivity implements RecyclerViewInt
                                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                     qr.addComment(comment, (String)documentSnapshot.get("username"));
                                                     commentDataList.add(new QRComment(comment, (String)documentSnapshot.get("username")));
+
+                                                    db.collection(QR.class.getSimpleName()).document(qr_hash).update("commentsList", commentDataList);
+
                                                     commentAdapter.notifyDataSetChanged();
-                                                    dbHelper.updateDB(qr);
+
                                                 }
                                             });
                                 }
@@ -184,6 +187,11 @@ public class QRCommentViewActivity extends QRActivity implements RecyclerViewInt
         return deviceId;
     }
 
+    /**
+     * Deletes comment at i
+     * @param i
+     * Index of comment
+     */
     @Override
     public void onItemClick(int i) {
         // get database information
