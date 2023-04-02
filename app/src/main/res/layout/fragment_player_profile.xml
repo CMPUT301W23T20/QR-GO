@@ -41,15 +41,14 @@
             android:layout_height="62dp"
             android:gravity="center_vertical"
             android:textSize="30sp" />
-
+        <!-- android:backgroundTint="@color/richblack
+        android:textColor="@color/beige"" -->
         <Button
             android:id="@+id/my_qr_codes_button"
             android:layout_width="wrap_content"
             android:layout_height="62dp"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="100dp"
-            android:backgroundTint="@color/richblack"
-            android:textColor="@color/beige"
             android:gravity="center_vertical"
             android:text="QR Codes"
             android:textSize="30sp" />
