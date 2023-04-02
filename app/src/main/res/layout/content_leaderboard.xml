@@ -13,7 +13,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="5dp"
         android:text="Player"
-        android:textSize="25sp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/score_text"
@@ -27,7 +27,7 @@
         android:layout_toRightOf="@+id/player_text"
         android:layout_centerVertical="true"
         android:gravity="right"
-        android:textSize="25sp" />
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/high_score_text"
@@ -40,7 +40,7 @@
         android:maxEms="8"
         android:singleLine="false"
         android:text="High Score"
-        android:textSize="25sp" />
+        android:textSize="22sp" />
 
 
 </RelativeLayout>
