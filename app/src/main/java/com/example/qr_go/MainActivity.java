@@ -64,27 +64,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // get database information
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
-
-        collectionReference.document(getDeviceId()).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        int theme = ((Long)documentSnapshot.get("theme")).intValue(); // theme val from db
-
-                        // set theme based on data from db
-                        if(theme == R.style.Theme_QRGO) {
-                            setTheme(R.style.Theme_QRGO);
-                        }
-                        else {
-                            setTheme(R.style.MyAppTheme);
-                        }
-                    }
-                });
-
+        //setCustomTheme();
+        setTheme(R.style.MyAppTheme);
         setContentView(R.layout.activity_main);
 
         if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -101,11 +82,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     /**
      * This initialize a viewPager
@@ -200,6 +176,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Intent myIntent = new Intent(MainActivity.this, GreetingScreenActivity.class);
                             myIntent.putExtra("android_id", getDeviceId());
                             MainActivity.this.startActivity(myIntent);
+                        }
+                    }
+                });
+    }
+
+    private void setCustomTheme() {
+        // get database information
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+        db.collection(Player.class.getSimpleName()).document(getDeviceId()).get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if(task.getResult().exists()) {
+                                    int theme = ((Long) task.getResult().get("theme")).intValue(); // theme val from db
+                                    if (theme == R.style.Theme_QRGO) {
+                                        setTheme(R.style.Theme_QRGO);
+                                    } else {
+                                        setTheme(R.style.MyAppTheme);
+                                    }
+                                }
+                            }
+                        });
+    }
+
+    private void setCustomTheme1() {
+        // get database information
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+        collectionReference.document(getDeviceId()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        int theme = ((Long) documentSnapshot.get("theme")).intValue(); // theme val from db
+
+                        // set theme based on data from db
+                        if (theme == R.style.Theme_QRGO) {
+                            setTheme(R.style.Theme_QRGO);
+                        } else {
+                            setTheme(R.style.MyAppTheme);
                         }
                     }
                 });
@@ -323,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()){
             case R.id.theme1:
                 Toast.makeText(this, "theme1", Toast.LENGTH_SHORT).show();
-                setTheme(R.style.Theme_QRGO);
+                //setTheme(R.style.Theme_QRGO);
 
                 data.put("theme", R.style.Theme_QRGO);
 
@@ -332,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.theme2:
-                setTheme(R.style.MyAppTheme);
+                //setTheme(R.style.MyAppTheme);
                 Toast.makeText(this, "theme2", Toast.LENGTH_SHORT).show();
 
                 data.put("theme", R.style.MyAppTheme);
