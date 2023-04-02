@@ -101,18 +101,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     String name = (String)doc.get("name");
                     String avatar = (String)doc.get("avatar");
                     int score = ((Long)doc.get("score")).intValue();
-                    double latitude = ((double)doc.get("latitude"));
-                    double longitude = ((double)doc.get("longitude"));
+
 
 
                     QR qr = new QR(doc.getId(), name, avatar, score,
                             new ArrayList<>(),
                             new ArrayList<>());
 
-                    qr.setLatitude((float)latitude);
-                    qr.setLongitude((float)longitude);
+                    if(doc.get("latitude") != null && doc.get("longitude") != null) {
+                        double latitude = ((double)doc.get("latitude"));
+                        double longitude = ((double)doc.get("longitude"));
 
-                    qrList.add(qr);
+                        qr.setLatitude((float)latitude);
+                        qr.setLongitude((float)longitude);
+
+                        qrList.add(qr);
+                    }
                 }
 
                 for(QR qr: qrList){
