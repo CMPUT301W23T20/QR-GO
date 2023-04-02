@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qr_go.Interfaces.RecyclerViewInterface;
@@ -28,6 +29,7 @@ public class ProfileQRListAdapter extends RecyclerView.Adapter<ProfileQRListAdap
         this.context = context;
         this.qrArrayList = qrArrayList;
         this.recyclerViewInterface = recyclerViewInterface;
+
     }
 
     @NonNull

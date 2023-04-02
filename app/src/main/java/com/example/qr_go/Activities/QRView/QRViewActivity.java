@@ -4,21 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.telephony.RadioAccessSpecifier;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.qr_go.Actor.Player;
-import com.example.qr_go.Adapters.QRCommentAdapter;
 import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.Interfaces.RecyclerViewInterface;
+import com.example.qr_go.QR.Avatar;
 import com.example.qr_go.QR.QRComment;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
@@ -40,6 +33,7 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
     private Button backButton;
     private TextView nameText;
     private TextView scoreText;
+    private TextView avatarTextView;
     private ImageView imageView;
     private Uri imageUri;
     private Button playerListButton;
@@ -120,6 +114,7 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
         this.imageView = findViewById(R.id.image_view);
         this.playerListButton = findViewById(R.id.player_list_button);
         this.commentListButton = findViewById(R.id.comment_list_button);
+        this.avatarTextView = findViewById(R.id.visual_text);
     }
 
     /**
@@ -146,20 +141,27 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
                         ArrayList<QRComment> commentList = dbHelper.convertQRCommentListFromDB((List<Map<String, Object>>)documentSnapshot.get("commentsList"));
 
 
-                        qr = new QR(qr_hash, name , avatar, score,
+                        qr = new QR(qr_hash, name, avatar, score,
                                 commentList,
                                 new ArrayList<>());
 
 
                         // set total text
-                        nameText.setText(qr.getName());
-                        scoreText.setText("" + qr.getScore());
+                        nameText.setText("Name: " + qr.getName());
+
+                        scoreText.setText("Score: " + qr.getScore());
 
                         // set image view
                         if (image != null) {
                             imageUri = Uri.parse(image);
                             Picasso.get().load(imageUri).into(imageView);
+
                         }
+
+
+                        // put avatar into xml view
+                        avatarTextView.setText(qr.getAvatar());
+
                     }
                 });
     }
@@ -168,6 +170,4 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
     public void onItemClick(int i) {
 
     }
-
-
 }

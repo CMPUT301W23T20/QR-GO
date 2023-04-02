@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,6 +57,9 @@ public class QRPlayerListViewActivity extends QRActivity implements RecyclerView
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        RecyclerView.ItemDecoration divider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        playerListView.addItemDecoration(divider);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

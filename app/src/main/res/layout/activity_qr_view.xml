@@ -35,14 +35,20 @@
 
             <TextView
                 android:id="@+id/visual_text"
-                android:layout_width="155dp"
+                android:layout_width="205dp"
                 android:layout_height="205dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical|center_horizontal"
-                android:letterSpacing=".4"
-                android:text="visual\nrepresenation"
-                android:textSize="15sp" />
+                android:padding="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="25sp"
+                android:fontFamily="monospace"
+                android:textStyle="bold"
+                android:gravity="top|left"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="2dp"
+                android:lineSpacingMultiplier="1.2"
+                android:text="visual\nrepresentation" />
         </LinearLayout>
+
 
         <TextView
             android:id="@+id/name_text"
@@ -74,6 +80,8 @@
                 android:layout_marginRight="50dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginBottom="80dp"
+                android:backgroundTint="@color/richblack"
+                android:textColor="@color/beige"
                 android:textSize="17dp"
                 android:text="Players" />
 
@@ -83,6 +91,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="45dp"
                 android:layout_marginEnd="80dp"
+                android:backgroundTint="@color/richblack"
+                android:textColor="@color/beige"
                 android:textSize="17dp"
                 android:layout_marginBottom="60dp"
 
