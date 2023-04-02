@@ -38,7 +38,9 @@ import com.example.qr_go.Fragments.LeaderboardFragment;
 import com.example.qr_go.Fragments.Profile.PlayerProfileFragment;
 import com.example.qr_go.Fragments.ScanFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -293,16 +295,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.theme1:
-                Toast.makeText(this, "theme1", Toast.LENGTH_SHORT).show();
-                setTheme(R.style.Theme_QRGO);
-                break;
-            case R.id.theme2:
-                setTheme(R.style.MyAppTheme);
-                Toast.makeText(this, "theme2", Toast.LENGTH_SHORT).show();
-                break;
-        }
+        // get database information
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+        collectionReference.document(getDeviceId()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        int theme = ((Long)documentSnapshot.get("theme")).intValue(); // theme val from db
+
+                        // set theme based on data from db
+                        if(theme == R.style.Theme_QRGO) {
+                            setTheme(R.style.Theme_QRGO);
+                        }
+                        else {
+                            setTheme(R.style.MyAppTheme);
+                        }
+                    }
+                });
         //recreate();
         return super.onOptionsItemSelected(item);
     }
