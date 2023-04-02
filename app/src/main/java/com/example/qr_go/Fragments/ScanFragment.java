@@ -226,14 +226,22 @@ public class ScanFragment extends Fragment {
                                                 dbHelper.updateDB(qr);
                                             }
                                             else {
-                                                HashMap<String, Object> data = new HashMap<>();
+                                                db.collection(QR.class.getSimpleName()).document(qr.getQrHash()).get()
+                                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                                                List<String> playerList = (List<String>) documentSnapshot.get("playerList");
-                                                playerList.add(player.getDeviceID());
+                                                                List<String> playerList = (List<String>)documentSnapshot.get("playerList");
 
-                                                data.put("playerList", data);
+                                                                playerList.add(player.getDeviceID());
 
-                                                db.collection(QR.class.getSimpleName()).document(qr.getQrHash()).update(data);
+                                                                System.out.println("list after: " + playerList);
+
+                                                                db.collection(QR.class.getSimpleName()).document(qr.getQrHash()).update("playerList", playerList);
+                                                            }
+                                                        });
+
+
                                             }
                                         }
                                     });
