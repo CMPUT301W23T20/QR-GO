@@ -22,6 +22,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,11 +61,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LocationManager locationManager;
     ArrayList<Fragment> fragments = new ArrayList<>();
     List<Address> address = null;
+    String TAG = MainActivity.class.getSimpleName();
     //private int themeId = R.style.Theme_QRGO;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, TAG + " onCreate");
         setCustomTheme();
         super.onCreate(savedInstanceState);
         //Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
@@ -84,21 +87,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getLocation();
         initGreetingScreen();
         initNavigationBar();
-        //initViewPager();
-
+        if (viewPager == null) {
+            initViewPager();
+            Log.d(TAG, TAG + "initViewPager");
+        }
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initViewPager();
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this, "destroy", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, TAG + "Destroy");
 
     }
 
