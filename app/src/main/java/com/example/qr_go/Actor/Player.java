@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.qr_go.QR.QR;
+import com.example.qr_go.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -25,6 +26,8 @@ public class Player extends Actor implements Comparable<Player> {
     private int lowestScore;
     private int totalScore;
 
+    private int theme;
+
     /**
      * Constructor for creating brand new player
      * @param username
@@ -35,6 +38,7 @@ public class Player extends Actor implements Comparable<Player> {
     public Player(String username, String deviceID) {
         super(username, deviceID);
         qrList = new ArrayList<>();
+        this.theme = R.style.Theme_QRGO;
     }
 
     /**
@@ -55,13 +59,22 @@ public class Player extends Actor implements Comparable<Player> {
      * Player's total score
      */
     public Player(String username, String deviceID, ArrayList<QR> qrList,
-                  int rank, int highestScore, int lowestScore, int totalScore) {
+                  int rank, int highestScore, int lowestScore, int totalScore, int theme) {
         super(username, deviceID);
         this.qrList = qrList;
         this.rank = rank;
         this.highestScore = highestScore;
         this.lowestScore = lowestScore;
         this.totalScore = totalScore;
+        this.theme = theme;
+    }
+
+    public int getTheme() {
+        return theme;
+    }
+
+    public void setTheme(int theme) {
+        this.theme = theme;
     }
 
     /**

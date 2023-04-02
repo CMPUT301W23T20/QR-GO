@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import com.example.qr_go.Activities.Scan.CameraActivity;
 import com.example.qr_go.Activities.Scan.CaptureAct;
 import com.example.qr_go.Actor.Player;
+import com.example.qr_go.Coupon;
 import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
@@ -71,7 +72,6 @@ public class ScanFragment extends Fragment {
 
     /**
      * fragment constructor
-     * @param android_id
      */
     public ScanFragment(String android_id) {
         this.android_id = android_id;
@@ -156,6 +156,9 @@ public class ScanFragment extends Fragment {
         if(result.getContents() !=null)
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            //generate coupon
+            Coupon coupon = new Coupon();
+            String couponString = coupon.lottery();
             // show score of QR code here
             qr = new QR(result.getContents());
             String name = qr.getName();
@@ -169,7 +172,7 @@ public class ScanFragment extends Fragment {
 
             TextView messageText = new TextView(getActivity());
             messageText.setTypeface(typeface);
-            messageText.setText("Score: "+scorestring+" points"+"\n\n"+avatar);
+            messageText.setText( couponString + "\n" + "Score: " + scorestring + " points" + "\n\n" + avatar);
             messageText.setPadding(20, 20, 20, 20);
             messageText.setTextSize(15);
             builder.setView(messageText);
@@ -201,8 +204,9 @@ public class ScanFragment extends Fragment {
                             int highestScore = ((Long)documentSnapshot.get("highestScore")).intValue();
                             int lowestScore = ((Long)documentSnapshot.get("lowestScore")).intValue();
                             int totalScore = ((Long)documentSnapshot.get("totalScore")).intValue();
+                            int theme = ((Long)documentSnapshot.get("theme")).intValue();
 
-                            player = new Player(username, android_id, qrList, rank, highestScore, lowestScore, totalScore);
+                            player = new Player(username, android_id, qrList, rank, highestScore, lowestScore, totalScore, theme);
                             player.setContact(contact);
 
                             qr.addToPlayerList(player.getDeviceID());

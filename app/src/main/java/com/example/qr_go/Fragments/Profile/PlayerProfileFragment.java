@@ -150,8 +150,9 @@ public class PlayerProfileFragment extends Fragment {
                         int highestScore = ((Long)documentSnapshot.get("highestScore")).intValue();
                         int lowestScore = ((Long)documentSnapshot.get("lowestScore")).intValue();
                         int totalScore = ((Long)documentSnapshot.get("totalScore")).intValue();
+                        int theme = ((Long)documentSnapshot.get("theme")).intValue();
 
-                        model = new Player(username, deviceID, qrListFromDoc, rank, highestScore, lowestScore, totalScore);
+                        model = new Player(username, deviceID, qrListFromDoc, rank, highestScore, lowestScore, totalScore, theme);
 
                         // update UI
                         usernameTextView.setText(model.getUsername());

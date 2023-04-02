@@ -2,6 +2,7 @@ package com.example.qr_go;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -25,6 +27,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.Toast;
 
 
 import com.example.qr_go.Activities.MapsActivity;
@@ -35,11 +38,14 @@ import com.example.qr_go.Fragments.LeaderboardFragment;
 import com.example.qr_go.Fragments.Profile.PlayerProfileFragment;
 import com.example.qr_go.Fragments.ScanFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,9 +60,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<Fragment> fragments = new ArrayList<>();
     List<Address> address = null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // get database information
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+        collectionReference.document(getDeviceId()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        int theme = ((Long)documentSnapshot.get("theme")).intValue(); // theme val from db
+
+                        // set theme based on data from db
+                        if(theme == R.style.Theme_QRGO) {
+                            setTheme(R.style.Theme_QRGO);
+                        }
+                        else {
+                            setTheme(R.style.MyAppTheme);
+                        }
+                    }
+                });
+
         setContentView(R.layout.activity_main);
 
         if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -73,6 +101,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     /**
      * This initialize a viewPager
@@ -281,9 +314,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        // get database information
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 
+        HashMap<String, Object> data = new HashMap<>();
+
+        switch (item.getItemId()){
+            case R.id.theme1:
+                Toast.makeText(this, "theme1", Toast.LENGTH_SHORT).show();
+                setTheme(R.style.Theme_QRGO);
+
+                data.put("theme", R.style.Theme_QRGO);
+
+                // update db
+                collectionReference.document(getDeviceId()).update(data);
+
+                break;
+            case R.id.theme2:
+                setTheme(R.style.MyAppTheme);
+                Toast.makeText(this, "theme2", Toast.LENGTH_SHORT).show();
+
+                data.put("theme", R.style.MyAppTheme);
+
+                // update db
+                collectionReference.document(getDeviceId()).update(data);
+                break;
         }
+        //recreate();
         return super.onOptionsItemSelected(item);
     }
 }
