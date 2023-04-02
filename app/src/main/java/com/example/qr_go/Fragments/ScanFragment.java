@@ -204,8 +204,9 @@ public class ScanFragment extends Fragment {
                             int highestScore = ((Long)documentSnapshot.get("highestScore")).intValue();
                             int lowestScore = ((Long)documentSnapshot.get("lowestScore")).intValue();
                             int totalScore = ((Long)documentSnapshot.get("totalScore")).intValue();
+                            int theme = ((Long)documentSnapshot.get("theme")).intValue();
 
-                            player = new Player(username, android_id, qrList, rank, highestScore, lowestScore, totalScore);
+                            player = new Player(username, android_id, qrList, rank, highestScore, lowestScore, totalScore, theme);
                             player.setContact(contact);
 
                             qr.addToPlayerList(player.getDeviceID());

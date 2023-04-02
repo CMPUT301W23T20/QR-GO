@@ -128,6 +128,7 @@ public class DataBaseHelper {
         data.put("highestScore", player.getHighestScore());
         data.put("lowestScore", player.getLowestScore());
         data.put("totalScore", player.getTotalScore());
+        data.put("theme", player.getTheme());
 
         // add data to database
         // document named after user deviceID
