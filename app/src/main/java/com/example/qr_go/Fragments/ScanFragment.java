@@ -21,10 +21,12 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.qr_go.Activities.Profile.GreetingScreenActivity;
 import com.example.qr_go.Activities.Scan.CameraActivity;
 import com.example.qr_go.Activities.Scan.CaptureAct;
 import com.example.qr_go.Actor.Player;
@@ -33,7 +35,9 @@ import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.MainActivity;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -224,7 +228,34 @@ public class ScanFragment extends Fragment {
 
                             // update DB
                             dbHelper.updateDB(player);
-                            dbHelper.updateDB(qr);
+
+                            db.collection(QR.class.getSimpleName()).document(qr.getQrHash()).get()
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if(!task.getResult().exists()) {
+                                                dbHelper.updateDB(qr);
+                                            }
+                                            else {
+                                                db.collection(QR.class.getSimpleName()).document(qr.getQrHash()).get()
+                                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                                                List<String> playerList = (List<String>)documentSnapshot.get("playerList");
+
+                                                                playerList.add(player.getDeviceID());
+
+                                                                System.out.println("list after: " + playerList);
+
+                                                                db.collection(QR.class.getSimpleName()).document(qr.getQrHash()).update("playerList", playerList);
+                                                            }
+                                                        });
+
+
+                                            }
+                                        }
+                                    });
                         }
                     });
 
