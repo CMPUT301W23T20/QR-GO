@@ -61,7 +61,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setTheme(R.style.MyAppTheme);
+
+       //setTheme(R.style.db.get(heMyAppTheme));
+
         setContentView(R.layout.activity_main);
 
         if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -301,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "theme2", Toast.LENGTH_SHORT).show();
                 break;
         }
-        recreate();
+        //recreate();
         return super.onOptionsItemSelected(item);
     }
 }
