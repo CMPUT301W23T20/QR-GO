@@ -45,6 +45,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -64,7 +65,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       //setTheme(R.style.db.get(heMyAppTheme));
+        // get database information
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+        collectionReference.document(getDeviceId()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        int theme = ((Long)documentSnapshot.get("theme")).intValue(); // theme val from db
+
+                        // set theme based on data from db
+                        if(theme == R.style.Theme_QRGO) {
+                            setTheme(R.style.Theme_QRGO);
+                        }
+                        else {
+                            setTheme(R.style.MyAppTheme);
+                        }
+                    }
+                });
 
         setContentView(R.layout.activity_main);
 
@@ -299,21 +318,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 
-        collectionReference.document(getDeviceId()).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        int theme = ((Long)documentSnapshot.get("theme")).intValue(); // theme val from db
+        HashMap<String, Object> data = new HashMap<>();
 
-                        // set theme based on data from db
-                        if(theme == R.style.Theme_QRGO) {
-                            setTheme(R.style.Theme_QRGO);
-                        }
-                        else {
-                            setTheme(R.style.MyAppTheme);
-                        }
-                    }
-                });
+        switch (item.getItemId()){
+            case R.id.theme1:
+                Toast.makeText(this, "theme1", Toast.LENGTH_SHORT).show();
+                setTheme(R.style.Theme_QRGO);
+
+                data.put("theme", R.style.Theme_QRGO);
+
+                // update db
+                collectionReference.document(getDeviceId()).update(data);
+
+                break;
+            case R.id.theme2:
+                setTheme(R.style.MyAppTheme);
+                Toast.makeText(this, "theme2", Toast.LENGTH_SHORT).show();
+
+                data.put("theme", R.style.MyAppTheme);
+
+                // update db
+                collectionReference.document(getDeviceId()).update(data);
+                break;
+        }
         //recreate();
         return super.onOptionsItemSelected(item);
     }
