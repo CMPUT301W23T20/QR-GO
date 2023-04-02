@@ -8,12 +8,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.activity.result.ActivityResultLauncher;
 
 import androidx.annotation.Nullable;
@@ -160,8 +163,22 @@ public class ScanFragment extends Fragment {
             int score = qr.getScore();
             String scorestring = Integer.toString(score);
             // show score of QR code here
+            Typeface typeface = Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL);
             builder.setTitle("You found a "+name+"!");
-            builder.setMessage("Score: "+scorestring+" points"+"\n"+avatar);
+            //builder.setMessage("Score: "+scorestring+" points"+"\n"+avatar);
+
+            TextView messageText = new TextView(getActivity());
+            messageText.setTypeface(typeface);
+            messageText.setText("Score: "+scorestring+" points"+"\n\n"+avatar);
+            messageText.setPadding(20, 20, 20, 20);
+            messageText.setTextSize(15);
+            builder.setView(messageText);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
 
 
             // add QR to DB and Player
