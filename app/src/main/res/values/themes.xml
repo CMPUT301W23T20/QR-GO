@@ -12,6 +12,10 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <item name="android:windowBackground">@drawable/bg2</item>
+
+
     </style>
 
     <style name="MyAppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -26,6 +30,13 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="AppTheme.Cyan" parent="Theme.QRGO">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryCyan</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkCyan</item>
+        <item name="colorAccent">@color/colorAccentCyan</item>
     </style>
 
 </resources>

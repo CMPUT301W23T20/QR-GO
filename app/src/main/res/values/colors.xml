@@ -15,6 +15,10 @@
     <color name = "spotgreen">#1DB954</color>
     <color name = "lightgreen">#cefad0</color>
     <color name = "faintgreen">#009E60</color>
+    <!-- Cyan Theme Colors -->
+    <color name="colorPrimaryCyan">#26c6da</color>
+    <color name="colorPrimaryDarkCyan">#0095a8</color>
+    <color name="colorAccentCyan">#ffca28</color>
 
 
 </resources>

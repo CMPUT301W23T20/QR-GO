@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<Fragment> fragments = new ArrayList<>();
     List<Address> address = null;
     String TAG = MainActivity.class.getSimpleName();
-    //private int themeId = R.style.Theme_QRGO;
+    private int themeId = R.style.Theme_QRGO;
 
 
     @Override
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, TAG + "Destroy");
+        Log.d(TAG, TAG + "onDestroy");
 
     }
 
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void initViewPager() {
         viewPager = findViewById(R.id.viewPager);
-        //fragments.add(MapFragment.newInstance("Map","321"));
+        //fragments.add(ScanFragment.newInstance(getDeviceId()));
         fragments.add(ScanFragment.newInstance(getDeviceId()));
         fragments.add(LeaderboardFragment.newInstance(getDeviceId()));
         fragments.add(PlayerProfileFragment.newInstance(getDeviceId(), true));
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         setTheme(R.style.Theme_QRGO);
 
                                     } else {
-                                        setTheme(R.style.MyAppTheme);
+                                        setTheme(R.style.AppTheme_Cyan);
 
                                     }
                                 }
@@ -230,54 +230,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    /*@Override
-    public Resources.Theme getTheme() {
-        Resources.Theme theme = super.getTheme();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
-
-
-        db.collection(Player.class.getSimpleName()).document(getDeviceId()).get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if(task.getResult().exists()) {
-                            int themeid = ((Long) task.getResult().get("theme")).intValue(); // theme val from db
-                            if (themeid == R.style.Theme_QRGO) {
-                                theme.applyStyle(R.style.Theme_QRGO, true);
-
-                            } else {
-                                theme.applyStyle(R.style.MyAppTheme, true);
-
-                            }
-                        }
-                    }
-                });
-
-        //Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
-        return theme;
-    }*/
-
-    private void setCustomTheme1() {
-        // get database information
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
-
-        collectionReference.document(getDeviceId()).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        int theme = ((Long) documentSnapshot.get("theme")).intValue(); // theme val from db
-
-                        // set theme based on data from db
-                        if (theme == R.style.Theme_QRGO) {
-                            setTheme(R.style.Theme_QRGO);
-                        } else {
-                            setTheme(R.style.MyAppTheme);
-                        }
-                    }
-                });
-    }
 
     /**
      * This calls changeTab method when a view is clicked

@@ -8,11 +8,11 @@
         app:actionLayout="@layout/music_switch_layout"/>
 
     <item
-        android:title="theme1"
+        android:title="Theme1 (Test)"
         android:id="@+id/theme1"/>
 
     <item
-        android:title="theme2"
+        android:title="Theme2 (Test)"
         android:id="@+id/theme2"/>
 
 
