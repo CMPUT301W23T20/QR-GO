@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.example.qr_go.Activities.Profile.OtherProfileQRListViewActivity;
+import com.example.qr_go.Activities.QRView.QRViewActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.LeaderboardAdapter;
 import com.example.qr_go.QR.QR;
@@ -19,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -42,7 +46,7 @@ import java.util.Map;
  * This class is an activity that shows Google Maps with markers showing geolocations
  * of scanned QR codes
  */
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     GoogleMap gMap;
     FrameLayout map;
@@ -130,7 +134,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     String scoreStr = Integer.toString(score);
 
                     LatLng tester = new LatLng(latitude,longitude);
-                    gMap.addMarker(new MarkerOptions().position(tester).title("SCORE: "+scoreStr +" | NAME: " +name));
+                    gMap.addMarker(new MarkerOptions().position(tester).snippet(qr.getQrHash()));
                     gMap.moveCamera(CameraUpdateFactory.newLatLng(tester));
 
                 }
@@ -138,6 +142,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        // Set a listener for marker click.
+        gMap.setOnMarkerClickListener(this);
+    }
 
+    /** Called when the user clicks a marker. */
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+        Intent myIntent = new Intent(MapsActivity.this, QRViewActivity.class);
+        myIntent.putExtra("android_id", "");
+        myIntent.putExtra("qr_hash", marker.getSnippet());
+        MapsActivity.this.startActivity(myIntent);
+
+        return false;
     }
 }
