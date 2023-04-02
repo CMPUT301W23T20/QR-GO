@@ -1,7 +1,9 @@
 package com.example.qr_go.Activities.QRView;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -10,12 +12,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.QRCommentAdapter;
+import com.example.qr_go.Coupon;
 import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.Interfaces.RecyclerViewInterface;
 import com.example.qr_go.QR.QR;
@@ -182,6 +186,58 @@ public class QRCommentViewActivity extends QRActivity implements RecyclerViewInt
 
     @Override
     public void onItemClick(int i) {
+        // get database information
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 
+        // put data into class
+        collectionReference.document(getDeviceId()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if(commentDataList.get(i).getCommenter().equals((String)documentSnapshot.get("username"))) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(QRCommentViewActivity.this);
+
+                            Typeface typeface = Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL);
+                            builder.setTitle("Delete comment");
+
+                            TextView messageText = new TextView(QRCommentViewActivity.this);
+                            messageText.setTypeface(typeface);
+                            messageText.setText("Are you sure you want to delete this comment?");
+                            messageText.setPadding(20, 20, 20, 20);
+                            messageText.setTextSize(15);
+                            builder.setView(messageText);
+                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int index) {
+                                    db.collection(QR.class.getSimpleName()).document(qr_hash).get()
+                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                                    commentDataList.remove(i);
+
+                                                    db.collection(QR.class.getSimpleName()).document(qr_hash).update("commentsList", commentDataList);
+
+
+
+                                                    commentAdapter.notifyDataSetChanged();
+                                                }
+                                            });
+
+                                    dialogInterface.dismiss();
+                                }
+                            });
+
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            }).show();
+                        }
+                    }
+                });
     }
 }
