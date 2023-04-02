@@ -8,7 +8,8 @@ import java.util.Random;
 
 public class Coupon {
     private ArrayList<String> dataList = new ArrayList<>();
-    private final String gl = "T_T Good luck next time!!";
+    private final String gl = "Good luck next time!!";
+    private final String cg = "Congratulation!! You get a free coffee!!! Contact the team with following coupon: ";
 
     public Coupon() {
         this.dataList = dataList;
@@ -18,9 +19,9 @@ public class Coupon {
 
     public String lottery(){
         Random randI = new Random();
-        int i = randI.nextInt(1000);
+        int i = randI.nextInt(10);
         if (i < 5){
-            return dataList.get(i);
+            return cg + dataList.get(i);
         }else{
             return gl;
         }
