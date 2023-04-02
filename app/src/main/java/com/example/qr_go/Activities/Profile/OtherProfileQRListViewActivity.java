@@ -37,7 +37,6 @@ import java.util.Map;
  */
 public class OtherProfileQRListViewActivity extends ProfileActivity implements RecyclerViewInterface {
     private Button backButton;
-    private TextView totalText;
     private RecyclerView qrList;
     private ArrayList<QR> qrDataList;
     private ProfileQRListAdapter qrListAdapter;
@@ -142,9 +141,6 @@ public class OtherProfileQRListViewActivity extends ProfileActivity implements R
                         qrList.setLayoutManager(new LinearLayoutManager(OtherProfileQRListViewActivity.this));
                         qrListAdapter = new ProfileQRListAdapter(OtherProfileQRListViewActivity.this, qrDataList, OtherProfileQRListViewActivity.this);
                         qrList.setAdapter(qrListAdapter);
-
-                        // set total text
-                        totalText.setText("Total QRs: " + player.getTotalQR());
                     }
                 });
     }
@@ -157,7 +153,6 @@ public class OtherProfileQRListViewActivity extends ProfileActivity implements R
         // get views from fragment
         this.qrList = findViewById(R.id.qr_list);
         this.backButton = findViewById(R.id.qr_list_back_button);
-        this.totalText = findViewById(R.id.total_text);
     }
 
     /**
