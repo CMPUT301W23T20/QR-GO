@@ -6,6 +6,7 @@
     android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/faintgreen"
     tools:context="com.example.qr_go.Fragments.Profile.PlayerProfileFragment">
 
     <LinearLayout
@@ -47,6 +48,8 @@
             android:layout_height="62dp"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="100dp"
+            android:backgroundTint="@color/richblack"
+            android:textColor="@color/beige"
             android:gravity="center_vertical"
             android:text="QR Codes"
             android:textSize="30sp" />

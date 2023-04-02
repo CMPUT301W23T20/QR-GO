@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:clickable="true"
+    android:backgroundTint="@color/faintgreen"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -23,16 +24,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-
-
         <TextView
             android:id="@+id/total_text"
             android:layout_width="335dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:padding="15dp"
-            android:text="Total QRs: "
+            android:text="Total QR Codes Scanned: "
             android:textSize="20sp" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

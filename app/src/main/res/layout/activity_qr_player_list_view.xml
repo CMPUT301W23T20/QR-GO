@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:clickable="true"
+    android:backgroundTint="@color/faintgreen"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
