@@ -112,8 +112,9 @@ public class LeaderboardFragment extends Fragment {
                     int highestScore = ((Long)doc.get("highestScore")).intValue();
                     int lowestScore = ((Long)doc.get("lowestScore")).intValue();
                     int totalScore = ((Long)doc.get("totalScore")).intValue();
+                    int theme = ((Long)doc.get("theme")).intValue();
 
-                    Player player = new Player(username, deviceID, new ArrayList<>(), rank, highestScore, lowestScore, totalScore);
+                    Player player = new Player(username, deviceID, new ArrayList<>(), rank, highestScore, lowestScore, totalScore, theme);
 
                     // add player to data list
                     dataList.add(player);

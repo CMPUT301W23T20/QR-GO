@@ -8,7 +8,12 @@
         app:actionLayout="@layout/music_switch_layout"/>
 
     <item
-        android:title="setting2"/>
+        android:title="theme1"
+        android:id="@+id/theme1"/>
+
+    <item
+        android:title="theme2"
+        android:id="@+id/theme2"/>
 
 
 </menu>

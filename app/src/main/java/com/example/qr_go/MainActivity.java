@@ -2,6 +2,7 @@ package com.example.qr_go;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -9,8 +10,10 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -25,6 +28,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.Toast;
 
 
 import com.example.qr_go.Activities.MapsActivity;
@@ -35,11 +39,14 @@ import com.example.qr_go.Fragments.LeaderboardFragment;
 import com.example.qr_go.Fragments.Profile.PlayerProfileFragment;
 import com.example.qr_go.Fragments.ScanFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,10 +60,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LocationManager locationManager;
     ArrayList<Fragment> fragments = new ArrayList<>();
     List<Address> address = null;
+    //private int themeId = R.style.Theme_QRGO;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setCustomTheme();
         super.onCreate(savedInstanceState);
+        //Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
+        //setCustomTheme();
+        //setTheme(R.style.MyAppTheme);
+
+
         setContentView(R.layout.activity_main);
 
         if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -69,10 +84,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getLocation();
         initGreetingScreen();
         initNavigationBar();
-        initViewPager();
+        //initViewPager();
+
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initViewPager();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(this, "destroy", Toast.LENGTH_SHORT).show();
+
+    }
 
     /**
      * This initialize a viewPager
@@ -167,6 +195,80 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Intent myIntent = new Intent(MainActivity.this, GreetingScreenActivity.class);
                             myIntent.putExtra("android_id", getDeviceId());
                             MainActivity.this.startActivity(myIntent);
+                        }
+                    }
+                });
+    }
+
+    public void setCustomTheme() {
+        // get database information
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+
+        db.collection(Player.class.getSimpleName()).document(getDeviceId()).get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if(task.getResult().exists()) {
+                                    int theme = ((Long) task.getResult().get("theme")).intValue(); // theme val from db
+                                    if (theme == R.style.Theme_QRGO) {
+                                        setTheme(R.style.Theme_QRGO);
+
+                                    } else {
+                                        setTheme(R.style.MyAppTheme);
+
+                                    }
+                                }
+                            }
+                        });
+
+    }
+
+    /*@Override
+    public Resources.Theme getTheme() {
+        Resources.Theme theme = super.getTheme();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+
+        db.collection(Player.class.getSimpleName()).document(getDeviceId()).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.getResult().exists()) {
+                            int themeid = ((Long) task.getResult().get("theme")).intValue(); // theme val from db
+                            if (themeid == R.style.Theme_QRGO) {
+                                theme.applyStyle(R.style.Theme_QRGO, true);
+
+                            } else {
+                                theme.applyStyle(R.style.MyAppTheme, true);
+
+                            }
+                        }
+                    }
+                });
+
+        //Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
+        return theme;
+    }*/
+
+    private void setCustomTheme1() {
+        // get database information
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+        collectionReference.document(getDeviceId()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        int theme = ((Long) documentSnapshot.get("theme")).intValue(); // theme val from db
+
+                        // set theme based on data from db
+                        if (theme == R.style.Theme_QRGO) {
+                            setTheme(R.style.Theme_QRGO);
+                        } else {
+                            setTheme(R.style.MyAppTheme);
                         }
                     }
                 });
@@ -281,9 +383,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // get database information
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
+
+        HashMap<String, Object> data = new HashMap<>();
+
         switch (item.getItemId()){
+            case R.id.theme1:
+                Toast.makeText(this, "theme1", Toast.LENGTH_SHORT).show();
+                setTheme(R.style.Theme_QRGO);
+
+
+                data.put("theme", R.style.Theme_QRGO);
+
+                // update db
+                collectionReference.document(getDeviceId()).update(data);
+
+                break;
+            case R.id.theme2:
+                MainActivity.this.setTheme(R.style.MyAppTheme);
+                Toast.makeText(this, "theme2", Toast.LENGTH_SHORT).show();
+
+                data.put("theme", R.style.MyAppTheme);
+
+                // update db
+                collectionReference.document(getDeviceId()).update(data);
+                /*TaskStackBuilder.create(MainActivity.this)
+                        .addNextIntent(new Intent(MainActivity.this, MainActivity.class))
+                        .addNextIntent(getIntent())
+                        .startActivities();*/
 
         }
+
+        //recreate();
         return super.onOptionsItemSelected(item);
     }
 }

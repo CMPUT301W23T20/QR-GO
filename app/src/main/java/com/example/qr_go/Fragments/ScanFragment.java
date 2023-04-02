@@ -6,6 +6,7 @@ import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 
 import android.graphics.Typeface;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 
@@ -26,7 +28,9 @@ import androidx.fragment.app.Fragment;
 import com.example.qr_go.Activities.Scan.CameraActivity;
 import com.example.qr_go.Activities.Scan.CaptureAct;
 import com.example.qr_go.Actor.Player;
+import com.example.qr_go.Coupon;
 import com.example.qr_go.DataBaseHelper;
+import com.example.qr_go.MainActivity;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,7 +63,7 @@ public class ScanFragment extends Fragment {
     private QR qr;
     private DataBaseHelper dbHelper = new DataBaseHelper();
 
-    private View view;
+    //private View view;
 
     //for passing data
     private OnFragmentInteractionListener listener;
@@ -71,7 +75,6 @@ public class ScanFragment extends Fragment {
 
     /**
      * fragment constructor
-     * @param android_id
      */
     public ScanFragment(String android_id) {
         this.android_id = android_id;
@@ -114,8 +117,12 @@ public class ScanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //Toast.makeText(getActivity(), "onCreate", Toast.LENGTH_SHORT).show();
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_scan, container, false);
+        //((MainActivity)getActivity()).setCustomTheme();
+        //((MainActivity)getActivity()).setTheme(R.style.MyAppTheme);
+
+        View view = inflater.inflate(R.layout.fragment_scan, container, false);
         Button scanButton = view.findViewById(R.id.btn_scan);
         //Button recordButton = view.findViewById(R.id.btn_record);
 
@@ -124,6 +131,7 @@ public class ScanFragment extends Fragment {
             scanCode();
 
         });
+
         return view;
     }
 
@@ -156,6 +164,9 @@ public class ScanFragment extends Fragment {
         if(result.getContents() !=null)
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            //generate coupon
+            Coupon coupon = new Coupon();
+            String couponString = coupon.lottery();
             // show score of QR code here
             qr = new QR(result.getContents());
             String name = qr.getName();
@@ -169,7 +180,7 @@ public class ScanFragment extends Fragment {
 
             TextView messageText = new TextView(getActivity());
             messageText.setTypeface(typeface);
-            messageText.setText("Score: "+scorestring+" points"+"\n\n"+avatar);
+            messageText.setText( couponString + "\n" + "Score: " + scorestring + " points" + "\n\n" + avatar);
             messageText.setPadding(20, 20, 20, 20);
             messageText.setTextSize(15);
             builder.setView(messageText);
@@ -201,8 +212,9 @@ public class ScanFragment extends Fragment {
                             int highestScore = ((Long)documentSnapshot.get("highestScore")).intValue();
                             int lowestScore = ((Long)documentSnapshot.get("lowestScore")).intValue();
                             int totalScore = ((Long)documentSnapshot.get("totalScore")).intValue();
+                            int theme = ((Long)documentSnapshot.get("theme")).intValue();
 
-                            player = new Player(username, android_id, qrList, rank, highestScore, lowestScore, totalScore);
+                            player = new Player(username, android_id, qrList, rank, highestScore, lowestScore, totalScore, theme);
                             player.setContact(contact);
 
                             qr.addToPlayerList(player.getDeviceID());
