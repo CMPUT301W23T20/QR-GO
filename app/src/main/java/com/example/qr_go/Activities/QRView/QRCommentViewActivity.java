@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,6 +62,9 @@ public class QRCommentViewActivity extends QRActivity implements RecyclerViewInt
         }
 
         updateQRInfo();
+
+        RecyclerView.ItemDecoration divider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        commentListRecyclerView.addItemDecoration(divider);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

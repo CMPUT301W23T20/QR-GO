@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,6 +64,9 @@ public class ThisProfileQRListViewActivity extends ProfileActivity implements Re
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        RecyclerView.ItemDecoration divider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        qrList.addItemDecoration(divider);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
