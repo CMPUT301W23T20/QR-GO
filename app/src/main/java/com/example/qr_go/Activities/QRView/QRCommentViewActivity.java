@@ -34,6 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents comment page for QR
+ */
 public class QRCommentViewActivity extends QRActivity implements RecyclerViewInterface {
 
     private Button backButton;
@@ -118,7 +121,6 @@ public class QRCommentViewActivity extends QRActivity implements RecyclerViewInt
                                                     db.collection(QR.class.getSimpleName()).document(qr_hash).update("commentsList", commentDataList);
 
                                                     commentAdapter.notifyDataSetChanged();
-
                                                 }
                                             });
                                 }
