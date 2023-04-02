@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.qr_go.DataBaseHelper;
 import com.example.qr_go.Interfaces.RecyclerViewInterface;
+import com.example.qr_go.QR.Avatar;
 import com.example.qr_go.QR.QRComment;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
@@ -146,13 +147,15 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
 
 
                         // set total text
-                        nameText.setText(qr.getName());
-                        scoreText.setText("" + qr.getScore());
+                        nameText.setText("Name: " + qr.getName());
+
+                        scoreText.setText("Score: " + qr.getScore());
 
                         // set image view
                         if (image != null) {
                             imageUri = Uri.parse(image);
                             Picasso.get().load(imageUri).into(imageView);
+
                         }
 
 
