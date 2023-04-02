@@ -6,6 +6,7 @@ import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 
 import android.graphics.Typeface;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 
@@ -28,6 +30,7 @@ import com.example.qr_go.Activities.Scan.CaptureAct;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Coupon;
 import com.example.qr_go.DataBaseHelper;
+import com.example.qr_go.MainActivity;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -60,7 +63,7 @@ public class ScanFragment extends Fragment {
     private QR qr;
     private DataBaseHelper dbHelper = new DataBaseHelper();
 
-    private View view;
+    //private View view;
 
     //for passing data
     private OnFragmentInteractionListener listener;
@@ -114,8 +117,12 @@ public class ScanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //Toast.makeText(getActivity(), "onCreate", Toast.LENGTH_SHORT).show();
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_scan, container, false);
+        //((MainActivity)getActivity()).setCustomTheme();
+        //((MainActivity)getActivity()).setTheme(R.style.MyAppTheme);
+
+        View view = inflater.inflate(R.layout.fragment_scan, container, false);
         Button scanButton = view.findViewById(R.id.btn_scan);
         //Button recordButton = view.findViewById(R.id.btn_record);
 
@@ -124,6 +131,7 @@ public class ScanFragment extends Fragment {
             scanCode();
 
         });
+
         return view;
     }
 
