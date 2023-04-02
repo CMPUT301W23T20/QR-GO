@@ -164,111 +164,160 @@ public class ScanFragment extends Fragment {
     }
 
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result ->{
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(Player.class.getSimpleName()).document(android_id).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        ArrayList<QR> playerQRList = dbHelper.convertQRListFromDB((List<Map<String, Object>>)documentSnapshot.get("qrList"));
 
-        if(result.getContents() !=null)
-        {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            //generate coupon
-            Coupon coupon = new Coupon();
-            String couponString = coupon.lottery();
-            // show score of QR code here
-            qr = new QR(result.getContents());
-            String name = qr.getName();
-            String avatar = qr.getAvatar();
-            int score = qr.getScore();
-            String scorestring = Integer.toString(score);
-            // show score of QR code here
-            Typeface typeface = Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL);
-            builder.setTitle("You found a "+name+"!");
-            //builder.setMessage("Score: "+scorestring+" points"+"\n"+avatar);
+                        if(result.getContents() != null) {
+                            qr = new QR(result.getContents());
+                        }
 
-            TextView messageText = new TextView(getActivity());
-            messageText.setTypeface(typeface);
-            messageText.setText( couponString + "\n" + "Score: " + scorestring + " points" + "\n\n" + avatar);
-            messageText.setPadding(20, 20, 20, 20);
-            messageText.setTextSize(15);
-            builder.setView(messageText);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
+                        boolean alreadyHasQR = false;
+
+                        for(QR qrDB: playerQRList) {
+                            if(qrDB.getQrHash().equals(qr.getQrHash())) {
+                                alreadyHasQR = true;
+                                break;
+                            }
+                        }
+
+                        if(result.getContents() !=null && !alreadyHasQR)
+                        {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            //generate coupon
+                            Coupon coupon = new Coupon();
+                            String couponString = coupon.lottery();
+                            // show score of QR code here
+                            qr = new QR(result.getContents());
+                            String name = qr.getName();
+                            String avatar = qr.getAvatar();
+                            int score = qr.getScore();
+                            String scorestring = Integer.toString(score);
+                            // show score of QR code here
+                            Typeface typeface = Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL);
+                            builder.setTitle("You found a "+name+"!");
+                            //builder.setMessage("Score: "+scorestring+" points"+"\n"+avatar);
+
+                            TextView messageText = new TextView(getActivity());
+                            messageText.setTypeface(typeface);
+                            messageText.setText( couponString + "\n" + "Score: " + scorestring + " points" + "\n\n" + avatar);
+                            messageText.setPadding(20, 20, 20, 20);
+                            messageText.setTextSize(15);
+                            builder.setView(messageText);
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
 
 
-            // add QR to DB and Player
-            // create new QR
+                            // add QR to DB and Player
+                            // create new QR
 
-            // get player from database
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 
-            // put data into class
-            db.collection(Player.class.getSimpleName()).document(android_id).get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            String username = (String)documentSnapshot.get("username");
-                            String deviceID = (String)documentSnapshot.get("deviceID");
-                            String contact = (String)documentSnapshot.get("contact");
-                            ArrayList<QR> qrList = dbHelper.convertQRListFromDB((List<Map<String, Object>>)documentSnapshot.get("qrList"));
-                            int rank = ((Long)documentSnapshot.get("rank")).intValue();
-                            int highestScore = ((Long)documentSnapshot.get("highestScore")).intValue();
-                            int lowestScore = ((Long)documentSnapshot.get("lowestScore")).intValue();
-                            int totalScore = ((Long)documentSnapshot.get("totalScore")).intValue();
-                            int theme = ((Long)documentSnapshot.get("theme")).intValue();
-
-                            player = new Player(username, android_id, qrList, rank, highestScore, lowestScore, totalScore, theme);
-                            player.setContact(contact);
-
-                            qr.addToPlayerList(player.getDeviceID());
-
-                            // add QR to player's list
-                            player.addQR(qr);
-
-                            // update DB
-                            dbHelper.updateDB(player);
-
-                            db.collection(QR.class.getSimpleName()).document(qr.getQrHash()).get()
-                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            // put data into class
+                            db.collection(Player.class.getSimpleName()).document(android_id).get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
-                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                            if(!task.getResult().exists()) {
-                                                dbHelper.updateDB(qr);
-                                            }
-                                            else {
-                                                db.collection(QR.class.getSimpleName()).document(qr.getQrHash()).get()
-                                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                            @Override
-                                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            String username = (String)documentSnapshot.get("username");
+                                            String deviceID = (String)documentSnapshot.get("deviceID");
+                                            String contact = (String)documentSnapshot.get("contact");
+                                            ArrayList<QR> qrList = dbHelper.convertQRListFromDB((List<Map<String, Object>>)documentSnapshot.get("qrList"));
+                                            int rank = ((Long)documentSnapshot.get("rank")).intValue();
+                                            int highestScore = ((Long)documentSnapshot.get("highestScore")).intValue();
+                                            int lowestScore = ((Long)documentSnapshot.get("lowestScore")).intValue();
+                                            int totalScore = ((Long)documentSnapshot.get("totalScore")).intValue();
+                                            int theme = ((Long)documentSnapshot.get("theme")).intValue();
 
-                                                                List<String> playerList = (List<String>)documentSnapshot.get("playerList");
+                                            player = new Player(username, android_id, qrList, rank, highestScore, lowestScore, totalScore, theme);
+                                            player.setContact(contact);
 
-                                                                playerList.add(player.getDeviceID());
+                                            qr.addToPlayerList(player.getDeviceID());
 
-                                                                System.out.println("list after: " + playerList);
+                                            // add QR to player's list
+                                            player.addQR(qr);
 
-                                                                db.collection(QR.class.getSimpleName()).document(qr.getQrHash()).update("playerList", playerList);
+                                            // update DB
+                                            dbHelper.updateDB(player);
+
+                                            db.collection(QR.class.getSimpleName()).document(qr.getQrHash()).get()
+                                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                            if(!task.getResult().exists()) {
+                                                                dbHelper.updateDB(qr);
                                                             }
-                                                        });
+                                                            else {
+                                                                db.collection(QR.class.getSimpleName()).document(qr.getQrHash()).get()
+                                                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                            @Override
+                                                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                                                                List<String> playerList = (List<String>)documentSnapshot.get("playerList");
+
+                                                                                playerList.add(player.getDeviceID());
+
+                                                                                System.out.println("list after: " + playerList);
+
+                                                                                db.collection(QR.class.getSimpleName()).document(qr.getQrHash()).update("playerList", playerList);
+                                                                            }
+                                                                        });
 
 
-                                            }
+                                                            }
+                                                        }
+                                                    });
                                         }
                                     });
-                        }
-                    });
 
-            builder.setPositiveButton("Yay!", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    Intent cameraIntent = new Intent(getActivity(), CameraActivity.class);
-                    cameraIntent.putExtra("QR",qr);
-                    startActivity(cameraIntent);
-                }
-            }).show();
-            // show fragment for camera here to record object
-        }
+                            builder.setPositiveButton("Yay!", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    Intent cameraIntent = new Intent(getActivity(), CameraActivity.class);
+                                    cameraIntent.putExtra("QR",qr);
+                                    startActivity(cameraIntent);
+                                }
+                            }).show();
+                            // show fragment for camera here to record object
+                        }
+
+                        else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            //generate coupon
+                            Coupon coupon = new Coupon();
+                            String couponString = coupon.lottery();
+                            // show failure screen
+                            Typeface typeface = Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL);
+                            builder.setTitle("Whoops!");
+                            //builder.setMessage("Score: "+scorestring+" points"+"\n"+avatar);
+
+                            TextView messageText = new TextView(getActivity());
+                            messageText.setTypeface(typeface);
+                            messageText.setText("Don't be greedy, you already found this QR!");
+                            messageText.setPadding(20, 20, 20, 20);
+                            messageText.setTextSize(15);
+                            builder.setView(messageText);
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
+
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).show();
+                        }
+                    }
+                });
     });
 }
