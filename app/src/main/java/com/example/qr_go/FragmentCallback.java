@@ -9,4 +9,5 @@ import java.util.List;
  * or passing data
  */
 public interface FragmentCallback {
+    int getThemeId();
 }

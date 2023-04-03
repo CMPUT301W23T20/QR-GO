@@ -39,4 +39,25 @@
         <item name="colorAccent">@color/colorAccentCyan</item>
     </style>
 
+    <style name="MyAppTheme1" parent="Theme.QRGO">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/theme1P</item>
+        <item name="colorPrimaryVariant">@color/theme1PV</item>
+        <item name="colorOnPrimary">@color/theme1OP</item>
+    </style>
+
+    <style name="MyAppTheme2" parent="Theme.QRGO">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/theme2P</item>
+        <item name="colorPrimaryVariant">@color/theme2PV</item>
+        <item name="colorOnPrimary">@color/theme2OP</item>
+    </style>
+
+    <style name="MyAppTheme3" parent="Theme.QRGO">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/theme3P</item>
+        <item name="colorPrimaryVariant">@color/theme3PV</item>
+        <item name="colorOnPrimary">@color/theme3OP</item>
+    </style>
+
 </resources>

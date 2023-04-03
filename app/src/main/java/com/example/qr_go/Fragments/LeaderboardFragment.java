@@ -87,10 +87,13 @@ public class LeaderboardFragment extends Fragment {
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
-        if (((MainActivity) getActivity()).themeId == R.style.AppTheme_Cyan){
-            view.setBackgroundResource(R.color.theme1background);
-        }
         searchView = (SearchView) view.findViewById(R.id.searchView);
+        if (((MainActivity) getActivity()).themeId == 1){
+            view.setBackgroundResource(R.color.white);
+        }else{
+            view.setBackgroundResource(R.color.lightgreen);
+        }
+
 
         dataList = new ArrayList<Player>();
         userList = new ArrayList<String>();

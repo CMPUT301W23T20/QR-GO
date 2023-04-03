@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import com.example.qr_go.Activities.Scan.CaptureAct;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Coupon;
 import com.example.qr_go.DataBaseHelper;
+import com.example.qr_go.FragmentCallback;
 import com.example.qr_go.MainActivity;
 import com.example.qr_go.QR.QR;
 import com.example.qr_go.R;
@@ -68,8 +70,15 @@ public class ScanFragment extends Fragment {
     private QR qr;
     private DataBaseHelper dbHelper = new DataBaseHelper();
     String TAG = "ScanFragment";
+    Button scanButton, scanButton2;
 
     //private View view;
+
+    private FragmentCallback fragmentCallback;
+
+    public void setFragmentCallback(FragmentCallback callback){
+        fragmentCallback = callback;
+    }
 
     //for passing data
     private OnFragmentInteractionListener listener;
@@ -126,7 +135,19 @@ public class ScanFragment extends Fragment {
         Log.d(TAG, TAG + " onCreate");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_scan, container, false);
-        Button scanButton = view.findViewById(R.id.btn_scan);
+        if (fragmentCallback.getThemeId() == 0){
+            scanButton = view.findViewById(R.id.btn_scan1);
+            scanButton2 = view.findViewById(R.id.btn_scan2);
+            scanButton2.setVisibility(View.INVISIBLE);
+            view.setBackgroundResource(R.color.lightgreen);
+        }else{
+            scanButton = view.findViewById(R.id.btn_scan2);
+            scanButton2 = view.findViewById(R.id.btn_scan1);
+            scanButton2.setVisibility(View.INVISIBLE);
+            ImageView image = (ImageView) view.findViewById(R.id.image_scan_bg);
+            image.setImageResource(R.drawable.bg_anime);
+        }
+
         //Button recordButton = view.findViewById(R.id.btn_record);
 
         scanButton.setOnClickListener(v->

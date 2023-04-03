@@ -6,7 +6,6 @@
     android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/lightgreen"
     tools:context="com.example.qr_go.Fragments.Profile.PlayerProfileFragment">
 
     <LinearLayout
