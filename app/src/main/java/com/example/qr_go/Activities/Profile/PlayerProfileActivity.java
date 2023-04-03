@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents player profile
+ */
 public class PlayerProfileActivity extends ProfileActivity {
 
     private TextView usernameTextView;
@@ -97,7 +100,13 @@ public class PlayerProfileActivity extends ProfileActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String username = (String)documentSnapshot.get("username");
+
                         String contact = (String)documentSnapshot.get("contact");
+
+                        if(((String)documentSnapshot.get("contact")).equals("")) {
+                            contact = "N/A";
+                        }
+
                         String deviceID = (String)documentSnapshot.get("deviceID");
 
                         ArrayList<QR> qrListFromDoc = dbHelper.convertQRListFromDB((List<Map<String, Object>>) documentSnapshot.get("qrList"));

@@ -23,12 +23,6 @@ public class QR implements Comparable<QR>, Parcelable {
     private final String name;
     private final String avatar;
     private ArrayList<String> qrUsers; // array of people who have discovered this QR
-
-
-
-
-
-    // private picture
     private String photoURI;
     // private geolocation
     private float latitude;
@@ -306,20 +300,34 @@ public class QR implements Comparable<QR>, Parcelable {
         dest.writeString(photoURI);
     }
 
-    // getter and setter for photo
-    // getter and setter for geolocation
+    /**
+     * gets the latitude of QR code
+     * @return float/latitude
+     */
     public float getLatitude() {
         return latitude;
     }
 
+    /**
+     * sets the latitude of QR with the given param
+     * @param latitude
+     */
     public void setLatitude(float latitude) {
         this.latitude = latitude;
     }
 
+    /**
+     * gets the longitude of the QR
+     * @return float/longitude
+     */
     public float getLongitude() {
         return longitude;
     }
 
+    /**
+     * sets the longitude of the QR code with the given param
+     * @param longitude
+     */
     public void setLongitude(float longitude) {
         this.longitude = longitude;
     }

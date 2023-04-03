@@ -79,7 +79,7 @@ public class ProfileQRListAdapter extends RecyclerView.Adapter<ProfileQRListAdap
          */
         void SetDetails(QR qr) {
             qrName.setText(qr.getName());
-            qrScore.setText(String.valueOf(qr.getScore()));
+            qrScore.setText("" + String.valueOf(qr.getScore()));
         }
     }
 }

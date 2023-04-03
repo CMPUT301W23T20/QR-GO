@@ -136,10 +136,9 @@ public class LeaderboardFragment extends Fragment {
             }
         });
 
-        leaderboardList = view.findViewById(R.id.leaderboard_list);
 
+        //This listener sorts the users in the leaderboard based on their total score
         Button button2= view.findViewById(R.id.score_button);
-      //  button2.setBackgroundColor(Color.parseColor("#2f4f4f"));
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Collections.sort(dataList);
@@ -150,6 +149,8 @@ public class LeaderboardFragment extends Fragment {
             }
         });
 
+        // this listener allows users to click on a user and access their profile
+        leaderboardList = view.findViewById(R.id.leaderboard_list);
         leaderboardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -162,9 +163,8 @@ public class LeaderboardFragment extends Fragment {
             }
         });
 
-
+        // this listener sorts uses based on their highest individual scan
         Button button = view.findViewById(R.id.filter_button);
-      //  button.setBackgroundColor(Color.parseColor("#2f4f4f"));
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Collections.sort(dataList, new Comparator<Player>() {
@@ -184,7 +184,7 @@ public class LeaderboardFragment extends Fragment {
 
 
 
-        // runs the search query
+        // this listener runs the search query
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
             // searches the query on the submission of content over SearchView editor

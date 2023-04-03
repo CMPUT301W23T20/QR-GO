@@ -1,0 +1,51 @@
+From: Youtube
+URL: https://www.youtube.com/watch?v=AZlYBBpj2jY
+Author: Monster Techno
+
+From: Stackoverflow
+URL: https://stackoverflow.com/questions/14012924/android-how-to-use-webcam-in-emulator
+Author: nurnachman
+
+From: Firebase
+URL: https://firebase.google.com/docs/firestore/query-data/get-data
+Author: Google
+
+From: Stackoverflow
+URL: https://stackoverflow.com/questions/15824733/option-to-ignore-case-with-contains-method
+Author: Spam
+
+From: Youtube
+URL: https://www.youtube.com/watch?v=yTvwfEmzMZY
+Author: Master Coding
+
+From: Youtube
+URL: https://www.youtube.com/watch?v=7GPUpvcU1FE
+Author: Practical Coding
+
+From: Youtube
+URL: https://www.youtube.com/watch?v=9oH133kXCyM
+Author: Coding With Evan
+
+From: Youtube
+URL: https://www.youtube.com/watch?v=Ut-qBmTMPBM
+Author: Stevdza-San
+
+From: Youtube
+URL: https://www.youtube.com/watch?v=sOJRJtM_iu0
+Author: Easy Tuto
+
+From: Stackoverflow
+URL: https://stackoverflow.com/questions/37244357/how-to-play-music-in-android-studio
+Author: Daniel Kng
+
+From: Java T Point
+URL: https://www.javatpoint.com/android-togglebutton-example
+Author: Java T Point
+
+From: developers.google.com
+URL: https://developers.google.com/maps/documentation/android-sdk/marker
+Author: Google
+
+From: wallpapers.com
+URL: https://wallpapers.com/wallpapers/dark-green-iphone-z4j4rngc5k9drtlc.html
+Author: wallpapers.com

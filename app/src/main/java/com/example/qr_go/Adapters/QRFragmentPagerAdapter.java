@@ -25,6 +25,11 @@ public class QRFragmentPagerAdapter extends FragmentStateAdapter {
         return fragmentList.get(position);
     }
 
+    /**
+     * Gets number of items in adapter
+     * @return
+     * Size of fragmentList
+     */
     @Override
     public int getItemCount() {
         return fragmentList.size();

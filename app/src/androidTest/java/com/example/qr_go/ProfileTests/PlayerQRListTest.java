@@ -1,24 +1,25 @@
-package com.example.qr_go;
-
-import static junit.framework.TestCase.assertTrue;
+package com.example.qr_go.ProfileTests;
 
 import android.app.Activity;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.qr_go.Activities.Profile.ThisProfileQRListViewActivity;
+import com.example.qr_go.Activities.QRView.QRViewActivity;
+import com.example.qr_go.MainActivity;
+import com.example.qr_go.R;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-/**
- * Test profile fragment
- */
-public class PlayerProfileTest {
+public class PlayerQRListTest {
+
     private Solo solo;
 
     @Rule
@@ -43,11 +44,11 @@ public class PlayerProfileTest {
     }
 
     /**
-     * Ensures the Search function filters out the correct results based on the user's input
+     * Ensures clicking on an element in the list takes you to it's respective QR
      * @throws Exception
      */
     @Test
-    public void QRButtonTest(){
+    public void clickOnQRListTest() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.navigation_profile));
 
@@ -57,5 +58,24 @@ public class PlayerProfileTest {
         // assert we are in QR list
         solo.assertCurrentActivity("Wrong Activity", ThisProfileQRListViewActivity.class);
 
+        // get name of QR in list
+        RecyclerView qrList =(RecyclerView)solo.getView(R.id.qr_list);
+
+        // make sure list isnt empty
+        assert(qrList.getAdapter().getItemCount() > 0);
+
+        View view = qrList.getChildAt(0);
+        TextView qrNameList = (TextView)view.findViewById(R.id.name_text);
+
+        // Click on list
+        solo.clickInRecyclerView(0);
+
+        // assert we are in QR list
+        solo.assertCurrentActivity("Wrong Activity", QRViewActivity.class);
+
+        // check if name matches
+        TextView qrNameView = (TextView)view.findViewById(R.id.name_text);
+
+        assert(qrNameList.getText().equals(qrNameView.getText()));
     }
 }

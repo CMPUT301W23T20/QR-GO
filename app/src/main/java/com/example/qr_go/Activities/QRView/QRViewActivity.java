@@ -147,7 +147,7 @@ public class QRViewActivity extends QRActivity implements RecyclerViewInterface 
 
 
                         // set total text
-                        nameText.setText("Name: " + qr.getName());
+                        nameText.setText(qr.getName());
 
                         scoreText.setText("Score: " + qr.getScore());
 
