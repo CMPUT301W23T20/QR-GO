@@ -123,9 +123,10 @@ public class GetLocationActivity extends AppCompatActivity implements LocationLi
      */
     @Override
     public void onLocationChanged(@NonNull Location location) {
+        //call DB
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference collectionReference = db.collection(QR.class.getSimpleName());
-
+        //store lat and long into db
         HashMap<String, Object> data = new HashMap<>();
         data.put("latitude", (float)location.getLatitude());
         data.put("longitude", (float)location.getLongitude());

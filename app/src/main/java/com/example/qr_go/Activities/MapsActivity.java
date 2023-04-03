@@ -87,7 +87,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.gMap = googleMap;
-
+        //create list to store all the QRs retrieved from DB
         ArrayList<QR> qrList = new ArrayList<>();
 
         // get database information
@@ -95,7 +95,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         CollectionReference collectionReference = db.collection(QR.class.getSimpleName());
 
-        // add db to
+        // getting the QR
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -106,12 +106,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     String avatar = (String)doc.get("avatar");
                     int score = ((Long)doc.get("score")).intValue();
 
-
-
                     QR qr = new QR(doc.getId(), name, avatar, score,
                             new ArrayList<>(),
                             new ArrayList<>());
-
+                    // ensure that the QR stored actually has a geolocation set to it
                     if(doc.get("latitude") != null && doc.get("longitude") != null) {
                         double latitude = ((double)doc.get("latitude"));
                         double longitude = ((double)doc.get("longitude"));
