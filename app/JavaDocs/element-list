@@ -9,4 +9,6 @@ com.example.qr_go.Content
 com.example.qr_go.Fragments
 com.example.qr_go.Fragments.Profile
 com.example.qr_go.Interfaces
+com.example.qr_go.ProfileTests
 com.example.qr_go.QR
+com.example.qr_go.QRTests
