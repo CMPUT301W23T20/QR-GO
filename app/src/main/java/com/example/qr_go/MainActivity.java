@@ -444,35 +444,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (item.getItemId()) {
             case R.id.default_theme:
-                Toast.makeText(this, "restart to view theme1", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "restart to view theme", Toast.LENGTH_SHORT).show();
                 //setTheme(R.style.Theme_QRGO);
                 data.put("theme", 0);
                 // update db
                 collectionReference.document(getDeviceId()).update(data);
                 break;
             case R.id.theme1:
-                Toast.makeText(this, "restart to view theme2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "restart to view theme", Toast.LENGTH_SHORT).show();
                 //MainActivity.this.setTheme(R.style.MyAppTheme);
                 data.put("theme", 1);
                 // update db
                 collectionReference.document(getDeviceId()).update(data);
                 break;
             case R.id.theme2:
-                Toast.makeText(this, "restart to view theme2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "restart to view theme", Toast.LENGTH_SHORT).show();
                 //MainActivity.this.setTheme(R.style.MyAppTheme);
                 data.put("theme", 2);
                 // update db
                 collectionReference.document(getDeviceId()).update(data);
                 break;
             case R.id.theme3:
-                Toast.makeText(this, "restart to view theme2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "restart to view theme", Toast.LENGTH_SHORT).show();
                 //MainActivity.this.setTheme(R.style.MyAppTheme);
                 data.put("theme", 3);
                 // update db
                 collectionReference.document(getDeviceId()).update(data);
                 break;
             case R.id.theme4:
-                Toast.makeText(this, "restart to view theme2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "restart to view theme", Toast.LENGTH_SHORT).show();
                 //MainActivity.this.setTheme(R.style.MyAppTheme);
                 data.put("theme", 4);
                 // update db
