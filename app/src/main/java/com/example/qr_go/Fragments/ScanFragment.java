@@ -135,17 +135,28 @@ public class ScanFragment extends Fragment {
         Log.d(TAG, TAG + " onCreate");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_scan, container, false);
-        if (fragmentCallback.getThemeId() == 0){
-            scanButton = view.findViewById(R.id.btn_scan1);
-            scanButton2 = view.findViewById(R.id.btn_scan2);
-            scanButton2.setVisibility(View.INVISIBLE);
-            view.setBackgroundResource(R.color.lightgreen);
-        }else{
-            scanButton = view.findViewById(R.id.btn_scan2);
-            scanButton2 = view.findViewById(R.id.btn_scan1);
-            scanButton2.setVisibility(View.INVISIBLE);
-            ImageView image = (ImageView) view.findViewById(R.id.image_scan_bg);
-            image.setImageResource(R.drawable.bg_anime);
+        ImageView image = (ImageView) view.findViewById(R.id.image_scan_bg);
+        switch (fragmentCallback.getThemeId()) {
+            case 1:
+            case 2:
+            case 3:
+                scanButton = view.findViewById(R.id.btn_scan2);
+                scanButton2 = view.findViewById(R.id.btn_scan1);
+                scanButton2.setVisibility(View.INVISIBLE);
+                image.setImageResource(R.drawable.bg_anime);
+                break;
+            case 0:
+                scanButton = view.findViewById(R.id.btn_scan1);
+                scanButton2 = view.findViewById(R.id.btn_scan2);
+                scanButton2.setVisibility(View.INVISIBLE);
+                view.setBackgroundResource(R.color.lightgreen);
+                break;
+            case 4:
+                scanButton = view.findViewById(R.id.btn_scan2);
+                scanButton2 = view.findViewById(R.id.btn_scan1);
+                scanButton2.setVisibility(View.INVISIBLE);
+                image.setImageResource(R.drawable.eva);
+                break;
         }
 
         //Button recordButton = view.findViewById(R.id.btn_record);

@@ -33,9 +33,9 @@
     <color name="theme2PV">#F0CAC0</color>
     <color name="theme2OP">#442C2E</color>
     <!-- Theme3 Colors -->
-    <color name="theme3P">#FFFFFF</color>
-    <color name="theme3PV">#E4E4E4</color>
-    <color name="theme3OP">#000000</color>
+    <color name="theme3P">#775997</color>
+    <color name="theme3PV">#56D456</color>
+    <color name="theme3OP">#FB9D21</color>
 
 
     <color name="theme1background">#00544D</color>
