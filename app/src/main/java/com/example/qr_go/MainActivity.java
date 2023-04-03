@@ -74,25 +74,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //setCustomTheme();
         //Log.d(TAG, TAG + themeId);
         super.onCreate(savedInstanceState);
-
         Bundle bundle = getIntent().getExtras();
-        themeId = bundle.getInt("themeId");
-        switch (themeId){
-            case 0:
-                setTheme(R.style.Theme_QRGO);
-                break;
-            case 1:
-                setTheme(R.style.Theme_QRGO);
-                break;
-            case 2:
-                setTheme(R.style.MyAppTheme1);
-                break;
-            case 3:
-                setTheme(R.style.MyAppTheme2);
-                break;
-            case 4:
-                setTheme(R.style.MyAppTheme3);
-                break;
+        if (bundle != null) {
+            themeId = bundle.getInt("themeId");
+            switch (themeId) {
+                case 0:
+                    setTheme(R.style.Theme_QRGO);
+                    break;
+                case 1:
+                    setTheme(R.style.Theme_QRGO);
+                    break;
+                case 2:
+                    setTheme(R.style.MyAppTheme1);
+                    break;
+                case 3:
+                    setTheme(R.style.MyAppTheme2);
+                    break;
+                case 4:
+                    setTheme(R.style.MyAppTheme3);
+                    break;
+            }
         }
 
         setContentView(R.layout.activity_main);
