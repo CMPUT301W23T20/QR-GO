@@ -1,7 +1,10 @@
 package com.example.qr_go.QR;
 
 public class Avatar {
-    private static final String[] FACE_SHAPES = {
+    /**
+     * An array of strings representing different face shapes.
+     */
+    private static final String[] faceShapes = {
             "  ( o_O )   ",
             "  ( o.o )  ",
             "  ( >.< )  ",
@@ -15,7 +18,10 @@ public class Avatar {
             "  (* > *)  "
     };
 
-    private static final String[] BODY_FEATURES = {
+    /**
+     * An array of strings representing different body features.
+     */
+    private static final String[] bodyFeatures = {
             "  |   |  ",
             "  |===|  ",
             "  |___|  ",
@@ -28,8 +34,10 @@ public class Avatar {
             "  / o \\  ",
             "  ) . (  "
     };
-
-    private static final String[] LEG_FEATURES = {
+    /**
+     * An array of strings representing different leg features.
+     */
+    private static final String[] legFeatures = {
             "/   \\",
             "|   |",
             "| | |",
@@ -42,8 +50,10 @@ public class Avatar {
             "|/|\\|",
             "|>|<|"
     };
-
-    private static final String[] HAT_FEATURES = {
+    /**
+     * An array of strings representing different hat features.
+     */
+    private static final String[] hatFeatures = {
             "   ___   ",
             "  /   \\  ",
             "  \\___/  ",
@@ -57,8 +67,10 @@ public class Avatar {
             "  |_|_|_|  ",
             "  ooooo  "
     };
-
-    private static final String[] SHOE_FEATURES = {
+    /**
+     * An array of strings representing different shoe features.
+     */
+    private static final String[] shoeFeatures = {
             "<_|_>",
             ">_|_<",
             "(_|_)",
@@ -68,14 +80,19 @@ public class Avatar {
             "....."
     };
 
+    /**
+     * Generates an avatar based on a given hash.
+     * @param hash a string representing the hash to use to generate the avatar
+     * @return a string representing the generated avatar
+     */
     public String generateAvatar(String hash) {
         String hex = hash.substring(0, 10);
 
-        String faceShape = FACE_SHAPES[Integer.parseInt(hex.substring(0, 2), 16) % FACE_SHAPES.length];
-        String hat = HAT_FEATURES[Integer.parseInt(hex.substring(2, 4), 16) % HAT_FEATURES.length];
-        String body = BODY_FEATURES[Integer.parseInt(hex.substring(4, 6), 16) % BODY_FEATURES.length];
-        String legs = LEG_FEATURES[Integer.parseInt(hex.substring(6, 8), 16) % LEG_FEATURES.length];
-        String shoes = SHOE_FEATURES[Integer.parseInt(hex.substring(8, 10), 16) % SHOE_FEATURES.length];
+        String faceShape = faceShapes[Integer.parseInt(hex.substring(0, 2), 16) % faceShapes.length];
+        String hat = hatFeatures[Integer.parseInt(hex.substring(2, 4), 16) % hatFeatures.length];
+        String body = bodyFeatures[Integer.parseInt(hex.substring(4, 6), 16) % bodyFeatures.length];
+        String legs = legFeatures[Integer.parseInt(hex.substring(6, 8), 16) % legFeatures.length];
+        String shoes = shoeFeatures[Integer.parseInt(hex.substring(8, 10), 16) % shoeFeatures.length];
 
         int maxLength = Math.max(Math.max(faceShape.length(), hat.length()), Math.max(body.length(), Math.max(legs.length(), shoes.length())));
 
@@ -95,6 +112,12 @@ public class Avatar {
         return avatar;
     }
 
+    /**
+     * Pads a given string with spaces to a given length.
+     * @param str the string to pad
+     * @param padding the number of spaces to add to the left and right of the string
+     * @return a padded string
+     */
     private String padString(String str, int padding) {
         return " ".repeat(Math.max(0, padding)) + str;
     }
