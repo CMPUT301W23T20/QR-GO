@@ -2,11 +2,19 @@
 <resources>
     <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/bg2</item>
-        <item name="colorPrimary">@color/colorPrimaryCyan</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkCyan</item>
-        <item name="colorAccent">@color/colorAccentCyan</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/green</item>
+        <item name="colorOnPrimary">@color/beige</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/green</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
-
+    </style>
+    <style name="Theme1Text">
+        <item name="android:textColor">#f00</item>
     </style>
 
 

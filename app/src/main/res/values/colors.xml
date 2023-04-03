@@ -20,5 +20,7 @@
     <color name="colorPrimaryDarkCyan">#0095a8</color>
     <color name="colorAccentCyan">#ffca28</color>
 
+    <color name="theme1background">#00544D</color>
+
 
 </resources>

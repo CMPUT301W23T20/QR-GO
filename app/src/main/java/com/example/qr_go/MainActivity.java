@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<Fragment> fragments = new ArrayList<>();
     List<Address> address = null;
     String TAG = MainActivity.class.getSimpleName();
-    private int themeId = R.style.Theme_QRGO;
+    public int themeId = R.style.Theme_QRGO;
 
 
     @Override
@@ -72,11 +73,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION
-            },100);
+            }, 100);
         }
 
         getLocation();
@@ -136,8 +137,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-
-
     }
 
     /**
@@ -183,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     *  This initialize a greeting screen
+     * This initialize a greeting screen
      */
     private void initGreetingScreen() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -191,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if(!task.getResult().exists()) {
+                        if (!task.getResult().exists()) {
                             Intent myIntent = new Intent(MainActivity.this, GreetingScreenActivity.class);
                             myIntent.putExtra("android_id", getDeviceId());
                             MainActivity.this.startActivity(myIntent);
@@ -210,27 +209,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         db.collection(Player.class.getSimpleName()).document(getDeviceId()).get()
-                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if(task.getResult().exists()) {
-                                    int theme = ((Long) task.getResult().get("theme")).intValue(); // theme val from db
-                                    if (theme == R.style.Theme_QRGO) {
-                                        setTheme(R.style.Theme_QRGO);
-
-                                    } else {
-                                        setTheme(R.style.AppTheme_Cyan);
-
-                                    }
-                                }
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.getResult().exists()) {
+                            int theme = ((Long) task.getResult().get("theme")).intValue(); // theme val from db
+                            if (theme == R.style.Theme_QRGO) {
+                                setTheme(R.style.Theme_QRGO);
+                                themeId = R.style.Theme_QRGO;
+                            } else {
+                                setTheme(R.style.AppTheme_Cyan);
+                                themeId = R.style.AppTheme_Cyan;
                             }
-                        });
+                        }
+                    }
+                });
 
     }
 
 
     /**
      * This calls changeTab method when a view is clicked
+     *
      * @param view
      */
     @Override
@@ -240,15 +240,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * This switches fragments when navigation bar is clicked
-     * @param i
-     *      This is a ID
+     *
+     * @param i This is a ID
      */
-    private void changeTab(int i){
+    private void changeTab(int i) {
         currentPage.setBackground(getDrawable(R.drawable.border_navigation_bar));
-        switch(i){
+        switch (i) {
             //case R.id.navigation_map:
-                //viewPager.setCurrentItem(0);
-                //break;
+            //viewPager.setCurrentItem(0);
+            //break;
 
 
             case R.id.navigation_scan:
@@ -275,8 +275,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * This returns the device's ID
-     * @return
-     *      Return the String ID
+     *
+     * @return Return the String ID
      */
     public String getDeviceId() {
         String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -297,12 +297,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        try{
+        try {
             Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
-            address = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+            address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -315,17 +315,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         item.setActionView(R.layout.music_switch_layout);
         Switch musicSwitch = item.getActionView().findViewById(R.id.music);
 
-        if(musicSwitch.isChecked()) {
+        if (musicSwitch.isChecked()) {
             MainActivity.this.startService(new Intent(MainActivity.this, MusicService.class));
         }
         musicSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b) {
-                   MainActivity.this.startService(new Intent(MainActivity.this, MusicService.class));
-                }
-                else {
-                   MainActivity.this.stopService(new Intent(MainActivity.this, MusicService.class));
+                if (b) {
+                    MainActivity.this.startService(new Intent(MainActivity.this, MusicService.class));
+                } else {
+                    MainActivity.this.stopService(new Intent(MainActivity.this, MusicService.class));
                 }
             }
         });
@@ -341,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
         HashMap<String, Object> data = new HashMap<>();
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.theme1:
                 Toast.makeText(this, "restart to view theme1", Toast.LENGTH_SHORT).show();
                 //setTheme(R.style.Theme_QRGO);

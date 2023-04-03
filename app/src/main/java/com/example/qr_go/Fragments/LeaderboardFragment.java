@@ -1,7 +1,6 @@
 package com.example.qr_go.Fragments;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,7 @@ import com.example.qr_go.Activities.Profile.PlayerProfileActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.LeaderboardAdapter;
 import com.example.qr_go.DataBaseHelper;
+import com.example.qr_go.MainActivity;
 import com.example.qr_go.R;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -83,8 +83,13 @@ public class LeaderboardFragment extends Fragment {
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+        if (((MainActivity) getActivity()).themeId == R.style.AppTheme_Cyan){
+            view.setBackgroundResource(R.color.theme1background);
+        }
         searchView = (SearchView) view.findViewById(R.id.searchView);
 
         dataList = new ArrayList<Player>();
