@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -62,26 +63,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<Fragment> fragments = new ArrayList<>();
     List<Address> address = null;
     String TAG = MainActivity.class.getSimpleName();
-    //private int themeId = R.style.Theme_QRGO;
+    public int themeId = R.style.Theme_QRGO;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, TAG + " onCreate");
+        //Log.d(TAG, TAG + " onCreate");
         setCustomTheme();
         super.onCreate(savedInstanceState);
-        //Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
-        //setCustomTheme();
-        //setTheme(R.style.MyAppTheme);
-
-
         setContentView(R.layout.activity_main);
 
-        if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION
-            },100);
+            }, 100);
         }
 
         getLocation();
@@ -103,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, TAG + "Destroy");
+        Log.d(TAG, TAG + "onDestroy");
 
     }
 
@@ -112,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void initViewPager() {
         viewPager = findViewById(R.id.viewPager);
-        //fragments.add(MapFragment.newInstance("Map","321"));
+        //fragments.add(ScanFragment.newInstance(getDeviceId()));
         fragments.add(ScanFragment.newInstance(getDeviceId()));
         fragments.add(LeaderboardFragment.newInstance(getDeviceId()));
         fragments.add(PlayerProfileFragment.newInstance(getDeviceId(), true));
@@ -139,8 +135,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 super.onPageScrollStateChanged(state);
             }
         });
-
-
 
 
     }
@@ -188,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     *  This initialize a greeting screen
+     * This initialize a greeting screen
      */
     private void initGreetingScreen() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -196,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if(!task.getResult().exists()) {
+                        if (!task.getResult().exists()) {
                             Intent myIntent = new Intent(MainActivity.this, GreetingScreenActivity.class);
                             myIntent.putExtra("android_id", getDeviceId());
                             MainActivity.this.startActivity(myIntent);
@@ -205,34 +199,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
+    /**
+     * This retrieve theme data from database and apply the theme to the app
+     */
     public void setCustomTheme() {
         // get database information
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
-
-
-        db.collection(Player.class.getSimpleName()).document(getDeviceId()).get()
-                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if(task.getResult().exists()) {
-                                    int theme = ((Long) task.getResult().get("theme")).intValue(); // theme val from db
-                                    if (theme == R.style.Theme_QRGO) {
-                                        setTheme(R.style.Theme_QRGO);
-
-                                    } else {
-                                        setTheme(R.style.MyAppTheme);
-
-                                    }
-                                }
-                            }
-                        });
-
-    }
-
-    /*@Override
-    public Resources.Theme getTheme() {
-        Resources.Theme theme = super.getTheme();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
 
@@ -241,46 +212,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if(task.getResult().exists()) {
-                            int themeid = ((Long) task.getResult().get("theme")).intValue(); // theme val from db
-                            if (themeid == R.style.Theme_QRGO) {
-                                theme.applyStyle(R.style.Theme_QRGO, true);
-
+                        if (task.getResult().exists()) {
+                            int theme = ((Long) task.getResult().get("theme")).intValue(); // theme val from db
+                            if (theme == R.style.Theme_QRGO) {
+                                setTheme(R.style.Theme_QRGO);
+                                themeId = R.style.Theme_QRGO;
                             } else {
-                                theme.applyStyle(R.style.MyAppTheme, true);
-
+                                setTheme(R.style.AppTheme_Cyan);
+                                themeId = R.style.AppTheme_Cyan;
                             }
                         }
                     }
                 });
 
-        //Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
-        return theme;
-    }*/
-
-    private void setCustomTheme1() {
-        // get database information
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
-
-        collectionReference.document(getDeviceId()).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        int theme = ((Long) documentSnapshot.get("theme")).intValue(); // theme val from db
-
-                        // set theme based on data from db
-                        if (theme == R.style.Theme_QRGO) {
-                            setTheme(R.style.Theme_QRGO);
-                        } else {
-                            setTheme(R.style.MyAppTheme);
-                        }
-                    }
-                });
     }
+
 
     /**
      * This calls changeTab method when a view is clicked
+     *
      * @param view
      */
     @Override
@@ -290,15 +240,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * This switches fragments when navigation bar is clicked
-     * @param i
-     *      This is a ID
+     *
+     * @param i This is a ID
      */
-    private void changeTab(int i){
+    private void changeTab(int i) {
         currentPage.setBackground(getDrawable(R.drawable.border_navigation_bar));
-        switch(i){
+        switch (i) {
             //case R.id.navigation_map:
-                //viewPager.setCurrentItem(0);
-                //break;
+            //viewPager.setCurrentItem(0);
+            //break;
 
 
             case R.id.navigation_scan:
@@ -325,8 +275,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * This returns the device's ID
-     * @return
-     *      Return the String ID
+     *
+     * @return Return the String ID
      */
     public String getDeviceId() {
         String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -347,12 +297,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        try{
+        try {
             Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
-            address = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+            address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -365,18 +315,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         item.setActionView(R.layout.music_switch_layout);
         Switch musicSwitch = item.getActionView().findViewById(R.id.music);
 
-        if(musicSwitch.isChecked()) {
+        if (musicSwitch.isChecked()) {
             MainActivity.this.startService(new Intent(MainActivity.this, MusicService.class));
         }
-
         musicSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b) {
-                   MainActivity.this.startService(new Intent(MainActivity.this, MusicService.class));
-                }
-                else {
-                   MainActivity.this.stopService(new Intent(MainActivity.this, MusicService.class));
+                if (b) {
+                    MainActivity.this.startService(new Intent(MainActivity.this, MusicService.class));
+                } else {
+                    MainActivity.this.stopService(new Intent(MainActivity.this, MusicService.class));
                 }
             }
         });
@@ -385,43 +333,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     // optionMenu selection method
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         // get database information
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference collectionReference = db.collection(Player.class.getSimpleName());
-
         HashMap<String, Object> data = new HashMap<>();
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.theme1:
-                Toast.makeText(this, "theme1", Toast.LENGTH_SHORT).show();
-                setTheme(R.style.Theme_QRGO);
-
-
+                Toast.makeText(this, "restart to view theme1", Toast.LENGTH_SHORT).show();
+                //setTheme(R.style.Theme_QRGO);
                 data.put("theme", R.style.Theme_QRGO);
-
                 // update db
                 collectionReference.document(getDeviceId()).update(data);
-
                 break;
             case R.id.theme2:
-                MainActivity.this.setTheme(R.style.MyAppTheme);
-                Toast.makeText(this, "theme2", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(this, "restart to view theme2", Toast.LENGTH_SHORT).show();
+                //MainActivity.this.setTheme(R.style.MyAppTheme);
                 data.put("theme", R.style.MyAppTheme);
-
                 // update db
                 collectionReference.document(getDeviceId()).update(data);
                 /*TaskStackBuilder.create(MainActivity.this)
                         .addNextIntent(new Intent(MainActivity.this, MainActivity.class))
                         .addNextIntent(getIntent())
                         .startActivities();*/
-
         }
-
-        //recreate();
         return super.onOptionsItemSelected(item);
     }
 }

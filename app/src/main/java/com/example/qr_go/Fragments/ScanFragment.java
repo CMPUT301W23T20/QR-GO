@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class ScanFragment extends Fragment {
     private Player player;
     private QR qr;
     private DataBaseHelper dbHelper = new DataBaseHelper();
+    String TAG = "ScanFragment";
 
     //private View view;
 
@@ -121,11 +123,8 @@ public class ScanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //Toast.makeText(getActivity(), "onCreate", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, TAG + " onCreate");
         // Inflate the layout for this fragment
-        //((MainActivity)getActivity()).setCustomTheme();
-        //((MainActivity)getActivity()).setTheme(R.style.MyAppTheme);
-
         View view = inflater.inflate(R.layout.fragment_scan, container, false);
         Button scanButton = view.findViewById(R.id.btn_scan);
         //Button recordButton = view.findViewById(R.id.btn_record);
