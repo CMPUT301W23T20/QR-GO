@@ -6,9 +6,9 @@
     android:id="@+id/qr_list_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/lightgreen"
     android:clickable="true"
-    android:backgroundTint="@color/faintgreen"
+    android:backgroundTint="@color/lightgreen"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
