@@ -164,6 +164,8 @@ public class ScanFragment extends Fragment {
         scanButton.setOnClickListener(v->
         {
             scanCode();
+            Intent myService = new Intent(getActivity(), MusicService.class);
+            getActivity().stopService(myService);
 
         });
 
