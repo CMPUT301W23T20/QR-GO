@@ -18,7 +18,7 @@
         >
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageView1"
             android:layout_width="109dp"
             android:layout_height="72dp"
             android:background="@color/green"
@@ -57,7 +57,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:background="@color/green"
             android:layout_height="73dp"

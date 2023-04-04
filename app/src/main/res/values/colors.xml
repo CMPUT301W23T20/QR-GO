@@ -15,10 +15,28 @@
     <color name = "spotgreen">#1DB954</color>
     <color name = "lightgreen">#cefad0</color>
     <color name = "faintgreen">#009E60</color>
+
+    <color name="gray1">#958787</color>
     <!-- Cyan Theme Colors -->
     <color name="colorPrimaryCyan">#26c6da</color>
     <color name="colorPrimaryDarkCyan">#0095a8</color>
     <color name="colorAccentCyan">#ffca28</color>
+
+
+    <!-- Theme1 Colors -->
+    <color name="theme1P">#19686A</color>
+    <color name="theme1PV">#A8EFF0</color>
+    <color name="theme1OP">#FFFFFF</color>
+
+    <!-- Theme2 Colors -->
+    <color name="theme2P">#FEDBD0</color>
+    <color name="theme2PV">#F0CAC0</color>
+    <color name="theme2OP">#442C2E</color>
+    <!-- Theme3 Colors -->
+    <color name="theme3P">#775997</color>
+    <color name="theme3PV">#56D456</color>
+    <color name="theme3OP">#FB9D21</color>
+
 
     <color name="theme1background">#00544D</color>
 

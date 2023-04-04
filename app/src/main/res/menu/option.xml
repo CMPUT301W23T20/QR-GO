@@ -8,12 +8,24 @@
         app:actionLayout="@layout/music_switch_layout"/>
 
     <item
-        android:title="Theme1 (Test)"
+        android:title="Default Theme"
+        android:id="@+id/default_theme"/>
+
+    <item
+        android:title="Theme 1"
         android:id="@+id/theme1"/>
 
     <item
-        android:title="Theme2 (Test)"
+        android:title="Theme 2 (Test)"
         android:id="@+id/theme2"/>
+
+    <item
+        android:title="Theme 3 (Test)"
+        android:id="@+id/theme3"/>
+
+    <item
+        android:title="Theme 4 (Test)"
+        android:id="@+id/theme4"/>
 
 
 </menu>

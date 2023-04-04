@@ -78,7 +78,11 @@ public class PlayerProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_player_profile, container, false);
-
+        if (((MainActivity) getActivity()).themeId == 1){
+            view.setBackgroundResource(R.color.white);
+        }else{
+            view.setBackgroundResource(R.color.lightgreen);
+        }
 
         getViews(view);
 

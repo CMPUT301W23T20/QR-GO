@@ -38,7 +38,7 @@ public class Player extends Actor implements Comparable<Player> {
     public Player(String username, String deviceID) {
         super(username, deviceID);
         qrList = new ArrayList<>();
-        this.theme = R.style.Theme_QRGO;
+        this.theme = 0;
     }
 
     /**
