@@ -143,7 +143,7 @@ public class ScanFragment extends Fragment {
                 scanButton = view.findViewById(R.id.btn_scan2);
                 scanButton2 = view.findViewById(R.id.btn_scan1);
                 scanButton2.setVisibility(View.INVISIBLE);
-                image.setImageResource(R.drawable.bg_anime);
+                image.setImageResource(R.drawable.img_4);
                 break;
             case 0:
                 scanButton = view.findViewById(R.id.btn_scan1);
