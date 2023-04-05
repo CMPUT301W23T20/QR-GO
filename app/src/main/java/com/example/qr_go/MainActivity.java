@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -74,6 +75,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //setCustomTheme();
         //Log.d(TAG, TAG + themeId);
         super.onCreate(savedInstanceState);
+        updateTheme();
+        setContentView(R.layout.activity_main);
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            }, 100);
+        }
+
+        getLocation();
+        initGreetingScreen();
+        initNavigationBar();
+        if (viewPager == null) {
+            initViewPager();
+        }
+
+    }
+
+    private void updateTheme() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             themeId = bundle.getInt("themeId");
@@ -93,25 +114,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case 4:
                     setTheme(R.style.MyAppTheme3);
                     break;
+                case 5:
+                    setTheme(R.style.MyAppTheme4);
+                    break;
+            }
+        }else{
+            switch (themeId) {
+                case 0:
+                    setTheme(R.style.Theme_QRGO);
+                    break;
+                case 1:
+                    setTheme(R.style.Theme_QRGO);
+                    break;
+                case 2:
+                    setTheme(R.style.MyAppTheme1);
+                    break;
+                case 3:
+                    setTheme(R.style.MyAppTheme2);
+                    break;
+                case 4:
+                    setTheme(R.style.MyAppTheme3);
+                    break;
+                case 5:
+                    setTheme(R.style.MyAppTheme4);
+                    break;
             }
         }
-
-        setContentView(R.layout.activity_main);
-
-        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION
-            }, 100);
-        }
-
-        getLocation();
-        initGreetingScreen();
-        initNavigationBar();
-        if (viewPager == null) {
-            initViewPager();
-        }
-
     }
 
     @Override
@@ -142,9 +170,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        LeaderboardFragment leaderboardFragment = new LeaderboardFragment(getDeviceId());
+        leaderboardFragment.setFragmentCallback(new FragmentCallback() {
+            @Override
+            public int getThemeId() {
+                    return themeId;
+            }
+        });
+
+        PlayerProfileFragment playerProfileFragment = new PlayerProfileFragment(getDeviceId(), true);
+        playerProfileFragment.setFragmentCallback(new FragmentCallback() {
+            @Override
+            public int getThemeId() {
+                return themeId;
+            }
+        });
+
         fragments.add(scanFragment);
-        fragments.add(LeaderboardFragment.newInstance(getDeviceId()));
-        fragments.add(PlayerProfileFragment.newInstance(getDeviceId(), true));
+        fragments.add(leaderboardFragment);
+        fragments.add(playerProfileFragment);
+
         QRFragmentPagerAdapter pagerAdapter = new QRFragmentPagerAdapter(
                 getSupportFragmentManager(),
                 getLifecycle(),
@@ -176,10 +221,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * This initialize a navigation bar on main screen
      */
     private void initNavigationBar() {
-        map = findViewById(R.id.navigation_map);
-        scan = findViewById(R.id.navigation_scan);
-        leaderboard = findViewById(R.id.navigation_leaderboard);
-        profile = findViewById(R.id.navigation_profile);
+        ViewStub stub = (ViewStub) findViewById(R.id.layout_stub);
+        stub.setLayoutResource(R.layout.navigation_bar);
+        View inflated = stub.inflate();
+
+
+
+        map = (LinearLayout) inflated.findViewById(R.id.navigation_map);
+        scan = (LinearLayout) inflated.findViewById(R.id.navigation_scan);
+        leaderboard = (LinearLayout) inflated.findViewById(R.id.navigation_leaderboard);
+        profile = (LinearLayout) inflated.findViewById(R.id.navigation_profile);
         currentPage = scan;
         ImageView image1,image2,image3,image4;
         image1 = (ImageView) findViewById(R.id.imageView1);
@@ -212,6 +263,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 image3.setBackgroundColor(getResources().getColor(R.color.theme3PV));
                 image4.setBackgroundColor(getResources().getColor(R.color.theme3PV));
                 break;
+            case 5:
+                image1.setBackgroundColor(getResources().getColor(R.color.theme4PV));
+                image2.setBackgroundColor(getResources().getColor(R.color.theme4PV));
+                image3.setBackgroundColor(getResources().getColor(R.color.theme4PV));
+                image4.setBackgroundColor(getResources().getColor(R.color.theme4PV));
+                break;
+
         }
 
         map.setOnClickListener(new View.OnClickListener() {
@@ -475,6 +533,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "restart to view theme", Toast.LENGTH_SHORT).show();
                 //MainActivity.this.setTheme(R.style.MyAppTheme);
                 data.put("theme", 4);
+                // update db
+                collectionReference.document(getDeviceId()).update(data);
+                break;
+            case R.id.theme5:
+                Toast.makeText(this, "restart to view theme", Toast.LENGTH_SHORT).show();
+                //MainActivity.this.setTheme(R.style.MyAppTheme);
+                data.put("theme", 5);
                 // update db
                 collectionReference.document(getDeviceId()).update(data);
                 break;

@@ -94,9 +94,8 @@ public class GetLocationActivity extends AppCompatActivity implements LocationLi
         done_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                /*Intent mainIntent = new Intent(GetLocationActivity.this, MainActivity.class);
-                startActivity(mainIntent);*/
+                Intent mainIntent = new Intent(GetLocationActivity.this, MainActivity.class);
+                startActivity(mainIntent);
             }
         });
     }

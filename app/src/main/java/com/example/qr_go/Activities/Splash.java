@@ -78,6 +78,9 @@ public class Splash extends AppCompatActivity {
                                 case 4:
                                     themeId = 4;
                                     break;
+                                case 5:
+                                    themeId = 5;
+                                    break;
                             }
                         }
                     }

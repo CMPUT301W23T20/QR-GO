@@ -12,20 +12,24 @@
         android:id="@+id/default_theme"/>
 
     <item
-        android:title="Theme 1"
+        android:title="Miku 1 (Test)"
         android:id="@+id/theme1"/>
 
     <item
-        android:title="Theme 2 (Test)"
+        android:title="Miku 2 (Test)"
         android:id="@+id/theme2"/>
 
     <item
-        android:title="Theme 3 (Test)"
+        android:title="Miku 3 (Test)"
         android:id="@+id/theme3"/>
 
     <item
-        android:title="Theme 4 (Test)"
+        android:title="Eva (Test)"
         android:id="@+id/theme4"/>
+
+    <item
+        android:title="Pokemon (Test)"
+        android:id="@+id/theme5"/>
 
 
 </menu>

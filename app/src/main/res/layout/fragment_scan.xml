@@ -13,7 +13,7 @@
         android:src="@drawable/bg2" />
 
     <Button
-        android:id="@+id/btn_scan1"
+        android:id="@+id/btn_scan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -23,14 +23,6 @@
         android:text="Scan"
         android:textSize="70sp" />
 
-    <Button
-        android:id="@+id/btn_scan2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"
-        android:text="Scan"
-        android:textSize="70sp" />
+
 
 </RelativeLayout>

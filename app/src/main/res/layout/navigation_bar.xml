@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="75dp"
     android:orientation="horizontal"
-    android:background="@drawable/border_navigation_bar">
+    android:background="@drawable/border_navigation_bar"
+    android:layout_gravity="bottom">
 
     <LinearLayout
         android:id="@+id/navigation_map"
@@ -39,7 +40,7 @@
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
-            android:layout_height="80dp"
+            android:layout_height="72dp"
             android:background="@color/green"
             android:layout_weight="1"
             app:srcCompat="@drawable/camera2" />

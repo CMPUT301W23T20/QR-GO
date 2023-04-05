@@ -72,7 +72,8 @@ public class ScanFragment extends Fragment {
     String TAG = "ScanFragment";
     Button scanButton, scanButton2;
 
-    //private View view;
+    private View view;
+    private ImageView image;
 
     private FragmentCallback fragmentCallback;
 
@@ -134,33 +135,39 @@ public class ScanFragment extends Fragment {
                              Bundle savedInstanceState) {
         Log.d(TAG, TAG + " onCreate");
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_scan, container, false);
-        ImageView image = (ImageView) view.findViewById(R.id.image_scan_bg);
         switch (fragmentCallback.getThemeId()) {
-            case 1:
-            case 2:
-            case 3:
-                scanButton = view.findViewById(R.id.btn_scan2);
-                scanButton2 = view.findViewById(R.id.btn_scan1);
-                scanButton2.setVisibility(View.INVISIBLE);
-                image.setImageResource(R.drawable.img_4);
-                break;
             case 0:
-                scanButton = view.findViewById(R.id.btn_scan1);
-                scanButton2 = view.findViewById(R.id.btn_scan2);
-                scanButton2.setVisibility(View.INVISIBLE);
-                view.setBackgroundResource(R.color.lightgreen);
+                view = inflater.inflate(R.layout.fragment_scan, container, false);
+                break;
+            case 1:
+                view = inflater.inflate(R.layout.fragment_scan_bottom, container, false);
+                image = (ImageView) view.findViewById(R.id.image_scan_bg);
+                image.setImageResource(R.drawable.img_3);
+                break;
+            case 2:
+                view = inflater.inflate(R.layout.fragment_scan_bottom, container, false);
+                image = (ImageView) view.findViewById(R.id.image_scan_bg);
+                image.setImageResource(R.drawable.miku4);
+                break;
+            case 3:
+                view = inflater.inflate(R.layout.fragment_scan_bottom, container, false);
+                image = (ImageView) view.findViewById(R.id.image_scan_bg);
+                image.setImageResource(R.drawable.miku2);
                 break;
             case 4:
-                scanButton = view.findViewById(R.id.btn_scan2);
-                scanButton2 = view.findViewById(R.id.btn_scan1);
-                scanButton2.setVisibility(View.INVISIBLE);
+                view = inflater.inflate(R.layout.fragment_scan_bottom, container, false);
+                image = (ImageView) view.findViewById(R.id.image_scan_bg);
                 image.setImageResource(R.drawable.eva);
+                break;
+            case 5:
+                view = inflater.inflate(R.layout.fragment_scan_bottom, container, false);
+                image = (ImageView) view.findViewById(R.id.image_scan_bg);
+                image.setImageResource(R.drawable.img_4);
                 break;
         }
 
         //Button recordButton = view.findViewById(R.id.btn_record);
-
+        scanButton = view.findViewById(R.id.btn_scan);
         scanButton.setOnClickListener(v->
         {
             scanCode();

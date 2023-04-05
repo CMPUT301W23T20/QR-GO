@@ -60,4 +60,11 @@
         <item name="colorOnPrimary">@color/theme3OP</item>
     </style>
 
+    <style name="MyAppTheme4" parent="Theme.QRGO">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/theme4P</item>
+        <item name="colorPrimaryVariant">@color/theme4PV</item>
+        <item name="colorOnPrimary">@color/colorAccentCyan</item>
+    </style>
+
 </resources>

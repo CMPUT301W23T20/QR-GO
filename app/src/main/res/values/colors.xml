@@ -22,21 +22,27 @@
     <color name="colorPrimaryDarkCyan">#0095a8</color>
     <color name="colorAccentCyan">#ffca28</color>
 
-
     <!-- Theme1 Colors -->
     <color name="theme1P">#19686A</color>
     <color name="theme1PV">#A8EFF0</color>
     <color name="theme1OP">#FFFFFF</color>
+    <color name="theme1bg">#D5FFFE</color>
 
     <!-- Theme2 Colors -->
     <color name="theme2P">#FEDBD0</color>
     <color name="theme2PV">#F0CAC0</color>
     <color name="theme2OP">#442C2E</color>
+    <color name="theme2bg">#F2F4E4</color>
+
     <!-- Theme3 Colors -->
     <color name="theme3P">#775997</color>
     <color name="theme3PV">#56D456</color>
     <color name="theme3OP">#FB9D21</color>
 
+    <color name="theme4P">#8B3A1F</color>
+    <color name="theme4PV">#D14F45</color>
+    <color name="theme4OP">#ffca28</color>
+    <color name="theme4bg">#DDA25C</color>
 
     <color name="theme1background">#00544D</color>
 

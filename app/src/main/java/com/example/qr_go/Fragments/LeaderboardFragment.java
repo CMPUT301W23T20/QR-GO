@@ -1,6 +1,7 @@
 package com.example.qr_go.Fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.example.qr_go.Activities.Profile.PlayerProfileActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.Adapters.LeaderboardAdapter;
 import com.example.qr_go.DataBaseHelper;
+import com.example.qr_go.FragmentCallback;
 import com.example.qr_go.MainActivity;
 import com.example.qr_go.R;
 import com.google.firebase.firestore.CollectionReference;
@@ -54,6 +56,12 @@ public class LeaderboardFragment extends Fragment {
     private LeaderboardAdapter leaderboardAdapter;
     private DataBaseHelper dbHelper;
 
+    private FragmentCallback fragmentCallback;
+
+    public void setFragmentCallback(FragmentCallback callback){
+        fragmentCallback = callback;
+    }
+
     public LeaderboardFragment(String thisDeviceID) {
         this.thisDeviceID = thisDeviceID;
     }
@@ -88,10 +96,31 @@ public class LeaderboardFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         searchView = (SearchView) view.findViewById(R.id.searchView);
-        if (((MainActivity) getActivity()).themeId == 1){
-            view.setBackgroundResource(R.color.white);
-        }else{
-            view.setBackgroundResource(R.color.lightgreen);
+        switch (fragmentCallback.getThemeId()) {
+            case 0:
+                view.setBackgroundResource(R.color.lightgreen);
+                break;
+            case 1:
+                view.setBackgroundResource(R.color.white);
+                searchView.setBackgroundColor(getResources().getColor(R.color.white));
+                searchView.setBackgroundResource(R.drawable.bg_white_rounded1);
+                break;
+            case 2:
+                view.setBackgroundResource(R.color.theme1bg);
+                searchView.setBackgroundColor(getResources().getColor(R.color.white));
+                break;
+            case 3:
+                view.setBackgroundResource(R.color.theme2bg);
+                searchView.setBackgroundColor(getResources().getColor(R.color.white));
+                break;
+            case 4:
+                view.setBackgroundResource(R.color.lightgreen);
+                break;
+            case 5:
+                view.setBackgroundResource(R.color.theme4bg);
+                searchView.setBackgroundColor(getResources().getColor(R.color.white));
+                break;
+
         }
 
 

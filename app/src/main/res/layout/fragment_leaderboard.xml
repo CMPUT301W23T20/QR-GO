@@ -8,18 +8,19 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <!-- android:backgroundTint="@color/faintgreen" -->
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="2dp"
-        android:iconifiedByDefault="false"
+        android:background="@drawable/bg_white_rounded"
         android:backgroundTint="@color/faintgreen"
+        android:iconifiedByDefault="false"
         android:queryHint="Search User"
-        android:submitBackground="@drawable/bg_white_rounded"
-        android:background="@drawable/bg_white_rounded"/>
+        android:submitBackground="@drawable/bg_white_rounded"/>
 
 
     <TableRow

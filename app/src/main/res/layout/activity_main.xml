@@ -17,7 +17,12 @@
 
     </androidx.viewpager2.widget.ViewPager2>
 
-    <include layout="@layout/navigation_bar" />
 
+
+    <ViewStub
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_stub"
+        android:layout="@layout/navigation_bar"/>
 
 </LinearLayout>

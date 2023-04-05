@@ -17,6 +17,7 @@ import com.example.qr_go.Activities.Profile.OtherProfileQRListViewActivity;
 import com.example.qr_go.Activities.Profile.ThisProfileQRListViewActivity;
 import com.example.qr_go.Actor.Player;
 import com.example.qr_go.DataBaseHelper;
+import com.example.qr_go.FragmentCallback;
 import com.example.qr_go.MainActivity;
 import com.example.qr_go.MusicService;
 import com.example.qr_go.QR.QR;
@@ -49,6 +50,11 @@ public class PlayerProfileFragment extends Fragment {
     private DataBaseHelper dbHelper = new DataBaseHelper();
 
     private MainActivity mainActivity;
+    private FragmentCallback fragmentCallback;
+
+    public void setFragmentCallback(FragmentCallback callback){
+        fragmentCallback = callback;
+    }
 
     /**
      * Constructor
@@ -78,10 +84,27 @@ public class PlayerProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_player_profile, container, false);
-        if (((MainActivity) getActivity()).themeId == 1){
-            view.setBackgroundResource(R.color.white);
-        }else{
-            view.setBackgroundResource(R.color.lightgreen);
+
+        switch (fragmentCallback.getThemeId()) {
+            case 0:
+                view.setBackgroundResource(R.color.lightgreen);
+                break;
+            case 1:
+                view.setBackgroundResource(R.color.white);
+                break;
+            case 2:
+                view.setBackgroundResource(R.color.theme1bg);
+                break;
+            case 3:
+                view.setBackgroundResource(R.color.theme2bg);
+                break;
+            case 4:
+                view.setBackgroundResource(R.color.lightgreen);
+                break;
+            case 5:
+                view.setBackgroundResource(R.color.theme4bg);
+                break;
+
         }
 
         getViews(view);
